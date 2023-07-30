@@ -1,0 +1,1445 @@
+Last login: Sat Jul  8 19:54:07 2023
+[root@localhost ~]# lsblk
+NAME            MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT
+sda               8:0    0   20G  0 disk
+├─sda1            8:1    0    1G  0 part /boot
+└─sda2            8:2    0   19G  0 part
+  ├─centos-root 253:0    0   17G  0 lvm  /
+  └─centos-swap 253:1    0    2G  0 lvm  [SWAP]
+sdb               8:16   0    1G  0 disk
+sdc               8:32   0    1G  0 disk
+sr0              11:0    1  973M  0 rom
+[root@localhost ~]# yum clean all
+Loaded plugins: fastestmirror
+Cleaning repos: base extras updates
+[root@localhost ~]# yum update
+Loaded plugins: fastestmirror
+Determining fastest mirrors
+ * base: centos.mirror.net.in
+ * extras: centos.mirror.net.in
+ * updates: centos.mirror.net.in
+base                                                     | 3.6 kB     00:00
+extras                                                   | 2.9 kB     00:00
+updates                                                  | 2.9 kB     00:00
+(1/4): extras/7/x86_64/primary_db                          | 250 kB   00:00
+(2/4): base/7/x86_64/group_gz                              | 153 kB   00:00
+(3/4): base/7/x86_64/primary_db                            | 6.1 MB   00:00
+(4/4): updates/7/x86_64/primary_db                         |  22 MB   00:01
+Resolving Dependencies
+--> Running transaction check
+---> Package NetworkManager.x86_64 1:1.18.8-1.el7 will be updated
+---> Package NetworkManager.x86_64 1:1.18.8-2.el7_9 will be an update
+---> Package NetworkManager-libnm.x86_64 1:1.18.8-1.el7 will be updated
+---> Package NetworkManager-libnm.x86_64 1:1.18.8-2.el7_9 will be an update
+---> Package NetworkManager-team.x86_64 1:1.18.8-1.el7 will be updated
+---> Package NetworkManager-team.x86_64 1:1.18.8-2.el7_9 will be an update
+---> Package NetworkManager-tui.x86_64 1:1.18.8-1.el7 will be updated
+---> Package NetworkManager-tui.x86_64 1:1.18.8-2.el7_9 will be an update
+---> Package NetworkManager-wifi.x86_64 1:1.18.8-1.el7 will be updated
+---> Package NetworkManager-wifi.x86_64 1:1.18.8-2.el7_9 will be an update
+---> Package bash.x86_64 0:4.2.46-34.el7 will be updated
+---> Package bash.x86_64 0:4.2.46-35.el7_9 will be an update
+---> Package bind-export-libs.x86_64 32:9.11.4-26.P2.el7 will be updated
+---> Package bind-export-libs.x86_64 32:9.11.4-26.P2.el7_9.13 will be an update
+---> Package binutils.x86_64 0:2.27-44.base.el7 will be updated
+---> Package binutils.x86_64 0:2.27-44.base.el7_9.1 will be an update
+---> Package ca-certificates.noarch 0:2020.2.41-70.0.el7_8 will be updated
+---> Package ca-certificates.noarch 0:2022.2.54-74.el7_9 will be an update
+---> Package centos-release.x86_64 0:7-9.2009.0.el7.centos will be updated
+---> Package centos-release.x86_64 0:7-9.2009.1.el7.centos will be an update
+---> Package coreutils.x86_64 0:8.22-24.el7 will be updated
+---> Package coreutils.x86_64 0:8.22-24.el7_9.2 will be an update
+---> Package cronie.x86_64 0:1.4.11-23.el7 will be updated
+---> Package cronie.x86_64 0:1.4.11-25.el7_9 will be an update
+---> Package cronie-anacron.x86_64 0:1.4.11-23.el7 will be updated
+---> Package cronie-anacron.x86_64 0:1.4.11-25.el7_9 will be an update
+---> Package curl.x86_64 0:7.29.0-59.el7 will be updated
+---> Package curl.x86_64 0:7.29.0-59.el7_9.1 will be an update
+---> Package cyrus-sasl-lib.x86_64 0:2.1.26-23.el7 will be updated
+---> Package cyrus-sasl-lib.x86_64 0:2.1.26-24.el7_9 will be an update
+---> Package device-mapper.x86_64 7:1.02.170-6.el7 will be updated
+---> Package device-mapper.x86_64 7:1.02.170-6.el7_9.5 will be an update
+---> Package device-mapper-event.x86_64 7:1.02.170-6.el7 will be updated
+---> Package device-mapper-event.x86_64 7:1.02.170-6.el7_9.5 will be an update
+---> Package device-mapper-event-libs.x86_64 7:1.02.170-6.el7 will be updated
+---> Package device-mapper-event-libs.x86_64 7:1.02.170-6.el7_9.5 will be an update
+---> Package device-mapper-libs.x86_64 7:1.02.170-6.el7 will be updated
+---> Package device-mapper-libs.x86_64 7:1.02.170-6.el7_9.5 will be an update
+---> Package device-mapper-persistent-data.x86_64 0:0.8.5-3.el7 will be updated
+---> Package device-mapper-persistent-data.x86_64 0:0.8.5-3.el7_9.2 will be an update
+---> Package dhclient.x86_64 12:4.2.5-82.el7.centos will be updated
+---> Package dhclient.x86_64 12:4.2.5-83.el7.centos.1 will be an update
+---> Package dhcp-common.x86_64 12:4.2.5-82.el7.centos will be updated
+---> Package dhcp-common.x86_64 12:4.2.5-83.el7.centos.1 will be an update
+---> Package dhcp-libs.x86_64 12:4.2.5-82.el7.centos will be updated
+---> Package dhcp-libs.x86_64 12:4.2.5-83.el7.centos.1 will be an update
+---> Package diffutils.x86_64 0:3.3-5.el7 will be updated
+---> Package diffutils.x86_64 0:3.3-6.el7_9 will be an update
+---> Package dmidecode.x86_64 1:3.2-5.el7 will be updated
+---> Package dmidecode.x86_64 1:3.2-5.el7_9.1 will be an update
+---> Package expat.x86_64 0:2.1.0-12.el7 will be updated
+---> Package expat.x86_64 0:2.1.0-15.el7_9 will be an update
+---> Package firewalld.noarch 0:0.6.3-11.el7 will be updated
+---> Package firewalld.noarch 0:0.6.3-13.el7_9 will be an update
+---> Package firewalld-filesystem.noarch 0:0.6.3-11.el7 will be updated
+---> Package firewalld-filesystem.noarch 0:0.6.3-13.el7_9 will be an update
+---> Package freetype.x86_64 0:2.8-14.el7 will be updated
+---> Package freetype.x86_64 0:2.8-14.el7_9.1 will be an update
+---> Package glib2.x86_64 0:2.56.1-7.el7 will be updated
+---> Package glib2.x86_64 0:2.56.1-9.el7_9 will be an update
+---> Package glibc.x86_64 0:2.17-317.el7 will be updated
+---> Package glibc.x86_64 0:2.17-326.el7_9 will be an update
+---> Package glibc-common.x86_64 0:2.17-317.el7 will be updated
+---> Package glibc-common.x86_64 0:2.17-326.el7_9 will be an update
+---> Package grub2.x86_64 1:2.02-0.86.el7.centos will be updated
+---> Package grub2.x86_64 1:2.02-0.87.0.2.el7.centos.11 will be an update
+---> Package grub2-common.noarch 1:2.02-0.86.el7.centos will be updated
+---> Package grub2-common.noarch 1:2.02-0.87.0.2.el7.centos.11 will be an update
+---> Package grub2-pc.x86_64 1:2.02-0.86.el7.centos will be updated
+---> Package grub2-pc.x86_64 1:2.02-0.87.0.2.el7.centos.11 will be an update
+---> Package grub2-pc-modules.noarch 1:2.02-0.86.el7.centos will be updated
+---> Package grub2-pc-modules.noarch 1:2.02-0.87.0.2.el7.centos.11 will be an update
+---> Package grub2-tools.x86_64 1:2.02-0.86.el7.centos will be updated
+---> Package grub2-tools.x86_64 1:2.02-0.87.0.2.el7.centos.11 will be an update
+---> Package grub2-tools-extra.x86_64 1:2.02-0.86.el7.centos will be updated
+---> Package grub2-tools-extra.x86_64 1:2.02-0.87.0.2.el7.centos.11 will be an update
+---> Package grub2-tools-minimal.x86_64 1:2.02-0.86.el7.centos will be updated
+---> Package grub2-tools-minimal.x86_64 1:2.02-0.87.0.2.el7.centos.11 will be an update
+---> Package gzip.x86_64 0:1.5-10.el7 will be updated
+---> Package gzip.x86_64 0:1.5-11.el7_9 will be an update
+---> Package initscripts.x86_64 0:9.49.53-1.el7 will be updated
+---> Package initscripts.x86_64 0:9.49.53-1.el7_9.1 will be an update
+---> Package iprutils.x86_64 0:2.4.17.1-3.el7 will be updated
+---> Package iprutils.x86_64 0:2.4.17.1-3.el7_7 will be an update
+---> Package iwl100-firmware.noarch 0:39.31.5.1-79.el7 will be updated
+---> Package iwl100-firmware.noarch 0:39.31.5.1-80.el7_9 will be an update
+---> Package iwl1000-firmware.noarch 1:39.31.5.1-79.el7 will be updated
+---> Package iwl1000-firmware.noarch 1:39.31.5.1-80.el7_9 will be an update
+---> Package iwl105-firmware.noarch 0:18.168.6.1-79.el7 will be updated
+---> Package iwl105-firmware.noarch 0:18.168.6.1-80.el7_9 will be an update
+---> Package iwl135-firmware.noarch 0:18.168.6.1-79.el7 will be updated
+---> Package iwl135-firmware.noarch 0:18.168.6.1-80.el7_9 will be an update
+---> Package iwl2000-firmware.noarch 0:18.168.6.1-79.el7 will be updated
+---> Package iwl2000-firmware.noarch 0:18.168.6.1-80.el7_9 will be an update
+---> Package iwl2030-firmware.noarch 0:18.168.6.1-79.el7 will be updated
+---> Package iwl2030-firmware.noarch 0:18.168.6.1-80.el7_9 will be an update
+---> Package iwl3160-firmware.noarch 0:25.30.13.0-79.el7 will be updated
+---> Package iwl3160-firmware.noarch 0:25.30.13.0-80.el7_9 will be an update
+---> Package iwl3945-firmware.noarch 0:15.32.2.9-79.el7 will be updated
+---> Package iwl3945-firmware.noarch 0:15.32.2.9-80.el7_9 will be an update
+---> Package iwl4965-firmware.noarch 0:228.61.2.24-79.el7 will be updated
+---> Package iwl4965-firmware.noarch 0:228.61.2.24-80.el7_9 will be an update
+---> Package iwl5000-firmware.noarch 0:8.83.5.1_1-79.el7 will be updated
+---> Package iwl5000-firmware.noarch 0:8.83.5.1_1-80.el7_9 will be an update
+---> Package iwl5150-firmware.noarch 0:8.24.2.2-79.el7 will be updated
+---> Package iwl5150-firmware.noarch 0:8.24.2.2-80.el7_9 will be an update
+---> Package iwl6000-firmware.noarch 0:9.221.4.1-79.el7 will be updated
+---> Package iwl6000-firmware.noarch 0:9.221.4.1-80.el7_9 will be an update
+---> Package iwl6000g2a-firmware.noarch 0:18.168.6.1-79.el7 will be updated
+---> Package iwl6000g2a-firmware.noarch 0:18.168.6.1-80.el7_9 will be an update
+---> Package iwl6000g2b-firmware.noarch 0:18.168.6.1-79.el7 will be updated
+---> Package iwl6000g2b-firmware.noarch 0:18.168.6.1-80.el7_9 will be an update
+---> Package iwl6050-firmware.noarch 0:41.28.5.1-79.el7 will be updated
+---> Package iwl6050-firmware.noarch 0:41.28.5.1-80.el7_9 will be an update
+---> Package iwl7260-firmware.noarch 0:25.30.13.0-79.el7 will be updated
+---> Package iwl7260-firmware.noarch 0:25.30.13.0-80.el7_9 will be an update
+---> Package kbd.x86_64 0:1.15.5-15.el7 will be updated
+---> Package kbd.x86_64 0:1.15.5-16.el7_9 will be an update
+---> Package kbd-legacy.noarch 0:1.15.5-15.el7 will be updated
+---> Package kbd-legacy.noarch 0:1.15.5-16.el7_9 will be an update
+---> Package kbd-misc.noarch 0:1.15.5-15.el7 will be updated
+---> Package kbd-misc.noarch 0:1.15.5-16.el7_9 will be an update
+---> Package kernel.x86_64 0:3.10.0-1160.92.1.el7 will be installed
+---> Package kernel-tools.x86_64 0:3.10.0-1160.el7 will be updated
+---> Package kernel-tools.x86_64 0:3.10.0-1160.92.1.el7 will be an update
+---> Package kernel-tools-libs.x86_64 0:3.10.0-1160.el7 will be updated
+---> Package kernel-tools-libs.x86_64 0:3.10.0-1160.92.1.el7 will be an update
+---> Package kexec-tools.x86_64 0:2.0.15-51.el7 will be updated
+---> Package kexec-tools.x86_64 0:2.0.15-51.el7_9.3 will be an update
+---> Package kpartx.x86_64 0:0.4.9-133.el7 will be updated
+---> Package kpartx.x86_64 0:0.4.9-136.el7_9 will be an update
+---> Package krb5-libs.x86_64 0:1.15.1-50.el7 will be updated
+---> Package krb5-libs.x86_64 0:1.15.1-55.el7_9 will be an update
+---> Package libblkid.x86_64 0:2.23.2-65.el7 will be updated
+---> Package libblkid.x86_64 0:2.23.2-65.el7_9.1 will be an update
+---> Package libcroco.x86_64 0:0.6.12-4.el7 will be updated
+---> Package libcroco.x86_64 0:0.6.12-6.el7_9 will be an update
+---> Package libcurl.x86_64 0:7.29.0-59.el7 will be updated
+---> Package libcurl.x86_64 0:7.29.0-59.el7_9.1 will be an update
+---> Package libmount.x86_64 0:2.23.2-65.el7 will be updated
+---> Package libmount.x86_64 0:2.23.2-65.el7_9.1 will be an update
+---> Package libsmartcols.x86_64 0:2.23.2-65.el7 will be updated
+---> Package libsmartcols.x86_64 0:2.23.2-65.el7_9.1 will be an update
+---> Package libuuid.x86_64 0:2.23.2-65.el7 will be updated
+---> Package libuuid.x86_64 0:2.23.2-65.el7_9.1 will be an update
+---> Package libxml2.x86_64 0:2.9.1-6.el7.5 will be updated
+---> Package libxml2.x86_64 0:2.9.1-6.el7_9.6 will be an update
+---> Package linux-firmware.noarch 0:20200421-79.git78c0348.el7 will be updated
+---> Package linux-firmware.noarch 0:20200421-80.git78c0348.el7_9 will be an update
+---> Package lvm2.x86_64 7:2.02.187-6.el7 will be updated
+---> Package lvm2.x86_64 7:2.02.187-6.el7_9.5 will be an update
+---> Package lvm2-libs.x86_64 7:2.02.187-6.el7 will be updated
+---> Package lvm2-libs.x86_64 7:2.02.187-6.el7_9.5 will be an update
+---> Package microcode_ctl.x86_64 2:2.1-73.el7 will be updated
+---> Package microcode_ctl.x86_64 2:2.1-73.15.el7_9 will be an update
+---> Package nspr.x86_64 0:4.21.0-1.el7 will be updated
+---> Package nspr.x86_64 0:4.34.0-3.1.el7_9 will be an update
+---> Package nss.x86_64 0:3.44.0-7.el7_7 will be updated
+---> Package nss.x86_64 0:3.79.0-5.el7_9 will be an update
+---> Package nss-pem.x86_64 0:1.0.3-7.el7 will be updated
+---> Package nss-pem.x86_64 0:1.0.3-7.el7_9.1 will be an update
+---> Package nss-softokn.x86_64 0:3.44.0-8.el7_7 will be updated
+---> Package nss-softokn.x86_64 0:3.79.0-4.el7_9 will be an update
+---> Package nss-softokn-freebl.x86_64 0:3.44.0-8.el7_7 will be updated
+---> Package nss-softokn-freebl.x86_64 0:3.79.0-4.el7_9 will be an update
+---> Package nss-sysinit.x86_64 0:3.44.0-7.el7_7 will be updated
+---> Package nss-sysinit.x86_64 0:3.79.0-5.el7_9 will be an update
+---> Package nss-tools.x86_64 0:3.44.0-7.el7_7 will be updated
+---> Package nss-tools.x86_64 0:3.79.0-5.el7_9 will be an update
+---> Package nss-util.x86_64 0:3.44.0-4.el7_7 will be updated
+---> Package nss-util.x86_64 0:3.79.0-1.el7_9 will be an update
+---> Package openldap.x86_64 0:2.4.44-22.el7 will be updated
+---> Package openldap.x86_64 0:2.4.44-25.el7_9 will be an update
+---> Package openssh.x86_64 0:7.4p1-21.el7 will be updated
+---> Package openssh.x86_64 0:7.4p1-22.el7_9 will be an update
+---> Package openssh-clients.x86_64 0:7.4p1-21.el7 will be updated
+---> Package openssh-clients.x86_64 0:7.4p1-22.el7_9 will be an update
+---> Package openssh-server.x86_64 0:7.4p1-21.el7 will be updated
+---> Package openssh-server.x86_64 0:7.4p1-22.el7_9 will be an update
+---> Package openssl.x86_64 1:1.0.2k-19.el7 will be updated
+---> Package openssl.x86_64 1:1.0.2k-26.el7_9 will be an update
+---> Package openssl-libs.x86_64 1:1.0.2k-19.el7 will be updated
+---> Package openssl-libs.x86_64 1:1.0.2k-26.el7_9 will be an update
+---> Package polkit.x86_64 0:0.112-26.el7 will be updated
+---> Package polkit.x86_64 0:0.112-26.el7_9.1 will be an update
+---> Package python.x86_64 0:2.7.5-89.el7 will be updated
+---> Package python.x86_64 0:2.7.5-93.el7_9 will be an update
+---> Package python-firewall.noarch 0:0.6.3-11.el7 will be updated
+---> Package python-firewall.noarch 0:0.6.3-13.el7_9 will be an update
+---> Package python-libs.x86_64 0:2.7.5-89.el7 will be updated
+---> Package python-libs.x86_64 0:2.7.5-93.el7_9 will be an update
+---> Package python-perf.x86_64 0:3.10.0-1160.el7 will be updated
+---> Package python-perf.x86_64 0:3.10.0-1160.92.1.el7 will be an update
+---> Package rpm.x86_64 0:4.11.3-45.el7 will be updated
+---> Package rpm.x86_64 0:4.11.3-48.el7_9 will be an update
+---> Package rpm-build-libs.x86_64 0:4.11.3-45.el7 will be updated
+---> Package rpm-build-libs.x86_64 0:4.11.3-48.el7_9 will be an update
+---> Package rpm-libs.x86_64 0:4.11.3-45.el7 will be updated
+---> Package rpm-libs.x86_64 0:4.11.3-48.el7_9 will be an update
+---> Package rpm-python.x86_64 0:4.11.3-45.el7 will be updated
+---> Package rpm-python.x86_64 0:4.11.3-48.el7_9 will be an update
+---> Package rsyslog.x86_64 0:8.24.0-55.el7 will be updated
+---> Package rsyslog.x86_64 0:8.24.0-57.el7_9.3 will be an update
+---> Package selinux-policy.noarch 0:3.13.1-268.el7 will be updated
+---> Package selinux-policy.noarch 0:3.13.1-268.el7_9.2 will be an update
+---> Package selinux-policy-targeted.noarch 0:3.13.1-268.el7 will be updated
+---> Package selinux-policy-targeted.noarch 0:3.13.1-268.el7_9.2 will be an update
+---> Package sudo.x86_64 0:1.8.23-10.el7 will be updated
+---> Package sudo.x86_64 0:1.8.23-10.el7_9.3 will be an update
+---> Package systemd.x86_64 0:219-78.el7 will be updated
+---> Package systemd.x86_64 0:219-78.el7_9.7 will be an update
+---> Package systemd-libs.x86_64 0:219-78.el7 will be updated
+---> Package systemd-libs.x86_64 0:219-78.el7_9.7 will be an update
+---> Package systemd-sysv.x86_64 0:219-78.el7 will be updated
+---> Package systemd-sysv.x86_64 0:219-78.el7_9.7 will be an update
+---> Package tuned.noarch 0:2.11.0-9.el7 will be updated
+---> Package tuned.noarch 0:2.11.0-12.el7_9 will be an update
+---> Package tzdata.noarch 0:2020a-1.el7 will be updated
+---> Package tzdata.noarch 0:2023c-1.el7 will be an update
+---> Package util-linux.x86_64 0:2.23.2-65.el7 will be updated
+---> Package util-linux.x86_64 0:2.23.2-65.el7_9.1 will be an update
+---> Package vim-minimal.x86_64 2:7.4.629-7.el7 will be updated
+---> Package vim-minimal.x86_64 2:7.4.629-8.el7_9 will be an update
+---> Package virt-what.x86_64 0:1.18-4.el7 will be updated
+---> Package virt-what.x86_64 0:1.18-4.el7_9.1 will be an update
+---> Package wpa_supplicant.x86_64 1:2.6-12.el7 will be updated
+---> Package wpa_supplicant.x86_64 1:2.6-12.el7_9.2 will be an update
+---> Package xz.x86_64 0:5.2.2-1.el7 will be updated
+---> Package xz.x86_64 0:5.2.2-2.el7_9 will be an update
+---> Package xz-libs.x86_64 0:5.2.2-1.el7 will be updated
+---> Package xz-libs.x86_64 0:5.2.2-2.el7_9 will be an update
+---> Package zlib.x86_64 0:1.2.7-18.el7 will be updated
+---> Package zlib.x86_64 0:1.2.7-21.el7_9 will be an update
+--> Finished Dependency Resolution
+
+Dependencies Resolved
+
+================================================================================
+ Package                     Arch   Version                       Repository
+                                                                           Size
+================================================================================
+Installing:
+ kernel                      x86_64 3.10.0-1160.92.1.el7          updates  52 M
+Updating:
+ NetworkManager              x86_64 1:1.18.8-2.el7_9              updates 1.9 M
+ NetworkManager-libnm        x86_64 1:1.18.8-2.el7_9              updates 1.7 M
+ NetworkManager-team         x86_64 1:1.18.8-2.el7_9              updates 165 k
+ NetworkManager-tui          x86_64 1:1.18.8-2.el7_9              updates 329 k
+ NetworkManager-wifi         x86_64 1:1.18.8-2.el7_9              updates 202 k
+ bash                        x86_64 4.2.46-35.el7_9               updates 1.0 M
+ bind-export-libs            x86_64 32:9.11.4-26.P2.el7_9.13      updates 1.1 M
+ binutils                    x86_64 2.27-44.base.el7_9.1          updates 5.9 M
+ ca-certificates             noarch 2022.2.54-74.el7_9            updates 911 k
+ centos-release              x86_64 7-9.2009.1.el7.centos         updates  27 k
+ coreutils                   x86_64 8.22-24.el7_9.2               updates 3.3 M
+ cronie                      x86_64 1.4.11-25.el7_9               updates  92 k
+ cronie-anacron              x86_64 1.4.11-25.el7_9               updates  36 k
+ curl                        x86_64 7.29.0-59.el7_9.1             updates 271 k
+ cyrus-sasl-lib              x86_64 2.1.26-24.el7_9               updates 156 k
+ device-mapper               x86_64 7:1.02.170-6.el7_9.5          updates 297 k
+ device-mapper-event         x86_64 7:1.02.170-6.el7_9.5          updates 192 k
+ device-mapper-event-libs    x86_64 7:1.02.170-6.el7_9.5          updates 192 k
+ device-mapper-libs          x86_64 7:1.02.170-6.el7_9.5          updates 325 k
+ device-mapper-persistent-data
+                             x86_64 0.8.5-3.el7_9.2               updates 423 k
+ dhclient                    x86_64 12:4.2.5-83.el7.centos.1      updates 286 k
+ dhcp-common                 x86_64 12:4.2.5-83.el7.centos.1      updates 177 k
+ dhcp-libs                   x86_64 12:4.2.5-83.el7.centos.1      updates 133 k
+ diffutils                   x86_64 3.3-6.el7_9                   updates 322 k
+ dmidecode                   x86_64 1:3.2-5.el7_9.1               updates  82 k
+ expat                       x86_64 2.1.0-15.el7_9                updates  83 k
+ firewalld                   noarch 0.6.3-13.el7_9                updates 449 k
+ firewalld-filesystem        noarch 0.6.3-13.el7_9                updates  51 k
+ freetype                    x86_64 2.8-14.el7_9.1                updates 380 k
+ glib2                       x86_64 2.56.1-9.el7_9                updates 2.5 M
+ glibc                       x86_64 2.17-326.el7_9                updates 3.6 M
+ glibc-common                x86_64 2.17-326.el7_9                updates  12 M
+ grub2                       x86_64 1:2.02-0.87.0.2.el7.centos.11 updates  34 k
+ grub2-common                noarch 1:2.02-0.87.0.2.el7.centos.11 updates 733 k
+ grub2-pc                    x86_64 1:2.02-0.87.0.2.el7.centos.11 updates  34 k
+ grub2-pc-modules            noarch 1:2.02-0.87.0.2.el7.centos.11 updates 860 k
+ grub2-tools                 x86_64 1:2.02-0.87.0.2.el7.centos.11 updates 1.8 M
+ grub2-tools-extra           x86_64 1:2.02-0.87.0.2.el7.centos.11 updates 1.0 M
+ grub2-tools-minimal         x86_64 1:2.02-0.87.0.2.el7.centos.11 updates 177 k
+ gzip                        x86_64 1.5-11.el7_9                  updates 130 k
+ initscripts                 x86_64 9.49.53-1.el7_9.1             updates 440 k
+ iprutils                    x86_64 2.4.17.1-3.el7_7              updates 243 k
+ iwl100-firmware             noarch 39.31.5.1-80.el7_9            updates 155 k
+ iwl1000-firmware            noarch 1:39.31.5.1-80.el7_9          updates 215 k
+ iwl105-firmware             noarch 18.168.6.1-80.el7_9           updates 234 k
+ iwl135-firmware             noarch 18.168.6.1-80.el7_9           updates 243 k
+ iwl2000-firmware            noarch 18.168.6.1-80.el7_9           updates 237 k
+ iwl2030-firmware            noarch 18.168.6.1-80.el7_9           updates 245 k
+ iwl3160-firmware            noarch 25.30.13.0-80.el7_9           updates 1.5 M
+ iwl3945-firmware            noarch 15.32.2.9-80.el7_9            updates  96 k
+ iwl4965-firmware            noarch 228.61.2.24-80.el7_9          updates 109 k
+ iwl5000-firmware            noarch 8.83.5.1_1-80.el7_9           updates 289 k
+ iwl5150-firmware            noarch 8.24.2.2-80.el7_9             updates 152 k
+ iwl6000-firmware            noarch 9.221.4.1-80.el7_9            updates 171 k
+ iwl6000g2a-firmware         noarch 18.168.6.1-80.el7_9           updates 304 k
+ iwl6000g2b-firmware         noarch 18.168.6.1-80.el7_9           updates 305 k
+ iwl6050-firmware            noarch 41.28.5.1-80.el7_9            updates 241 k
+ iwl7260-firmware            noarch 25.30.13.0-80.el7_9           updates 6.1 M
+ kbd                         x86_64 1.15.5-16.el7_9               updates 347 k
+ kbd-legacy                  noarch 1.15.5-16.el7_9               updates 466 k
+ kbd-misc                    noarch 1.15.5-16.el7_9               updates 1.4 M
+ kernel-tools                x86_64 3.10.0-1160.92.1.el7          updates 8.2 M
+ kernel-tools-libs           x86_64 3.10.0-1160.92.1.el7          updates 8.1 M
+ kexec-tools                 x86_64 2.0.15-51.el7_9.3             updates 351 k
+ kpartx                      x86_64 0.4.9-136.el7_9               updates  81 k
+ krb5-libs                   x86_64 1.15.1-55.el7_9               updates 810 k
+ libblkid                    x86_64 2.23.2-65.el7_9.1             updates 183 k
+ libcroco                    x86_64 0.6.12-6.el7_9                updates 105 k
+ libcurl                     x86_64 7.29.0-59.el7_9.1             updates 223 k
+ libmount                    x86_64 2.23.2-65.el7_9.1             updates 185 k
+ libsmartcols                x86_64 2.23.2-65.el7_9.1             updates 143 k
+ libuuid                     x86_64 2.23.2-65.el7_9.1             updates  84 k
+ libxml2                     x86_64 2.9.1-6.el7_9.6               updates 668 k
+ linux-firmware              noarch 20200421-80.git78c0348.el7_9  updates  80 M
+ lvm2                        x86_64 7:2.02.187-6.el7_9.5          updates 1.3 M
+ lvm2-libs                   x86_64 7:2.02.187-6.el7_9.5          updates 1.1 M
+ microcode_ctl               x86_64 2:2.1-73.15.el7_9             updates 4.5 M
+ nspr                        x86_64 4.34.0-3.1.el7_9              updates 128 k
+ nss                         x86_64 3.79.0-5.el7_9                updates 895 k
+ nss-pem                     x86_64 1.0.3-7.el7_9.1               updates  75 k
+ nss-softokn                 x86_64 3.79.0-4.el7_9                updates 379 k
+ nss-softokn-freebl          x86_64 3.79.0-4.el7_9                updates 337 k
+ nss-sysinit                 x86_64 3.79.0-5.el7_9                updates  66 k
+ nss-tools                   x86_64 3.79.0-5.el7_9                updates 555 k
+ nss-util                    x86_64 3.79.0-1.el7_9                updates  80 k
+ openldap                    x86_64 2.4.44-25.el7_9               updates 356 k
+ openssh                     x86_64 7.4p1-22.el7_9                updates 510 k
+ openssh-clients             x86_64 7.4p1-22.el7_9                updates 655 k
+ openssh-server              x86_64 7.4p1-22.el7_9                updates 459 k
+ openssl                     x86_64 1:1.0.2k-26.el7_9             updates 494 k
+ openssl-libs                x86_64 1:1.0.2k-26.el7_9             updates 1.2 M
+ polkit                      x86_64 0.112-26.el7_9.1              updates 170 k
+ python                      x86_64 2.7.5-93.el7_9                updates  96 k
+ python-firewall             noarch 0.6.3-13.el7_9                updates 355 k
+ python-libs                 x86_64 2.7.5-93.el7_9                updates 5.6 M
+ python-perf                 x86_64 3.10.0-1160.92.1.el7          updates 8.2 M
+ rpm                         x86_64 4.11.3-48.el7_9               updates 1.2 M
+ rpm-build-libs              x86_64 4.11.3-48.el7_9               updates 108 k
+ rpm-libs                    x86_64 4.11.3-48.el7_9               updates 279 k
+ rpm-python                  x86_64 4.11.3-48.el7_9               updates  84 k
+ rsyslog                     x86_64 8.24.0-57.el7_9.3             updates 622 k
+ selinux-policy              noarch 3.13.1-268.el7_9.2            updates 498 k
+ selinux-policy-targeted     noarch 3.13.1-268.el7_9.2            updates 7.0 M
+ sudo                        x86_64 1.8.23-10.el7_9.3             updates 844 k
+ systemd                     x86_64 219-78.el7_9.7                updates 5.1 M
+ systemd-libs                x86_64 219-78.el7_9.7                updates 419 k
+ systemd-sysv                x86_64 219-78.el7_9.7                updates  97 k
+ tuned                       noarch 2.11.0-12.el7_9               updates 270 k
+ tzdata                      noarch 2023c-1.el7                   updates 497 k
+ util-linux                  x86_64 2.23.2-65.el7_9.1             updates 2.0 M
+ vim-minimal                 x86_64 2:7.4.629-8.el7_9             updates 443 k
+ virt-what                   x86_64 1.18-4.el7_9.1                updates  30 k
+ wpa_supplicant              x86_64 1:2.6-12.el7_9.2              updates 1.2 M
+ xz                          x86_64 5.2.2-2.el7_9                 updates 229 k
+ xz-libs                     x86_64 5.2.2-2.el7_9                 updates 103 k
+ zlib                        x86_64 1.2.7-21.el7_9                updates  90 k
+
+Transaction Summary
+================================================================================
+Install    1 Package
+Upgrade  116 Packages
+
+Total download size: 255 M
+Is this ok [y/d/N]: y
+Downloading packages:
+Delta RPMs disabled because /usr/bin/applydeltarpm not installed.
+warning: /var/cache/yum/x86_64/7/updates/packages/NetworkManager-team-1.18.8-2.el7_9.x86_64.rpm: Header V3 RSA/SHA256 Signature, key ID f4a80eb5: NOKEY
+Public key for NetworkManager-team-1.18.8-2.el7_9.x86_64.rpm is not installed
+(1/117): NetworkManager-team-1.18.8-2.el7_9.x86_64.rpm     | 165 kB   00:00
+(2/117): NetworkManager-1.18.8-2.el7_9.x86_64.rpm          | 1.9 MB   00:00
+(3/117): NetworkManager-libnm-1.18.8-2.el7_9.x86_64.rpm    | 1.7 MB   00:00
+(4/117): NetworkManager-tui-1.18.8-2.el7_9.x86_64.rpm      | 329 kB   00:00
+(5/117): NetworkManager-wifi-1.18.8-2.el7_9.x86_64.rpm     | 202 kB   00:00
+(6/117): bind-export-libs-9.11.4-26.P2.el7_9.13.x86_64.rpm | 1.1 MB   00:00
+(7/117): bash-4.2.46-35.el7_9.x86_64.rpm                   | 1.0 MB   00:00
+(8/117): centos-release-7-9.2009.1.el7.centos.x86_64.rpm   |  27 kB   00:00
+(9/117): ca-certificates-2022.2.54-74.el7_9.noarch.rpm     | 911 kB   00:00
+(10/117): binutils-2.27-44.base.el7_9.1.x86_64.rpm         | 5.9 MB   00:00
+(11/117): cronie-1.4.11-25.el7_9.x86_64.rpm                |  92 kB   00:00
+(12/117): cronie-anacron-1.4.11-25.el7_9.x86_64.rpm        |  36 kB   00:00
+(13/117): curl-7.29.0-59.el7_9.1.x86_64.rpm                | 271 kB   00:00
+(14/117): cyrus-sasl-lib-2.1.26-24.el7_9.x86_64.rpm        | 156 kB   00:00
+(15/117): device-mapper-event-1.02.170-6.el7_9.5.x86_64.rp | 192 kB   00:00
+(16/117): device-mapper-1.02.170-6.el7_9.5.x86_64.rpm      | 297 kB   00:00
+(17/117): coreutils-8.22-24.el7_9.2.x86_64.rpm             | 3.3 MB   00:00
+(18/117): device-mapper-event-libs-1.02.170-6.el7_9.5.x86_ | 192 kB   00:00
+(19/117): dhclient-4.2.5-83.el7.centos.1.x86_64.rpm        | 286 kB   00:00
+(20/117): dhcp-common-4.2.5-83.el7.centos.1.x86_64.rpm     | 177 kB   00:00
+(21/117): device-mapper-libs-1.02.170-6.el7_9.5.x86_64.rpm | 325 kB   00:00
+(22/117): dhcp-libs-4.2.5-83.el7.centos.1.x86_64.rpm       | 133 kB   00:00
+(23/117): device-mapper-persistent-data-0.8.5-3.el7_9.2.x8 | 423 kB   00:00
+(24/117): dmidecode-3.2-5.el7_9.1.x86_64.rpm               |  82 kB   00:00
+(25/117): expat-2.1.0-15.el7_9.x86_64.rpm                  |  83 kB   00:00
+(26/117): firewalld-filesystem-0.6.3-13.el7_9.noarch.rpm   |  51 kB   00:00
+(27/117): diffutils-3.3-6.el7_9.x86_64.rpm                 | 322 kB   00:00
+(28/117): freetype-2.8-14.el7_9.1.x86_64.rpm               | 380 kB   00:00
+(29/117): firewalld-0.6.3-13.el7_9.noarch.rpm              | 449 kB   00:00
+(30/117): glib2-2.56.1-9.el7_9.x86_64.rpm                  | 2.5 MB   00:00
+(31/117): grub2-2.02-0.87.0.2.el7.centos.11.x86_64.rpm     |  34 kB   00:00
+(32/117): glibc-2.17-326.el7_9.x86_64.rpm                  | 3.6 MB   00:00
+(33/117): grub2-pc-2.02-0.87.0.2.el7.centos.11.x86_64.rpm  |  34 kB   00:00
+(34/117): grub2-common-2.02-0.87.0.2.el7.centos.11.noarch. | 733 kB   00:00
+(35/117): grub2-pc-modules-2.02-0.87.0.2.el7.centos.11.noa | 860 kB   00:00
+(36/117): glibc-common-2.17-326.el7_9.x86_64.rpm           |  12 MB   00:00
+(37/117): grub2-tools-extra-2.02-0.87.0.2.el7.centos.11.x8 | 1.0 MB   00:00
+(38/117): gzip-1.5-11.el7_9.x86_64.rpm                     | 130 kB   00:00
+(39/117): grub2-tools-minimal-2.02-0.87.0.2.el7.centos.11. | 177 kB   00:00
+(40/117): grub2-tools-2.02-0.87.0.2.el7.centos.11.x86_64.r | 1.8 MB   00:00
+(41/117): iprutils-2.4.17.1-3.el7_7.x86_64.rpm             | 243 kB   00:00
+(42/117): iwl100-firmware-39.31.5.1-80.el7_9.noarch.rpm    | 155 kB   00:00
+(43/117): initscripts-9.49.53-1.el7_9.1.x86_64.rpm         | 440 kB   00:00
+(44/117): iwl1000-firmware-39.31.5.1-80.el7_9.noarch.rpm   | 215 kB   00:00
+(45/117): iwl105-firmware-18.168.6.1-80.el7_9.noarch.rpm   | 234 kB   00:00
+(46/117): iwl135-firmware-18.168.6.1-80.el7_9.noarch.rpm   | 243 kB   00:00
+(47/117): iwl2000-firmware-18.168.6.1-80.el7_9.noarch.rpm  | 237 kB   00:00
+(48/117): iwl2030-firmware-18.168.6.1-80.el7_9.noarch.rpm  | 245 kB   00:00
+(49/117): iwl3945-firmware-15.32.2.9-80.el7_9.noarch.rpm   |  96 kB   00:00
+(50/117): iwl4965-firmware-228.61.2.24-80.el7_9.noarch.rpm | 109 kB   00:00
+(51/117): iwl5150-firmware-8.24.2.2-80.el7_9.noarch.rpm    | 152 kB   00:00
+(52/117): iwl5000-firmware-8.83.5.1_1-80.el7_9.noarch.rpm  | 289 kB   00:00
+(53/117): iwl6000-firmware-9.221.4.1-80.el7_9.noarch.rpm   | 171 kB   00:00
+(54/117): iwl6000g2a-firmware-18.168.6.1-80.el7_9.noarch.r | 304 kB   00:00
+(55/117): iwl6000g2b-firmware-18.168.6.1-80.el7_9.noarch.r | 305 kB   00:00
+(56/117): iwl6050-firmware-41.28.5.1-80.el7_9.noarch.rpm   | 241 kB   00:00
+(57/117): iwl3160-firmware-25.30.13.0-80.el7_9.noarch.rpm  | 1.5 MB   00:00
+(58/117): kbd-1.15.5-16.el7_9.x86_64.rpm                   | 347 kB   00:00
+(59/117): kbd-legacy-1.15.5-16.el7_9.noarch.rpm            | 466 kB   00:00
+(60/117): kbd-misc-1.15.5-16.el7_9.noarch.rpm              | 1.4 MB   00:00
+(61/117): iwl7260-firmware-25.30.13.0-80.el7_9.noarch.rpm  | 6.1 MB   00:00
+(62/117): kernel-tools-3.10.0-1160.92.1.el7.x86_64.rpm     | 8.2 MB   00:00
+(63/117): kpartx-0.4.9-136.el7_9.x86_64.rpm                |  81 kB   00:00
+(64/117): kernel-tools-libs-3.10.0-1160.92.1.el7.x86_64.rp | 8.1 MB   00:00
+(65/117): libblkid-2.23.2-65.el7_9.1.x86_64.rpm            | 183 kB   00:00
+(66/117): libcroco-0.6.12-6.el7_9.x86_64.rpm               | 105 kB   00:00
+(67/117): libcurl-7.29.0-59.el7_9.1.x86_64.rpm             | 223 kB   00:00
+(68/117): libmount-2.23.2-65.el7_9.1.x86_64.rpm            | 185 kB   00:00
+(69/117): libsmartcols-2.23.2-65.el7_9.1.x86_64.rpm        | 143 kB   00:00
+(70/117): libuuid-2.23.2-65.el7_9.1.x86_64.rpm             |  84 kB   00:00
+(71/117): krb5-libs-1.15.1-55.el7_9.x86_64.rpm             | 810 kB   00:00
+(72/117): libxml2-2.9.1-6.el7_9.6.x86_64.rpm               | 668 kB   00:00
+(73/117): lvm2-2.02.187-6.el7_9.5.x86_64.rpm               | 1.3 MB   00:00
+(74/117): lvm2-libs-2.02.187-6.el7_9.5.x86_64.rpm          | 1.1 MB   00:00
+(75/117): kexec-tools-2.0.15-51.el7_9.3.x86_64.rpm         | 351 kB   00:01
+(76/117): microcode_ctl-2.1-73.15.el7_9.x86_64.rpm         | 4.5 MB   00:00
+(77/117): nspr-4.34.0-3.1.el7_9.x86_64.rpm                 | 128 kB   00:00
+(78/117): nss-3.79.0-5.el7_9.x86_64.rpm                    | 895 kB   00:00
+(79/117): nss-pem-1.0.3-7.el7_9.1.x86_64.rpm               |  75 kB   00:00
+(80/117): nss-softokn-freebl-3.79.0-4.el7_9.x86_64.rpm     | 337 kB   00:00
+(81/117): nss-sysinit-3.79.0-5.el7_9.x86_64.rpm            |  66 kB   00:00
+(82/117): nss-softokn-3.79.0-4.el7_9.x86_64.rpm            | 379 kB   00:00
+(83/117): nss-tools-3.79.0-5.el7_9.x86_64.rpm              | 555 kB   00:00
+(84/117): nss-util-3.79.0-1.el7_9.x86_64.rpm               |  80 kB   00:00
+(85/117): openssh-7.4p1-22.el7_9.x86_64.rpm                | 510 kB   00:00
+(86/117): openldap-2.4.44-25.el7_9.x86_64.rpm              | 356 kB   00:00
+(87/117): openssh-clients-7.4p1-22.el7_9.x86_64.rpm        | 655 kB   00:00
+(88/117): openssh-server-7.4p1-22.el7_9.x86_64.rpm         | 459 kB   00:00
+(89/117): openssl-libs-1.0.2k-26.el7_9.x86_64.rpm          | 1.2 MB   00:00
+(90/117): polkit-0.112-26.el7_9.1.x86_64.rpm               | 170 kB   00:00
+(91/117): python-2.7.5-93.el7_9.x86_64.rpm                 |  96 kB   00:00
+(92/117): openssl-1.0.2k-26.el7_9.x86_64.rpm               | 494 kB   00:00
+(93/117): python-firewall-0.6.3-13.el7_9.noarch.rpm        | 355 kB   00:00
+(94/117): python-libs-2.7.5-93.el7_9.x86_64.rpm            | 5.6 MB   00:01
+(95/117): rpm-4.11.3-48.el7_9.x86_64.rpm                   | 1.2 MB   00:00
+(96/117): rpm-build-libs-4.11.3-48.el7_9.x86_64.rpm        | 108 kB   00:00
+(97/117): python-perf-3.10.0-1160.92.1.el7.x86_64.rpm      | 8.2 MB   00:02
+(98/117): rpm-libs-4.11.3-48.el7_9.x86_64.rpm              | 279 kB   00:00
+(99/117): rpm-python-4.11.3-48.el7_9.x86_64.rpm            |  84 kB   00:00
+(100/117): selinux-policy-3.13.1-268.el7_9.2.noarch.rpm    | 498 kB   00:00
+(101/117): rsyslog-8.24.0-57.el7_9.3.x86_64.rpm            | 622 kB   00:00
+(102/117): selinux-policy-targeted-3.13.1-268.el7_9.2.noar | 7.0 MB   00:03
+(103/117): sudo-1.8.23-10.el7_9.3.x86_64.rpm               | 844 kB   00:00
+(104/117): systemd-libs-219-78.el7_9.7.x86_64.rpm          | 419 kB   00:00
+(105/117): systemd-sysv-219-78.el7_9.7.x86_64.rpm          |  97 kB   00:00
+(106/117): tuned-2.11.0-12.el7_9.noarch.rpm                | 270 kB   00:00
+(107/117): linux-firmware-20200421-80.git78c0348.el7_9.noa |  80 MB   00:09
+(108/117): tzdata-2023c-1.el7.noarch.rpm                   | 497 kB   00:00
+(109/117): vim-minimal-7.4.629-8.el7_9.x86_64.rpm          | 443 kB   00:00
+(110/117): virt-what-1.18-4.el7_9.1.x86_64.rpm             |  30 kB   00:00
+(111/117): wpa_supplicant-2.6-12.el7_9.2.x86_64.rpm        | 1.2 MB   00:00
+(112/117): xz-5.2.2-2.el7_9.x86_64.rpm                     | 229 kB   00:00
+(113/117): util-linux-2.23.2-65.el7_9.1.x86_64.rpm         | 2.0 MB   00:00
+(114/117): zlib-1.2.7-21.el7_9.x86_64.rpm                  |  90 kB   00:00
+(115/117): xz-libs-5.2.2-2.el7_9.x86_64.rpm                | 103 kB   00:00
+(116/117): systemd-219-78.el7_9.7.x86_64.rpm               | 5.1 MB   00:02
+(117/117): kernel-3.10.0-1160.92.1.el7.x86_64.rpm          |  52 MB   00:14
+--------------------------------------------------------------------------------
+Total                                               14 MB/s | 255 MB  00:18
+Retrieving key from file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7
+Importing GPG key 0xF4A80EB5:
+ Userid     : "CentOS-7 Key (CentOS 7 Official Signing Key) <security@centos.org>"
+ Fingerprint: 6341 ab27 53d7 8a78 a7c2 7bb1 24c6 a8a7 f4a8 0eb5
+ Package    : centos-release-7-9.2009.0.el7.centos.x86_64 (@anaconda)
+ From       : /etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7
+Is this ok [y/N]: y
+Running transaction check
+Running transaction test
+Transaction test succeeded
+Running transaction
+  Updating   : 1:grub2-common-2.02-0.87.0.2.el7.centos.11.noarch          1/233
+  Updating   : centos-release-7-9.2009.1.el7.centos.x86_64                2/233
+  Updating   : 1:grub2-pc-modules-2.02-0.87.0.2.el7.centos.11.noarch      3/233
+  Updating   : kbd-misc-1.15.5-16.el7_9.noarch                            4/233
+  Updating   : kbd-legacy-1.15.5-16.el7_9.noarch                          5/233
+  Updating   : tzdata-2023c-1.el7.noarch                                  6/233
+  Updating   : bash-4.2.46-35.el7_9.x86_64                                7/233
+  Updating   : glibc-common-2.17-326.el7_9.x86_64                         8/233
+  Updating   : nss-softokn-freebl-3.79.0-4.el7_9.x86_64                   9/233
+  Updating   : glibc-2.17-326.el7_9.x86_64                               10/233
+  Updating   : nspr-4.34.0-3.1.el7_9.x86_64                              11/233
+  Updating   : nss-util-3.79.0-1.el7_9.x86_64                            12/233
+  Updating   : zlib-1.2.7-21.el7_9.x86_64                                13/233
+  Updating   : xz-libs-5.2.2-2.el7_9.x86_64                              14/233
+  Updating   : systemd-libs-219-78.el7_9.7.x86_64                        15/233
+  Updating   : libuuid-2.23.2-65.el7_9.1.x86_64                          16/233
+  Updating   : expat-2.1.0-15.el7_9.x86_64                               17/233
+  Updating   : nss-softokn-3.79.0-4.el7_9.x86_64                         18/233
+  Updating   : device-mapper-persistent-data-0.8.5-3.el7_9.2.x86_64      19/233
+  Updating   : libxml2-2.9.1-6.el7_9.6.x86_64                            20/233
+  Updating   : freetype-2.8-14.el7_9.1.x86_64                            21/233
+  Updating   : 1:dmidecode-3.2-5.el7_9.1.x86_64                          22/233
+  Updating   : 2:vim-minimal-7.4.629-8.el7_9.x86_64                      23/233
+  Updating   : libsmartcols-2.23.2-65.el7_9.1.x86_64                     24/233
+  Updating   : diffutils-3.3-6.el7_9.x86_64                              25/233
+  Updating   : kernel-tools-libs-3.10.0-1160.92.1.el7.x86_64             26/233
+  Updating   : linux-firmware-20200421-80.git78c0348.el7_9.noarch
+  Updating   : ca-certificates-2022.2.54-74.el7_9.noarch
+  Updating   : 1:openssl-libs-1.0.2k-26.el7_9.x86_64
+  Updating   : coreutils-8.22-24.el7_9.2.x86_64
+  Updating   : krb5-libs-1.15.1-55.el7_9.x86_64
+  Updating   : libblkid-2.23.2-65.el7_9.1.x86_64
+  Updating   : libmount-2.23.2-65.el7_9.1.x86_64
+  Updating   : glib2-2.56.1-9.el7_9.x86_64
+  Updating   : util-linux-2.23.2-65.el7_9.1.x86_64
+  Updating   : python-libs-2.7.5-93.el7_9.x86_64
+  Updating   : python-2.7.5-93.el7_9.x86_64
+  Updating   : python-firewall-0.6.3-13.el7_9.noarch
+  Updating   : python-perf-3.10.0-1160.92.1.el7.x86_64
+  Updating   : virt-what-1.18-4.el7_9.1.x86_64
+  Updating   : 32:bind-export-libs-9.11.4-26.P2.el7_9.13.x86_64
+  Updating   : cyrus-sasl-lib-2.1.26-24.el7_9.x86_64
+  Updating   : selinux-policy-3.13.1-268.el7_9.2.noarch
+  Updating   : nss-pem-1.0.3-7.el7_9.1.x86_64
+  Updating   : nss-sysinit-3.79.0-5.el7_9.x86_64
+  Updating   : nss-3.79.0-5.el7_9.x86_64
+  Updating   : 1:NetworkManager-libnm-1.18.8-2.el7_9.x86_64
+  Updating   : nss-tools-3.79.0-5.el7_9.x86_64
+  Updating   : libcurl-7.29.0-59.el7_9.1.x86_64
+  Updating   : curl-7.29.0-59.el7_9.1.x86_64
+  Updating   : rpm-libs-4.11.3-48.el7_9.x86_64
+  Updating   : rpm-4.11.3-48.el7_9.x86_64
+  Updating   : openldap-2.4.44-25.el7_9.x86_64
+  Updating   : systemd-219-78.el7_9.7.x86_64
+  Updating   : initscripts-9.49.53-1.el7_9.1.x86_64
+  Updating   : 7:device-mapper-libs-1.02.170-6.el7_9.5.x86_64
+  Updating   : 7:device-mapper-1.02.170-6.el7_9.5.x86_64
+  Updating   : 1:grub2-tools-minimal-2.02-0.87.0.2.el7.centos.11.x86_64
+  Updating   : 7:device-mapper-event-libs-1.02.170-6.el7_9.5.x86_64
+  Updating   : 1:grub2-tools-2.02-0.87.0.2.el7.centos.11.x86_64
+  Updating   : polkit-0.112-26.el7_9.1.x86_64
+  Updating   : 12:dhcp-libs-4.2.5-83.el7.centos.1.x86_64
+  Updating   : openssh-7.4p1-22.el7_9.x86_64
+  Updating   : 12:dhcp-common-4.2.5-83.el7.centos.1.x86_64
+  Updating   : 1:grub2-tools-extra-2.02-0.87.0.2.el7.centos.11.x86_64
+  Updating   : 1:grub2-pc-2.02-0.87.0.2.el7.centos.11.x86_64
+  Updating   : 7:device-mapper-event-1.02.170-6.el7_9.5.x86_64
+  Updating   : 7:lvm2-libs-2.02.187-6.el7_9.5.x86_64
+  Updating   : cronie-anacron-1.4.11-25.el7_9.x86_64
+  Updating   : cronie-1.4.11-25.el7_9.x86_64
+  Updating   : systemd-sysv-219-78.el7_9.7.x86_64
+  Updating   : 1:wpa_supplicant-2.6-12.el7_9.2.x86_64
+  Updating   : 1:NetworkManager-1.18.8-2.el7_9.x86_64
+  Updating   : rpm-build-libs-4.11.3-48.el7_9.x86_64
+  Updating   : firewalld-filesystem-0.6.3-13.el7_9.noarch
+  Updating   : firewalld-0.6.3-13.el7_9.noarch
+  Updating   : rpm-python-4.11.3-48.el7_9.x86_64
+  Updating   : 1:NetworkManager-tui-1.18.8-2.el7_9.x86_64
+  Updating   : 1:NetworkManager-team-1.18.8-2.el7_9.x86_64
+  Updating   : 1:NetworkManager-wifi-1.18.8-2.el7_9.x86_64
+  Updating   : 7:lvm2-2.02.187-6.el7_9.5.x86_64
+  Updating   : 1:grub2-2.02-0.87.0.2.el7.centos.11.x86_64
+  Updating   : 12:dhclient-4.2.5-83.el7.centos.1.x86_64
+  Updating   : openssh-clients-7.4p1-22.el7_9.x86_64
+  Updating   : openssh-server-7.4p1-22.el7_9.x86_64
+  Updating   : tuned-2.11.0-12.el7_9.noarch
+  Updating   : kpartx-0.4.9-136.el7_9.x86_64
+  Installing : kernel-3.10.0-1160.92.1.el7.x86_64
+  Updating   : kbd-1.15.5-16.el7_9.x86_64
+  Updating   : 2:microcode_ctl-2.1-73.15.el7_9.x86_64
+  Updating   : kexec-tools-2.0.15-51.el7_9.3.x86_64
+  Updating   : rsyslog-8.24.0-57.el7_9.3.x86_64
+  Updating   : sudo-1.8.23-10.el7_9.3.x86_64
+  Updating   : selinux-policy-targeted-3.13.1-268.el7_9.2.noarch
+  Updating   : libcroco-0.6.12-6.el7_9.x86_64
+  Updating   : 1:openssl-1.0.2k-26.el7_9.x86_64
+  Updating   : binutils-2.27-44.base.el7_9.1.x86_64
+  Updating   : gzip-1.5-11.el7_9.x86_64
+  Updating   : kernel-tools-3.10.0-1160.92.1.el7.x86_64
+  Updating   : xz-5.2.2-2.el7_9.x86_64
+  Updating   : iprutils-2.4.17.1-3.el7_7.x86_64
+  Updating   : iwl2000-firmware-18.168.6.1-80.el7_9.noarch
+  Updating   : iwl2030-firmware-18.168.6.1-80.el7_9.noarch
+  Updating   : iwl135-firmware-18.168.6.1-80.el7_9.noarch
+  Updating   : iwl3945-firmware-15.32.2.9-80.el7_9.noarch
+  Updating   : iwl7260-firmware-25.30.13.0-80.el7_9.noarch
+  Updating   : iwl6000g2a-firmware-18.168.6.1-80.el7_9.noarch
+  Updating   : 1:iwl1000-firmware-39.31.5.1-80.el7_9.noarch
+  Updating   : iwl6000g2b-firmware-18.168.6.1-80.el7_9.noarch
+  Updating   : iwl5000-firmware-8.83.5.1_1-80.el7_9.noarch
+  Updating   : iwl105-firmware-18.168.6.1-80.el7_9.noarch
+  Updating   : iwl4965-firmware-228.61.2.24-80.el7_9.noarch
+  Updating   : iwl100-firmware-39.31.5.1-80.el7_9.noarch
+  Updating   : iwl6050-firmware-41.28.5.1-80.el7_9.noarch
+  Updating   : iwl3160-firmware-25.30.13.0-80.el7_9.noarch
+  Updating   : iwl6000-firmware-9.221.4.1-80.el7_9.noarch
+  Updating   : iwl5150-firmware-8.24.2.2-80.el7_9.noarch
+  Cleanup    : 12:dhclient-4.2.5-82.el7.centos.x86_64
+  Cleanup    : 2:microcode_ctl-2.1-73.el7.x86_64
+  Cleanup    : tuned-2.11.0-9.el7.noarch
+  Cleanup    : firewalld-0.6.3-11.el7.noarch
+  Cleanup    : selinux-policy-targeted-3.13.1-268.el7.noarch
+  Cleanup    : selinux-policy-3.13.1-268.el7.noarch
+  Cleanup    : 1:grub2-2.02-0.86.el7.centos.x86_64
+  Cleanup    : 1:grub2-pc-2.02-0.86.el7.centos.x86_64
+  Cleanup    : 1:grub2-pc-modules-2.02-0.86.el7.centos.noarch
+  Cleanup    : python-firewall-0.6.3-11.el7.noarch
+  Cleanup    : 12:dhcp-common-4.2.5-82.el7.centos.x86_64
+  Cleanup    : 12:dhcp-libs-4.2.5-82.el7.centos.x86_64
+  Cleanup    : linux-firmware-20200421-79.git78c0348.el7.noarch
+  Cleanup    : firewalld-filesystem-0.6.3-11.el7.noarch
+  Cleanup    : iwl2000-firmware-18.168.6.1-79.el7.noarch
+  Cleanup    : iwl2030-firmware-18.168.6.1-79.el7.noarch
+  Cleanup    : iwl135-firmware-18.168.6.1-79.el7.noarch
+  Cleanup    : iwl3945-firmware-15.32.2.9-79.el7.noarch
+  Cleanup    : iwl7260-firmware-25.30.13.0-79.el7.noarch
+  Cleanup    : iwl6000g2a-firmware-18.168.6.1-79.el7.noarch
+  Cleanup    : 1:iwl1000-firmware-39.31.5.1-79.el7.noarch
+  Cleanup    : iwl6000g2b-firmware-18.168.6.1-79.el7.noarch
+  Cleanup    : iwl5000-firmware-8.83.5.1_1-79.el7.noarch
+  Cleanup    : iwl105-firmware-18.168.6.1-79.el7.noarch
+  Cleanup    : iwl4965-firmware-228.61.2.24-79.el7.noarch
+  Cleanup    : iwl100-firmware-39.31.5.1-79.el7.noarch
+  Cleanup    : iwl6050-firmware-41.28.5.1-79.el7.noarch
+  Cleanup    : iwl3160-firmware-25.30.13.0-79.el7.noarch
+  Cleanup    : iwl6000-firmware-9.221.4.1-79.el7.noarch
+  Cleanup    : iwl5150-firmware-8.24.2.2-79.el7.noarch
+  Cleanup    : rpm-python-4.11.3-45.el7.x86_64
+  Cleanup    : 1:NetworkManager-tui-1.18.8-1.el7.x86_64
+  Cleanup    : openssh-server-7.4p1-21.el7.x86_64
+  Cleanup    : 7:lvm2-2.02.187-6.el7.x86_64
+  Cleanup    : 1:openssl-1.0.2k-19.el7.x86_64
+  Cleanup    : openssh-clients-7.4p1-21.el7.x86_64
+  Cleanup    : openssh-7.4p1-21.el7.x86_64
+  Cleanup    : 7:lvm2-libs-2.02.187-6.el7.x86_64
+  Cleanup    : rpm-build-libs-4.11.3-45.el7.x86_64
+  Cleanup    : 1:grub2-tools-extra-2.02-0.86.el7.centos.x86_64
+  Cleanup    : kexec-tools-2.0.15-51.el7.x86_64
+  Cleanup    : 1:grub2-tools-2.02-0.86.el7.centos.x86_64
+  Cleanup    : 7:device-mapper-event-1.02.170-6.el7.x86_64
+  Cleanup    : rsyslog-8.24.0-55.el7.x86_64
+  Cleanup    : sudo-1.8.23-10.el7.x86_64
+  Cleanup    : 1:grub2-tools-minimal-2.02-0.86.el7.centos.x86_64
+  Cleanup    : cronie-anacron-1.4.11-23.el7.x86_64
+  Cleanup    : cronie-1.4.11-23.el7.x86_64
+  Cleanup    : xz-5.2.2-1.el7.x86_64
+  Cleanup    : 1:NetworkManager-wifi-1.18.8-1.el7.x86_64
+  Cleanup    : kernel-tools-3.10.0-1160.el7.x86_64
+  Cleanup    : binutils-2.27-44.base.el7.x86_64
+  Cleanup    : kbd-1.15.5-15.el7.x86_64
+  Cleanup    : initscripts-9.49.53-1.el7.x86_64
+  Cleanup    : freetype-2.8-14.el7.x86_64
+  Cleanup    : device-mapper-persistent-data-0.8.5-3.el7.x86_64
+  Cleanup    : python-perf-3.10.0-1160.el7.x86_64
+  Cleanup    : virt-what-1.18-4.el7.x86_64
+  Cleanup    : 32:bind-export-libs-9.11.4-26.P2.el7.x86_64
+  Cleanup    : libcroco-0.6.12-4.el7.x86_64
+  Cleanup    : libxml2-2.9.1-6.el7.5.x86_64
+  Cleanup    : 1:NetworkManager-team-1.18.8-1.el7.x86_64
+  Cleanup    : 1:NetworkManager-1.18.8-1.el7.x86_64
+  Cleanup    : 1:NetworkManager-libnm-1.18.8-1.el7.x86_64
+  Cleanup    : polkit-0.112-26.el7.x86_64
+  Cleanup    : 1:wpa_supplicant-2.6-12.el7.x86_64
+  Cleanup    : glib2-2.56.1-7.el7.x86_64
+  Cleanup    : iprutils-2.4.17.1-3.el7.x86_64
+  Cleanup    : 7:device-mapper-event-libs-1.02.170-6.el7.x86_64
+  Cleanup    : gzip-1.5-10.el7.x86_64
+  Cleanup    : kpartx-0.4.9-133.el7.x86_64
+  Cleanup    : systemd-sysv-219-78.el7.x86_64
+  Cleanup    : python-2.7.5-89.el7.x86_64
+  Cleanup    : python-libs-2.7.5-89.el7.x86_64
+  Cleanup    : 7:device-mapper-1.02.170-6.el7.x86_64
+  Cleanup    : 7:device-mapper-libs-1.02.170-6.el7.x86_64
+  Cleanup    : systemd-219-78.el7.x86_64
+  Cleanup    : util-linux-2.23.2-65.el7.x86_64
+  Cleanup    : curl-7.29.0-59.el7.x86_64
+  Cleanup    : libcurl-7.29.0-59.el7.x86_64
+  Cleanup    : openldap-2.4.44-22.el7.x86_64
+  Cleanup    : rpm-libs-4.11.3-45.el7.x86_64
+  Cleanup    : rpm-4.11.3-45.el7.x86_64
+  Cleanup    : nss-tools-3.44.0-7.el7_7.x86_64
+  Cleanup    : nss-sysinit-3.44.0-7.el7_7.x86_64
+  Cleanup    : nss-3.44.0-7.el7_7.x86_64
+  Cleanup    : nss-pem-1.0.3-7.el7.x86_64
+  Cleanup    : nss-softokn-3.44.0-8.el7_7.x86_64
+  Cleanup    : libmount-2.23.2-65.el7.x86_64
+  Cleanup    : libblkid-2.23.2-65.el7.x86_64
+  Cleanup    : cyrus-sasl-lib-2.1.26-23.el7.x86_64
+  Cleanup    : krb5-libs-1.15.1-50.el7.x86_64
+  Cleanup    : coreutils-8.22-24.el7.x86_64
+  Cleanup    : 1:openssl-libs-1.0.2k-19.el7.x86_64
+  Cleanup    : systemd-libs-219-78.el7.x86_64
+  Cleanup    : diffutils-3.3-5.el7.x86_64
+  Cleanup    : ca-certificates-2020.2.41-70.0.el7_8.noarch
+  Cleanup    : xz-libs-5.2.2-1.el7.x86_64
+  Cleanup    : zlib-1.2.7-18.el7.x86_64
+  Cleanup    : libuuid-2.23.2-65.el7.x86_64
+  Cleanup    : libsmartcols-2.23.2-65.el7.x86_64
+  Cleanup    : expat-2.1.0-12.el7.x86_64
+  Cleanup    : 1:dmidecode-3.2-5.el7.x86_64
+  Cleanup    : kernel-tools-libs-3.10.0-1160.el7.x86_64
+  Cleanup    : 2:vim-minimal-7.4.629-7.el7.x86_64
+  Cleanup    : centos-release-7-9.2009.0.el7.centos.x86_64
+  Cleanup    : kbd-legacy-1.15.5-15.el7.noarch
+  Cleanup    : kbd-misc-1.15.5-15.el7.noarch
+  Cleanup    : 1:grub2-common-2.02-0.86.el7.centos.noarch
+  Cleanup    : glibc-common-2.17-317.el7.x86_64
+  Cleanup    : bash-4.2.46-34.el7.x86_64
+  Cleanup    : nspr-4.21.0-1.el7.x86_64
+  Cleanup    : nss-util-3.44.0-4.el7_7.x86_64
+  Cleanup    : nss-softokn-freebl-3.44.0-8.el7_7.x86_64
+  Cleanup    : glibc-2.17-317.el7.x86_64
+  Cleanup    : tzdata-2020a-1.el7.noarch
+  Verifying  : 7:device-mapper-event-1.02.170-6.el7_9.5.x86_64
+  Verifying  : libblkid-2.23.2-65.el7_9.1.x86_64
+  Verifying  : linux-firmware-20200421-80.git78c0348.el7_9.noarch
+  Verifying  : firewalld-filesystem-0.6.3-13.el7_9.noarch
+  Verifying  : selinux-policy-targeted-3.13.1-268.el7_9.2.noarch
+  Verifying  : iwl5150-firmware-8.24.2.2-80.el7_9.noarch
+  Verifying  : python-libs-2.7.5-93.el7_9.x86_64
+  Verifying  : 1:NetworkManager-tui-1.18.8-2.el7_9.x86_64
+  Verifying  : centos-release-7-9.2009.1.el7.centos.x86_64
+  Verifying  : kernel-3.10.0-1160.92.1.el7.x86_64
+  Verifying  : 7:lvm2-2.02.187-6.el7_9.5.x86_64
+  Verifying  : 12:dhcp-common-4.2.5-83.el7.centos.1.x86_64
+  Verifying  : iwl6000-firmware-9.221.4.1-80.el7_9.noarch
+  Verifying  : sudo-1.8.23-10.el7_9.3.x86_64
+  Verifying  : iwl3160-firmware-25.30.13.0-80.el7_9.noarch
+  Verifying  : libcurl-7.29.0-59.el7_9.1.x86_64
+  Verifying  : kbd-1.15.5-16.el7_9.x86_64
+  Verifying  : selinux-policy-3.13.1-268.el7_9.2.noarch
+  Verifying  : openldap-2.4.44-25.el7_9.x86_64
+  Verifying  : 1:grub2-tools-2.02-0.87.0.2.el7.centos.11.x86_64
+  Verifying  : 1:grub2-2.02-0.87.0.2.el7.centos.11.x86_64
+  Verifying  : 7:device-mapper-1.02.170-6.el7_9.5.x86_64
+  Verifying  : freetype-2.8-14.el7_9.1.x86_64
+  Verifying  : 2:microcode_ctl-2.1-73.15.el7_9.x86_64
+  Verifying  : 1:grub2-common-2.02-0.87.0.2.el7.centos.11.noarch
+  Verifying  : nss-softokn-freebl-3.79.0-4.el7_9.x86_64
+  Verifying  : systemd-libs-219-78.el7_9.7.x86_64
+  Verifying  : cronie-1.4.11-25.el7_9.x86_64
+  Verifying  : libxml2-2.9.1-6.el7_9.6.x86_64
+  Verifying  : cronie-anacron-1.4.11-25.el7_9.x86_64
+  Verifying  : 1:dmidecode-3.2-5.el7_9.1.x86_64
+  Verifying  : systemd-219-78.el7_9.7.x86_64
+  Verifying  : 1:grub2-tools-extra-2.02-0.87.0.2.el7.centos.11.x86_64
+  Verifying  : expat-2.1.0-15.el7_9.x86_64
+  Verifying  : binutils-2.27-44.base.el7_9.1.x86_64
+  Verifying  : libmount-2.23.2-65.el7_9.1.x86_64
+  Verifying  : zlib-1.2.7-21.el7_9.x86_64
+  Verifying  : tzdata-2023c-1.el7.noarch
+  Verifying  : 32:bind-export-libs-9.11.4-26.P2.el7_9.13.x86_64
+  Verifying  : initscripts-9.49.53-1.el7_9.1.x86_64
+  Verifying  : device-mapper-persistent-data-0.8.5-3.el7_9.2.x86_64
+  Verifying  : 1:openssl-libs-1.0.2k-26.el7_9.x86_64
+  Verifying  : iwl6050-firmware-41.28.5.1-80.el7_9.noarch
+  Verifying  : nss-pem-1.0.3-7.el7_9.1.x86_64
+  Verifying  : kbd-legacy-1.15.5-16.el7_9.noarch
+  Verifying  : 12:dhcp-libs-4.2.5-83.el7.centos.1.x86_64
+  Verifying  : bash-4.2.46-35.el7_9.x86_64
+  Verifying  : iprutils-2.4.17.1-3.el7_7.x86_64
+  Verifying  : curl-7.29.0-59.el7_9.1.x86_64
+  Verifying  : iwl100-firmware-39.31.5.1-80.el7_9.noarch
+  Verifying  : iwl4965-firmware-228.61.2.24-80.el7_9.noarch
+  Verifying  : 2:vim-minimal-7.4.629-8.el7_9.x86_64
+  Verifying  : cyrus-sasl-lib-2.1.26-24.el7_9.x86_64
+  Verifying  : nss-tools-3.79.0-5.el7_9.x86_64
+  Verifying  : openssh-clients-7.4p1-22.el7_9.x86_64
+  Verifying  : nspr-4.34.0-3.1.el7_9.x86_64
+  Verifying  : nss-softokn-3.79.0-4.el7_9.x86_64
+  Verifying  : 1:NetworkManager-team-1.18.8-2.el7_9.x86_64
+  Verifying  : 7:device-mapper-libs-1.02.170-6.el7_9.5.x86_64
+  Verifying  : iwl105-firmware-18.168.6.1-80.el7_9.noarch
+  Verifying  : iwl5000-firmware-8.83.5.1_1-80.el7_9.noarch
+  Verifying  : glibc-2.17-326.el7_9.x86_64
+  Verifying  : firewalld-0.6.3-13.el7_9.noarch
+  Verifying  : krb5-libs-1.15.1-55.el7_9.x86_64
+  Verifying  : kexec-tools-2.0.15-51.el7_9.3.x86_64
+  Verifying  : iwl6000g2b-firmware-18.168.6.1-80.el7_9.noarch
+  Verifying  : libsmartcols-2.23.2-65.el7_9.1.x86_64
+  Verifying  : coreutils-8.22-24.el7_9.2.x86_64
+  Verifying  : rpm-libs-4.11.3-48.el7_9.x86_64
+  Verifying  : 1:wpa_supplicant-2.6-12.el7_9.2.x86_64
+  Verifying  : 1:grub2-pc-2.02-0.87.0.2.el7.centos.11.x86_64
+  Verifying  : util-linux-2.23.2-65.el7_9.1.x86_64
+  Verifying  : rpm-python-4.11.3-48.el7_9.x86_64
+  Verifying  : libuuid-2.23.2-65.el7_9.1.x86_64
+  Verifying  : openssh-server-7.4p1-22.el7_9.x86_64
+  Verifying  : xz-libs-5.2.2-2.el7_9.x86_64
+  Verifying  : 1:iwl1000-firmware-39.31.5.1-80.el7_9.noarch
+  Verifying  : 1:openssl-1.0.2k-26.el7_9.x86_64
+  Verifying  : tuned-2.11.0-12.el7_9.noarch
+  Verifying  : iwl6000g2a-firmware-18.168.6.1-80.el7_9.noarch
+  Verifying  : diffutils-3.3-6.el7_9.x86_64
+  Verifying  : kpartx-0.4.9-136.el7_9.x86_64
+  Verifying  : virt-what-1.18-4.el7_9.1.x86_64
+  Verifying  : nss-sysinit-3.79.0-5.el7_9.x86_64
+  Verifying  : 1:grub2-tools-minimal-2.02-0.87.0.2.el7.centos.11.x86_64
+  Verifying  : iwl7260-firmware-25.30.13.0-80.el7_9.noarch
+  Verifying  : rpm-4.11.3-48.el7_9.x86_64
+  Verifying  : 12:dhclient-4.2.5-83.el7.centos.1.x86_64
+  Verifying  : kernel-tools-3.10.0-1160.92.1.el7.x86_64
+  Verifying  : openssh-7.4p1-22.el7_9.x86_64
+  Verifying  : python-2.7.5-93.el7_9.x86_64
+  Verifying  : glib2-2.56.1-9.el7_9.x86_64
+  Verifying  : kbd-misc-1.15.5-16.el7_9.noarch
+  Verifying  : 1:NetworkManager-wifi-1.18.8-2.el7_9.x86_64
+  Verifying  : iwl3945-firmware-15.32.2.9-80.el7_9.noarch
+  Verifying  : 1:NetworkManager-1.18.8-2.el7_9.x86_64
+  Verifying  : nss-3.79.0-5.el7_9.x86_64
+  Verifying  : iwl135-firmware-18.168.6.1-80.el7_9.noarch
+  Verifying  : rsyslog-8.24.0-57.el7_9.3.x86_64
+  Verifying  : 7:lvm2-libs-2.02.187-6.el7_9.5.x86_64
+  Verifying  : kernel-tools-libs-3.10.0-1160.92.1.el7.x86_64
+  Verifying  : 1:NetworkManager-libnm-1.18.8-2.el7_9.x86_64
+  Verifying  : systemd-sysv-219-78.el7_9.7.x86_64
+  Verifying  : python-firewall-0.6.3-13.el7_9.noarch
+  Verifying  : 1:grub2-pc-modules-2.02-0.87.0.2.el7.centos.11.noarch
+  Verifying  : 7:device-mapper-event-libs-1.02.170-6.el7_9.5.x86_64
+  Verifying  : nss-util-3.79.0-1.el7_9.x86_64
+  Verifying  : gzip-1.5-11.el7_9.x86_64
+  Verifying  : glibc-common-2.17-326.el7_9.x86_64
+  Verifying  : libcroco-0.6.12-6.el7_9.x86_64
+  Verifying  : ca-certificates-2022.2.54-74.el7_9.noarch
+  Verifying  : iwl2030-firmware-18.168.6.1-80.el7_9.noarch
+  Verifying  : python-perf-3.10.0-1160.92.1.el7.x86_64
+  Verifying  : iwl2000-firmware-18.168.6.1-80.el7_9.noarch
+  Verifying  : xz-5.2.2-2.el7_9.x86_64
+  Verifying  : polkit-0.112-26.el7_9.1.x86_64
+  Verifying  : rpm-build-libs-4.11.3-48.el7_9.x86_64
+  Verifying  : rpm-4.11.3-45.el7.x86_64
+  Verifying  : firewalld-filesystem-0.6.3-11.el7.noarch
+  Verifying  : glibc-common-2.17-317.el7.x86_64
+  Verifying  : selinux-policy-targeted-3.13.1-268.el7.noarch
+  Verifying  : ca-certificates-2020.2.41-70.0.el7_8.noarch
+  Verifying  : linux-firmware-20200421-79.git78c0348.el7.noarch
+  Verifying  : 7:device-mapper-event-1.02.170-6.el7.x86_64
+  Verifying  : freetype-2.8-14.el7.x86_64
+  Verifying  : iwl2000-firmware-18.168.6.1-79.el7.noarch
+  Verifying  : glib2-2.56.1-7.el7.x86_64
+  Verifying  : python-2.7.5-89.el7.x86_64
+  Verifying  : 1:iwl1000-firmware-39.31.5.1-79.el7.noarch
+  Verifying  : virt-what-1.18-4.el7.x86_64
+  Verifying  : zlib-1.2.7-18.el7.x86_64
+  Verifying  : iwl5150-firmware-8.24.2.2-79.el7.noarch
+  Verifying  : nss-pem-1.0.3-7.el7.x86_64
+  Verifying  : systemd-219-78.el7.x86_64
+  Verifying  : 7:device-mapper-1.02.170-6.el7.x86_64
+  Verifying  : iwl100-firmware-39.31.5.1-79.el7.noarch
+  Verifying  : openssh-server-7.4p1-21.el7.x86_64
+  Verifying  : libblkid-2.23.2-65.el7.x86_64
+  Verifying  : 1:grub2-common-2.02-0.86.el7.centos.noarch
+  Verifying  : rpm-libs-4.11.3-45.el7.x86_64
+  Verifying  : iwl6000g2b-firmware-18.168.6.1-79.el7.noarch
+  Verifying  : 12:dhcp-libs-4.2.5-82.el7.centos.x86_64
+  Verifying  : 1:grub2-tools-2.02-0.86.el7.centos.x86_64
+  Verifying  : 1:openssl-libs-1.0.2k-19.el7.x86_64
+  Verifying  : 1:NetworkManager-team-1.18.8-1.el7.x86_64
+  Verifying  : kernel-tools-libs-3.10.0-1160.el7.x86_64
+  Verifying  : iwl3160-firmware-25.30.13.0-79.el7.noarch
+  Verifying  : iwl6000-firmware-9.221.4.1-79.el7.noarch
+  Verifying  : sudo-1.8.23-10.el7.x86_64
+  Verifying  : 7:lvm2-2.02.187-6.el7.x86_64
+  Verifying  : nss-3.44.0-7.el7_7.x86_64
+  Verifying  : iwl3945-firmware-15.32.2.9-79.el7.noarch
+  Verifying  : selinux-policy-3.13.1-268.el7.noarch
+  Verifying  : 1:NetworkManager-libnm-1.18.8-1.el7.x86_64
+  Verifying  : libuuid-2.23.2-65.el7.x86_64
+  Verifying  : 2:vim-minimal-7.4.629-7.el7.x86_64
+  Verifying  : nss-tools-3.44.0-7.el7_7.x86_64
+  Verifying  : 12:dhclient-4.2.5-82.el7.centos.x86_64
+  Verifying  : 1:wpa_supplicant-2.6-12.el7.x86_64
+  Verifying  : 2:microcode_ctl-2.1-73.el7.x86_64
+  Verifying  : 1:grub2-2.02-0.86.el7.centos.x86_64
+  Verifying  : kbd-misc-1.15.5-15.el7.noarch
+  Verifying  : 1:NetworkManager-1.18.8-1.el7.x86_64
+  Verifying  : initscripts-9.49.53-1.el7.x86_64
+  Verifying  : 32:bind-export-libs-9.11.4-26.P2.el7.x86_64
+  Verifying  : rsyslog-8.24.0-55.el7.x86_64
+  Verifying  : nss-sysinit-3.44.0-7.el7_7.x86_64
+  Verifying  : iwl6050-firmware-41.28.5.1-79.el7.noarch
+  Verifying  : iwl135-firmware-18.168.6.1-79.el7.noarch
+  Verifying  : openssh-clients-7.4p1-21.el7.x86_64
+  Verifying  : 1:openssl-1.0.2k-19.el7.x86_64
+  Verifying  : 7:device-mapper-event-libs-1.02.170-6.el7.x86_64
+  Verifying  : rpm-python-4.11.3-45.el7.x86_64
+  Verifying  : coreutils-8.22-24.el7.x86_64
+  Verifying  : tzdata-2020a-1.el7.noarch
+  Verifying  : libcurl-7.29.0-59.el7.x86_64
+  Verifying  : 7:lvm2-libs-2.02.187-6.el7.x86_64
+  Verifying  : 1:grub2-pc-2.02-0.86.el7.centos.x86_64
+  Verifying  : krb5-libs-1.15.1-50.el7.x86_64
+  Verifying  : cronie-anacron-1.4.11-23.el7.x86_64
+  Verifying  : gzip-1.5-10.el7.x86_64
+  Verifying  : nspr-4.21.0-1.el7.x86_64
+  Verifying  : nss-softokn-freebl-3.44.0-8.el7_7.x86_64
+  Verifying  : iwl5000-firmware-8.83.5.1_1-79.el7.noarch
+  Verifying  : python-firewall-0.6.3-11.el7.noarch
+  Verifying  : rpm-build-libs-4.11.3-45.el7.x86_64
+  Verifying  : iwl4965-firmware-228.61.2.24-79.el7.noarch
+  Verifying  : binutils-2.27-44.base.el7.x86_64
+  Verifying  : libxml2-2.9.1-6.el7.5.x86_64
+  Verifying  : libcroco-0.6.12-4.el7.x86_64
+  Verifying  : centos-release-7-9.2009.0.el7.centos.x86_64
+  Verifying  : systemd-libs-219-78.el7.x86_64
+  Verifying  : 1:dmidecode-3.2-5.el7.x86_64
+  Verifying  : iwl7260-firmware-25.30.13.0-79.el7.noarch
+  Verifying  : cronie-1.4.11-23.el7.x86_64
+  Verifying  : openldap-2.4.44-22.el7.x86_64
+  Verifying  : iwl6000g2a-firmware-18.168.6.1-79.el7.noarch
+  Verifying  : kbd-legacy-1.15.5-15.el7.noarch
+  Verifying  : tuned-2.11.0-9.el7.noarch
+  Verifying  : iwl2030-firmware-18.168.6.1-79.el7.noarch
+  Verifying  : 7:device-mapper-libs-1.02.170-6.el7.x86_64
+  Verifying  : kbd-1.15.5-15.el7.x86_64
+  Verifying  : python-perf-3.10.0-1160.el7.x86_64
+  Verifying  : 1:NetworkManager-tui-1.18.8-1.el7.x86_64
+  Verifying  : diffutils-3.3-5.el7.x86_64
+  Verifying  : xz-libs-5.2.2-1.el7.x86_64
+  Verifying  : polkit-0.112-26.el7.x86_64
+  Verifying  : curl-7.29.0-59.el7.x86_64
+  Verifying  : iprutils-2.4.17.1-3.el7.x86_64
+  Verifying  : 1:NetworkManager-wifi-1.18.8-1.el7.x86_64
+  Verifying  : 1:grub2-pc-modules-2.02-0.86.el7.centos.noarch
+  Verifying  : expat-2.1.0-12.el7.x86_64
+  Verifying  : glibc-2.17-317.el7.x86_64
+  Verifying  : bash-4.2.46-34.el7.x86_64
+  Verifying  : openssh-7.4p1-21.el7.x86_64
+  Verifying  : kpartx-0.4.9-133.el7.x86_64
+  Verifying  : nss-util-3.44.0-4.el7_7.x86_64
+  Verifying  : python-libs-2.7.5-89.el7.x86_64
+  Verifying  : iwl105-firmware-18.168.6.1-79.el7.noarch
+  Verifying  : kernel-tools-3.10.0-1160.el7.x86_64
+  Verifying  : xz-5.2.2-1.el7.x86_64
+  Verifying  : 12:dhcp-common-4.2.5-82.el7.centos.x86_64
+  Verifying  : firewalld-0.6.3-11.el7.noarch
+  Verifying  : kexec-tools-2.0.15-51.el7.x86_64
+  Verifying  : 1:grub2-tools-minimal-2.02-0.86.el7.centos.x86_64
+  Verifying  : nss-softokn-3.44.0-8.el7_7.x86_64
+  Verifying  : systemd-sysv-219-78.el7.x86_64
+  Verifying  : 1:grub2-tools-extra-2.02-0.86.el7.centos.x86_64
+  Verifying  : device-mapper-persistent-data-0.8.5-3.el7.x86_64
+  Verifying  : libsmartcols-2.23.2-65.el7.x86_64
+  Verifying  : cyrus-sasl-lib-2.1.26-23.el7.x86_64
+  Verifying  : util-linux-2.23.2-65.el7.x86_64
+  Verifying  : libmount-2.23.2-65.el7.x86_64
+
+Installed:
+  kernel.x86_64 0:3.10.0-1160.92.1.el7
+
+Updated:
+  NetworkManager.x86_64 1:1.18.8-2.el7_9                           NetworkManage
+  NetworkManager-tui.x86_64 1:1.18.8-2.el7_9                       NetworkManage
+  bind-export-libs.x86_64 32:9.11.4-26.P2.el7_9.13                 binutils.x86_
+  centos-release.x86_64 0:7-9.2009.1.el7.centos                    coreutils.x86
+  cronie-anacron.x86_64 0:1.4.11-25.el7_9                          curl.x86_64 0
+  device-mapper.x86_64 7:1.02.170-6.el7_9.5                        device-mapper
+  device-mapper-libs.x86_64 7:1.02.170-6.el7_9.5                   device-mapper
+  dhcp-common.x86_64 12:4.2.5-83.el7.centos.1                      dhcp-libs.x86
+  dmidecode.x86_64 1:3.2-5.el7_9.1                                 expat.x86_64
+  firewalld-filesystem.noarch 0:0.6.3-13.el7_9                     freetype.x86_
+  glibc.x86_64 0:2.17-326.el7_9                                    glibc-common.
+  grub2-common.noarch 1:2.02-0.87.0.2.el7.centos.11                grub2-pc.x86_
+  grub2-tools.x86_64 1:2.02-0.87.0.2.el7.centos.11                 grub2-tools-e
+  gzip.x86_64 0:1.5-11.el7_9                                       initscripts.x
+  iwl100-firmware.noarch 0:39.31.5.1-80.el7_9                      iwl1000-firmw
+  iwl135-firmware.noarch 0:18.168.6.1-80.el7_9                     iwl2000-firmw
+  iwl3160-firmware.noarch 0:25.30.13.0-80.el7_9                    iwl3945-firmw
+  iwl5000-firmware.noarch 0:8.83.5.1_1-80.el7_9                    iwl5150-firmw
+  iwl6000g2a-firmware.noarch 0:18.168.6.1-80.el7_9                 iwl6000g2b-fi
+  iwl7260-firmware.noarch 0:25.30.13.0-80.el7_9                    kbd.x86_64 0:
+  kbd-misc.noarch 0:1.15.5-16.el7_9                                kernel-tools.
+  kexec-tools.x86_64 0:2.0.15-51.el7_9.3                           kpartx.x86_64
+  libblkid.x86_64 0:2.23.2-65.el7_9.1                              libcroco.x86_
+  libmount.x86_64 0:2.23.2-65.el7_9.1                              libsmartcols.
+  libxml2.x86_64 0:2.9.1-6.el7_9.6                                 linux-firmwar
+  lvm2-libs.x86_64 7:2.02.187-6.el7_9.5                            microcode_ctl
+  nss.x86_64 0:3.79.0-5.el7_9                                      nss-pem.x86_6
+  nss-softokn-freebl.x86_64 0:3.79.0-4.el7_9                       nss-sysinit.x
+  nss-util.x86_64 0:3.79.0-1.el7_9                                 openldap.x86_
+  openssh-clients.x86_64 0:7.4p1-22.el7_9                          openssh-serve
+  openssl-libs.x86_64 1:1.0.2k-26.el7_9                            polkit.x86_64
+  python-firewall.noarch 0:0.6.3-13.el7_9                          python-libs.x
+  rpm.x86_64 0:4.11.3-48.el7_9                                     rpm-build-lib
+  rpm-python.x86_64 0:4.11.3-48.el7_9                              rsyslog.x86_6
+  selinux-policy-targeted.noarch 0:3.13.1-268.el7_9.2              sudo.x86_64 0
+  systemd-libs.x86_64 0:219-78.el7_9.7                             systemd-sysv.
+  tzdata.noarch 0:2023c-1.el7                                      util-linux.x8
+  virt-what.x86_64 0:1.18-4.el7_9.1                                wpa_supplican
+  xz-libs.x86_64 0:5.2.2-2.el7_9                                   zlib.x86_64 0
+
+Complete!
+[root@localhost ~]# yum install mdadm
+Loaded plugins: fastestmirror
+Loading mirror speeds from cached hostfile
+ * base: centos.mirror.net.in
+ * extras: centos.mirror.net.in
+ * updates: centos.mirror.net.in
+Resolving Dependencies
+--> Running transaction check
+---> Package mdadm.x86_64 0:4.1-9.el7_9 will be installed
+--> Processing Dependency: libreport-filesystem for package: mdadm-4.1-9.el7_9.x
+--> Running transaction check
+---> Package libreport-filesystem.x86_64 0:2.1.11-53.el7.centos will be installe
+--> Finished Dependency Resolution
+
+Dependencies Resolved
+
+================================================================================
+ Package                                                 Arch
+================================================================================
+Installing:
+ mdadm                                                   x86_64
+Installing for dependencies:
+ libreport-filesystem                                    x86_64
+
+Transaction Summary
+================================================================================
+Install  1 Package (+1 Dependent package)
+
+Total download size: 480 k
+Installed size: 1.0 M
+Is this ok [y/d/N]: y
+Downloading packages:
+(1/2): libreport-filesystem-2.1.11-53.el7.centos.x86_64.rpm
+(2/2): mdadm-4.1-9.el7_9.x86_64.rpm
+--------------------------------------------------------------------------------
+Total
+Running transaction check
+Running transaction test
+Transaction test succeeded
+Running transaction
+  Installing : libreport-filesystem-2.1.11-53.el7.centos.x86_64
+  Installing : mdadm-4.1-9.el7_9.x86_64
+  Verifying  : mdadm-4.1-9.el7_9.x86_64
+  Verifying  : libreport-filesystem-2.1.11-53.el7.centos.x86_64
+
+Installed:
+  mdadm.x86_64 0:4.1-9.el7_9
+
+Dependency Installed:
+  libreport-filesystem.x86_64 0:2.1.11-53.el7.centos
+
+Complete!
+[root@localhost ~]# mdadm -h
+mdadm is used for building, managing, and monitoring
+Linux md devices (aka RAID arrays)
+Usage: mdadm --create device options...
+            Create a new array from unused devices.
+       mdadm --assemble device options...
+            Assemble a previously created array.
+       mdadm --build device options...
+            Create or assemble an array without metadata.
+       mdadm --manage device options...
+            make changes to an existing array.
+       mdadm --misc options... devices
+            report on or modify various md related devices.
+       mdadm --grow options device
+            resize/reshape an active array
+       mdadm --incremental device
+            add/remove a device to/from an array as appropriate
+       mdadm --monitor options...
+            Monitor one or more array for significant changes.
+       mdadm device options...
+            Shorthand for --manage.
+Any parameter that does not start with '-' is treated as a device name
+or, for --examine-bitmap, a file name.
+The first such name is often the name of an md device.  Subsequent
+names are often names of component devices.
+
+ For detailed help on the above major modes use --help after the mode
+ e.g.
+         mdadm --assemble --help
+ For general help on options use
+         mdadm --help-options
+[root@localhost ~]# mdadm --create --verbose /dev/md0 --level=0 --raid-devices=2
+mdadm: chunk size defaults to 512K
+mdadm: Defaulting to version 1.2 metadata
+mdadm: array /dev/md0 started.
+[root@localhost ~]# cat /proc/mdstat
+Personalities : [raid0]
+md0 : active raid0 sdc[1] sdb[0]
+      2093056 blocks super 1.2 512k chunks
+
+unused devices: <none>
+[root@localhost ~]# lsblk
+NAME            MAJ:MIN RM  SIZE RO TYPE  MOUNTPOINT
+sda               8:0    0   20G  0 disk
+├─sda1            8:1    0    1G  0 part  /boot
+└─sda2            8:2    0   19G  0 part
+  ├─centos-root 253:0    0   17G  0 lvm   /
+  └─centos-swap 253:1    0    2G  0 lvm   [SWAP]
+sdb               8:16   0    1G  0 disk
+└─md0             9:0    0    2G  0 raid0
+sdc               8:32   0    1G  0 disk
+└─md0             9:0    0    2G  0 raid0
+sr0              11:0    1  973M  0 rom
+[root@localhost ~]# fdisk /dev/md0
+Welcome to fdisk (util-linux 2.23.2).
+
+Changes will remain in memory only, until you decide to write them.
+Be careful before using the write command.
+
+Device does not contain a recognized partition table
+Building a new DOS disklabel with disk identifier 0xecc26972.
+
+Command (m for help): n
+Partition type:
+   p   primary (0 primary, 0 extended, 4 free)
+   e   extended
+Select (default p): p
+Partition number (1-4, default 1):
+First sector (2048-4186111, default 2048):
+Using default value 2048
+Last sector, +sectors or +size{K,M,G} (2048-4186111, default 4186111):
+Using default value 4186111
+Partition 1 of type Linux and of size 2 GiB is set
+
+Command (m for help): w
+The partition table has been altered!
+
+Calling ioctl() to re-read partition table.
+Syncing disks.
+[root@localhost ~]# lsblk
+NAME            MAJ:MIN RM  SIZE RO TYPE  MOUNTPOINT
+sda               8:0    0   20G  0 disk
+├─sda1            8:1    0    1G  0 part  /boot
+└─sda2            8:2    0   19G  0 part
+  ├─centos-root 253:0    0   17G  0 lvm   /
+  └─centos-swap 253:1    0    2G  0 lvm   [SWAP]
+sdb               8:16   0    1G  0 disk
+└─md0             9:0    0    2G  0 raid0
+  └─md0p1       259:1    0    2G  0 md
+sdc               8:32   0    1G  0 disk
+└─md0             9:0    0    2G  0 raid0
+  └─md0p1       259:1    0    2G  0 md
+sr0              11:0    1  973M  0 rom
+[root@localhost ~]# mkfs.ext4 /dev/md0p1
+mke2fs 1.42.9 (28-Dec-2013)
+Filesystem label=
+OS type: Linux
+Block size=4096 (log=2)
+Fragment size=4096 (log=2)
+Stride=128 blocks, Stripe width=256 blocks
+130816 inodes, 523008 blocks
+26150 blocks (5.00%) reserved for the super user
+First data block=0
+Maximum filesystem blocks=536870912
+16 block groups
+32768 blocks per group, 32768 fragments per group
+8176 inodes per group
+Superblock backups stored on blocks:
+        32768, 98304, 163840, 229376, 294912
+
+Allocating group tables: done
+Writing inode tables: done
+Creating journal (8192 blocks): done
+Writing superblocks and filesystem accounting information: done
+
+[root@localhost ~]# mkdir /mnt/raid0
+[root@localhost ~]# mount /dev/md0p1 mnt/raid0/
+mount: mount point mnt/raid0/ does not exist
+[root@localhost ~]# mount /dev/md0p1 /mnt/raid0/
+[root@localhost ~]# df -h
+Filesystem               Size  Used Avail Use% Mounted on
+devtmpfs                 475M     0  475M   0% /dev
+tmpfs                    487M     0  487M   0% /dev/shm
+tmpfs                    487M  7.7M  479M   2% /run
+tmpfs                    487M     0  487M   0% /sys/fs/cgroup
+/dev/mapper/centos-root   17G  1.7G   16G  10% /
+/dev/sda1               1014M  168M  847M  17% /boot
+tmpfs                     98M     0   98M   0% /run/user/0
+/dev/md0p1               2.0G  6.0M  1.9G   1% /mnt/raid0
+[root@localhost ~]# history
+    1  ll
+    2  clear
+    3  init 0
+    4  lsblk
+    5  yum clean all
+    6  yum update
+    7  yum install mdadm
+    8  mdadm -h
+    9  mdadm --create --verbose /dev/md0 --level=0 --raid-devices=2 /dev/sdb /dev/sdc
+   10  cat /proc/mdstat
+   11  lsblk
+   12  fdisk /dev/md0
+   13  lsblk
+   14  mkfs.ext4 /dev/md0p1
+   15  mkdir /mnt/raid0
+   16  mount /dev/md0p1 mnt/raid0/
+   17  mount /dev/md0p1 /mnt/raid0/
+   18  df -h
+   19  history
+[root@localhost ~]# mdadm  --detail /dev/md0
+/dev/md0:
+           Version : 1.2
+     Creation Time : Sat Jul  8 20:04:07 2023
+        Raid Level : raid0
+        Array Size : 2093056 (2044.00 MiB 2143.29 MB)
+      Raid Devices : 2
+     Total Devices : 2
+       Persistence : Superblock is persistent
+
+       Update Time : Sat Jul  8 20:04:07 2023
+             State : clean
+    Active Devices : 2
+   Working Devices : 2
+    Failed Devices : 0
+     Spare Devices : 0
+
+        Chunk Size : 512K
+
+Consistency Policy : none
+
+              Name : localhost.localdomain:0  (local to host localhost.localdomain)
+              UUID : 137bf1be:913a37fa:dea9cc6b:7281e370
+            Events : 0
+
+    Number   Major   Minor   RaidDevice State
+       0       8       16        0      active sync   /dev/sdb
+       1       8       32        1      active sync   /dev/sdc
+[root@localhost ~]# mdadm  --examine /dev/sdc
+/dev/sdc:
+          Magic : a92b4efc
+        Version : 1.2
+    Feature Map : 0x0
+     Array UUID : 137bf1be:913a37fa:dea9cc6b:7281e370
+           Name : localhost.localdomain:0  (local to host localhost.localdomain)
+  Creation Time : Sat Jul  8 20:04:07 2023
+     Raid Level : raid0
+   Raid Devices : 2
+
+ Avail Dev Size : 2093056 sectors (1022.00 MiB 1071.64 MB)
+    Data Offset : 4096 sectors
+   Super Offset : 8 sectors
+   Unused Space : before=4016 sectors, after=0 sectors
+          State : clean
+    Device UUID : c73ed65f:c65f5d37:f90c8af7:26175a43
+
+    Update Time : Sat Jul  8 20:04:07 2023
+  Bad Block Log : 512 entries available at offset 8 sectors
+       Checksum : ecd4ee81 - correct
+         Events : 0
+
+     Chunk Size : 512K
+
+   Device Role : Active device 1
+   Array State : AA ('A' == active, '.' == missing, 'R' == replacing)
+[root@localhost ~]# fdisk -l
+
+Disk /dev/sda: 21.5 GB, 21474836480 bytes, 41943040 sectors
+Units = sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+Disk label type: dos
+Disk identifier: 0x000cd7d9
+
+   Device Boot      Start         End      Blocks   Id  System
+/dev/sda1   *        2048     2099199     1048576   83  Linux
+/dev/sda2         2099200    41943039    19921920   8e  Linux LVM
+
+Disk /dev/sdb: 1073 MB, 1073741824 bytes, 2097152 sectors
+Units = sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+
+
+Disk /dev/sdc: 1073 MB, 1073741824 bytes, 2097152 sectors
+Units = sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+
+
+Disk /dev/mapper/centos-root: 18.2 GB, 18249416704 bytes, 35643392 sectors
+Units = sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+
+
+Disk /dev/mapper/centos-swap: 2147 MB, 2147483648 bytes, 4194304 sectors
+Units = sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+
+
+Disk /dev/md0: 2143 MB, 2143289344 bytes, 4186112 sectors
+Units = sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 524288 bytes / 1048576 bytes
+Disk label type: dos
+Disk identifier: 0xecc26972
+
+    Device Boot      Start         End      Blocks   Id  System
+/dev/md0p1            2048     4186111     2092032   83  Linux
+[root@localhost ~]# cd /mnt/raid0/
+[root@localhost raid0]# ls
+lost+found
+[root@localhost raid0]# touch test
+[root@localhost raid0]# ls
+lost+found  test
+[root@localhost raid0]# dd -if=/devxero of=500mb.file bs=1024 count=502400
+dd: invalid option -- 'i'
+Try 'dd --help' for more information.
+[root@localhost raid0]# dd if=/dev/zero of=500mb.file bs=1024 count=502400
+502400+0 records in
+502400+0 records out
+514457600 bytes (514 MB) copied, 1.11587 s, 461 MB/s
+[root@localhost raid0]# history
+    1  ll
+    2  clear
+    3  init 0
+    4  lsblk
+    5  yum clean all
+    6  yum update
+    7  yum install mdadm
+    8  mdadm -h
+    9  mdadm --create --verbose /dev/md0 --level=0 --raid-devices=2 /dev/sdb /dev/sdc
+   10  cat /proc/mdstat
+   11  lsblk
+   12  fdisk /dev/md0
+   13  lsblk
+   14  mkfs.ext4 /dev/md0p1
+   15  mkdir /mnt/raid0
+   16  mount /dev/md0p1 mnt/raid0/
+   17  mount /dev/md0p1 /mnt/raid0/
+   18  df -h
+   19  history
+   20  mdadm  --detail /dev/md0
+   21  mdadm  --examine /dev/sdc
+   22  fdisk -l
+   23  cd /mnt/raid0/
+   24  ls
+   25  touch test
+   26  ls
+   27  dd -if=/devxero of=500mb.file bs=1024 count=502400
+   28  dd if=/dev/zero of=500mb.file bs=1024 count=502400
+   29  history
+[root@localhost raid0]# lsblk
+NAME            MAJ:MIN RM  SIZE RO TYPE  MOUNTPOINT
+sda               8:0    0   20G  0 disk
+├─sda1            8:1    0    1G  0 part  /boot
+└─sda2            8:2    0   19G  0 part
+  ├─centos-root 253:0    0   17G  0 lvm   /
+  └─centos-swap 253:1    0    2G  0 lvm   [SWAP]
+sdb               8:16   0    1G  0 disk
+└─md0             9:0    0    2G  0 raid0
+  └─md0p1       259:1    0    2G  0 md    /mnt/raid0
+sdc               8:32   0    1G  0 disk
+└─md0             9:0    0    2G  0 raid0
+  └─md0p1       259:1    0    2G  0 md    /mnt/raid0
+sr0              11:0    1  973M  0 rom
+[root@localhost raid0]#
+-----------------------------------------------------------------------------------------------
+
+
+[root@localhost ~]# history
+    1  ll
+    2  clear
+    3  init 0
+    4  lsblk
+    5  yum clean all
+    6  yum update
+    7  yum install mdadm
+    8  mdadm -h
+    9  mdadm --create --verbose /dev/md0 --level=0 --raid-devices=2 /dev/sdb /dev/sdc
+   10  cat /proc/mdstat
+   11  lsblk
+   12  fdisk /dev/md0
+   13  lsblk
+   14  mkfs.ext4 /dev/md0p1
+   15  mkdir /mnt/raid0
+   16  mount /dev/md0p1 mnt/raid0/
+   17  mount /dev/md0p1 /mnt/raid0/
+   18  df -h
+   19  history
+   20  mdadm  --detail /dev/md0
+   21  mdadm  --examine /dev/sdc
+   22  fdisk -l
+   23  cd /mnt/raid0/
+   24  ls
+   25  touch test
+   26  ls
+   27  dd -if=/devxero of=500mb.file bs=1024 count=502400
+   28  dd if=/dev/zero of=500mb.file bs=1024 count=502400
+   29  history
+   30  lsblk
+   31  init 0
+   32  nmtui ens33
+   33  ifdown ens33
+   34  ifup ens33
+   35  ip a
+   36  history
+

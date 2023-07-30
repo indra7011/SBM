@@ -1,0 +1,197 @@
+login as: root
+root@192.168.15.140's password:
+    +----------------------------------------------------------------------+
+    ¦                 • MobaXterm Personal Edition v23.0 •                 ¦
+    ¦               (SSH client, X server and network tools)               ¦
+    ¦                                                                      ¦
+    ¦ ? SSH session to root@192.168.15.140                                 ¦
+    ¦   • Direct SSH      :  ?                                             ¦
+    ¦   • SSH compression :  ?                                             ¦
+    ¦   • SSH-browser     :  ?                                             ¦
+    ¦   • X11-forwarding  :  ?  (disabled or not supported by server)      ¦
+    ¦                                                                      ¦
+    ¦ ? For more info, ctrl+click on help or visit our website.            ¦
+    +----------------------------------------------------------------------+
+
+Last login: Sun Jul 16 19:53:50 2023
+[root@localhost ~]# hostnamectl set-hostname ceph-compute01
+[root@localhost ~]# hostname
+ceph-compute01
+[root@localhost ~]# exit
+logout
+
+---------------------------------------------------------------------------------------------------------
+
+Session stopped
+    - Press <Return> to exit tab
+    - Press R to restart session
+    - Press S to save terminal output to file
+login as: root
+root@192.168.15.140's password:
+    +----------------------------------------------------------------------+
+    ¦                 • MobaXterm Personal Edition v23.0 •                 ¦
+    ¦               (SSH client, X server and network tools)               ¦
+    ¦                                                                      ¦
+    ¦ ? SSH session to root@192.168.15.140                                 ¦
+    ¦   • Direct SSH      :  ?                                             ¦
+    ¦   • SSH compression :  ?                                             ¦
+    ¦   • SSH-browser     :  ?                                             ¦
+    ¦   • X11-forwarding  :  ?  (disabled or not supported by server)      ¦
+    ¦                                                                      ¦
+    ¦ ? For more info, ctrl+click on help or visit our website.            ¦
+    +----------------------------------------------------------------------+
+
+Last login: Sun Jul 16 20:08:46 2023 from 192.168.15.1
+[root@ceph-compute01 ~]# cat /etc/hosts
+127.0.0.1   localhost localhost.localdomain localhost4 localhost4.localdomain4
+::1         localhost localhost.localdomain localhost6 localhost6.localdomain6
+192.168.15.138 ceph-monitor
+192.168.15.139 ceph-controller
+192.168.15.140 ceph-compute01
+192.168.15.141 ceph-compute02
+192.168.15.142 ceph-client
+[root@ceph-compute01 ~]# systemctl stop firewalld
+[root@ceph-compute01 ~]# systemctl disable firewalld
+Removed symlink /etc/systemd/system/multi-user.target.wants/firewalld.service.
+Removed symlink /etc/systemd/system/dbus-org.fedoraproject.FirewallD1.service.
+[root@ceph-compute01 ~]# vi /etc/selinux/config
+[root@ceph-compute01 ~]# init 6
+
+Remote side unexpectedly closed network connection
+
+---------------------------------------------------------------------------------------------------------
+
+Session stopped
+    - Press <Return> to exit tab
+    - Press R to restart session
+    - Press S to save terminal output to file
+login as: root
+root@192.168.15.140's password:
+    +----------------------------------------------------------------------+
+    ¦                 • MobaXterm Personal Edition v23.0 •                 ¦
+    ¦               (SSH client, X server and network tools)               ¦
+    ¦                                                                      ¦
+    ¦ ? SSH session to root@192.168.15.140                                 ¦
+    ¦   • Direct SSH      :  ?                                             ¦
+    ¦   • SSH compression :  ?                                             ¦
+    ¦   • SSH-browser     :  ?                                             ¦
+    ¦   • X11-forwarding  :  ?  (disabled or not supported by server)      ¦
+    ¦                                                                      ¦
+    ¦ ? For more info, ctrl+click on help or visit our website.            ¦
+    +----------------------------------------------------------------------+
+
+Last login: Sun Jul 16 20:52:29 2023
+[root@ceph-compute01 ~]# lsblk
+NAME            MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT
+sda               8:0    0   20G  0 disk
++-sda1            8:1    0    1G  0 part /boot
++-sda2            8:2    0   19G  0 part
+  +-centos-root 253:0    0   17G  0 lvm  /
+  +-centos-swap 253:1    0    2G  0 lvm  [SWAP]
+sdb               8:16   0   20G  0 disk
+sdc               8:32   0   20G  0 disk
+sdd               8:48   0   20G  0 disk
+sr0              11:0    1  973M  0 rom
+[root@ceph-compute01 ~]# yum install chrony -y
+Loaded plugins: fastestmirror
+Loading mirror speeds from cached hostfile
+ * base: centos.mirror.net.in
+ * extras: centos.mirror.net.in
+ * updates: centos.mirror.net.in
+Package chrony-3.4-1.el7.x86_64 already installed and latest version
+Nothing to do
+[root@ceph-compute01 ~]# chronyc sourcestats
+210 Number of sources = 4
+Name/IP Address            NP  NR  Span  Frequency  Freq Skew  Offset  Std Dev
+==============================================================================
+static.226.144.216.95.cl>   0   0     0     +0.000   2000.000     +0ns  4000ms
+ntp5.mum-in.hosts.301-mo>   0   0     0     +0.000   2000.000     +0ns  4000ms
+ec2-13-126-27-131.ap-sou>   0   0     0     +0.000   2000.000     +0ns  4000ms
+kyc2docs.x10corp.com        0   0     0     +0.000   2000.000     +0ns  4000ms
+[root@ceph-compute01 ~]# useradd cephadm && echo "cdac" | passwd --stdin cephadm
+Changing password for user cephadm.
+passwd: all authentication tokens updated successfully.
+[root@ceph-compute01 ~]# echo "cephadm ALL = (root) NOPASSWD:ALL" | sudo tee /etc/sudoers.d/cephadm
+cephadm ALL = (root) NOPASSWD:ALL
+[root@ceph-compute01 ~]# chmod 0440 /etc/sudoers.d/cephadm
+[root@ceph-compute01 ~]# sed -i --follow-symlinks 's/SELINUX=enforcing/SELINUX=disabled/g' /etc/sysconfig/selinux
+[root@ceph-compute01 ~]# sudo yum install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
+Loaded plugins: fastestmirror
+epel-release-latest-7.noarch.rpm                                                  |  15 kB  00:00:00
+Examining /var/tmp/yum-root-orgW0V/epel-release-latest-7.noarch.rpm: epel-release-7-14.noarch
+Marking /var/tmp/yum-root-orgW0V/epel-release-latest-7.noarch.rpm to be installed
+Resolving Dependencies
+--> Running transaction check
+---> Package epel-release.noarch 0:7-14 will be installed
+--> Finished Dependency Resolution
+
+Dependencies Resolved
+
+=========================================================================================================
+ Package                Arch             Version           Repository                               Size
+=========================================================================================================
+Installing:
+ epel-release           noarch           7-14              /epel-release-latest-7.noarch            25 k
+
+Transaction Summary
+=========================================================================================================
+Install  1 Package
+
+Total size: 25 k
+Installed size: 25 k
+Downloading packages:
+Running transaction check
+Running transaction test
+Transaction test succeeded
+Running transaction
+  Installing : epel-release-7-14.noarch                                                              1/1
+  Verifying  : epel-release-7-14.noarch                                                              1/1
+
+Installed:
+  epel-release.noarch 0:7-14
+
+Complete!
+[root@ceph-compute01 ~]# vim /etc/chrony.conf
+[root@ceph-compute01 ~]# systemctl restart chronyd
+[root@ceph-compute01 ~]# cat /etc/chrony.conf
+# Use public servers from the pool.ntp.org project.
+# Please consider joining the pool (http://www.pool.ntp.org/join.html).
+#server 0.centos.pool.ntp.org iburst
+#server 1.centos.pool.ntp.org iburst
+#server 2.centos.pool.ntp.org iburst
+#server 3.centos.pool.ntp.org iburst
+server ceph-controller
+
+
+# Record the rate at which the system clock gains/losses time.
+driftfile /var/lib/chrony/drift
+
+# Allow the system clock to be stepped in the first three updates
+# if its offset is larger than 1 second.
+makestep 1.0 3
+
+# Enable kernel synchronization of the real-time clock (RTC).
+rtcsync
+
+# Enable hardware timestamping on all interfaces that support it.
+#hwtimestamp *
+
+# Increase the minimum number of selectable sources required to adjust
+# the system clock.
+#minsources 2
+
+# Allow NTP client access from local network.
+#allow 192.168.0.0/16
+
+# Serve time even if not synchronized to a time source.
+#local stratum 10
+
+# Specify file containing keys for NTP authentication.
+#keyfile /etc/chrony.keys
+
+# Specify directory for log files.
+logdir /var/log/chrony
+
+# Select which information is logged.
+#log measurements statistics tracking
+[root@ceph-compute01 ~]#

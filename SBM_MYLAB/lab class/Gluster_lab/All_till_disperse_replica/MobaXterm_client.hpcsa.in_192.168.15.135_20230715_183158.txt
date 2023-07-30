@@ -1,0 +1,248 @@
+login as: root
+root@192.168.15.135's password:
+    +----------------------------------------------------------------------+
+    ¦                 • MobaXterm Personal Edition v23.0 •                 ¦
+    ¦               (SSH client, X server and network tools)               ¦
+    ¦                                                                      ¦
+    ¦ ? SSH session to root@192.168.15.135                                 ¦
+    ¦   • Direct SSH      :  ?                                             ¦
+    ¦   • SSH compression :  ?                                             ¦
+    ¦   • SSH-browser     :  ?                                             ¦
+    ¦   • X11-forwarding  :  ?  (disabled or not supported by server)      ¦
+    ¦                                                                      ¦
+    ¦ ? For more info, ctrl+click on help or visit our website.            ¦
+    +----------------------------------------------------------------------+
+
+Last login: Sat Jul 15 19:50:45 2023 from 192.168.15.1
+[root@client ~]# systemctl stop firewalld
+[root@client ~]# lsblk
+NAME            MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT
+sda               8:0    0   20G  0 disk
++-sda1            8:1    0    1G  0 part /boot
++-sda2            8:2    0   19G  0 part
+  +-centos-root 253:0    0   17G  0 lvm  /
+  +-centos-swap 253:1    0    2G  0 lvm  [SWAP]
+sr0              11:0    1  973M  0 rom
+[root@client ~]# fdisk /dev/sdb
+fdisk: cannot open /dev/sdb: No such file or directory
+[root@client ~]# yum install glusterfs-fuse
+Loaded plugins: fastestmirror
+Determining fastest mirrors
+ * base: centos.excellmedia.net
+ * extras: centos.excellmedia.net
+ * updates: centos.excellmedia.net
+base                                                                      | 3.6 kB  00:00:00
+extras                                                                    | 2.9 kB  00:00:00
+updates                                                                   | 2.9 kB  00:00:00
+(1/4): base/7/x86_64/group_gz                                             | 153 kB  00:00:00
+(2/4): extras/7/x86_64/primary_db                                         | 250 kB  00:00:00
+(3/4): updates/7/x86_64/primary_db                                        |  22 MB  00:00:01
+(4/4): base/7/x86_64/primary_db                                           | 6.1 MB  00:00:33
+Resolving Dependencies
+--> Running transaction check
+---> Package glusterfs-fuse.x86_64 0:6.0-61.el7 will be installed
+--> Processing Dependency: glusterfs-libs(x86-64) = 6.0-61.el7 for package: glusterfs-fuse-6.0-61.el7.x86_64
+--> Processing Dependency: glusterfs-client-xlators(x86-64) = 6.0-61.el7 for package: glusterfs-fuse-6.0-61.el7.x86_64
+--> Processing Dependency: glusterfs(x86-64) = 6.0-61.el7 for package: glusterfs-fuse-6.0-61.el7.x86_64
+--> Processing Dependency: psmisc for package: glusterfs-fuse-6.0-61.el7.x86_64
+--> Processing Dependency: attr for package: glusterfs-fuse-6.0-61.el7.x86_64
+--> Processing Dependency: libglusterfs.so.0()(64bit) for package: glusterfs-fuse-6.0-61.el7.x86_64
+--> Processing Dependency: libgfxdr.so.0()(64bit) for package: glusterfs-fuse-6.0-61.el7.x86_64
+--> Processing Dependency: libgfrpc.so.0()(64bit) for package: glusterfs-fuse-6.0-61.el7.x86_64
+--> Running transaction check
+---> Package attr.x86_64 0:2.4.46-13.el7 will be installed
+---> Package glusterfs.x86_64 0:6.0-61.el7 will be installed
+---> Package glusterfs-client-xlators.x86_64 0:6.0-61.el7 will be installed
+---> Package glusterfs-libs.x86_64 0:6.0-61.el7 will be installed
+---> Package psmisc.x86_64 0:22.20-17.el7 will be installed
+--> Finished Dependency Resolution
+
+Dependencies Resolved
+
+=================================================================================================
+ Package                           Arch            Version                Repository        Size
+=================================================================================================
+Installing:
+ glusterfs-fuse                    x86_64          6.0-61.el7             updates          129 k
+Installing for dependencies:
+ attr                              x86_64          2.4.46-13.el7          base              66 k
+ glusterfs                         x86_64          6.0-61.el7             updates          586 k
+ glusterfs-client-xlators          x86_64          6.0-61.el7             updates          786 k
+ glusterfs-libs                    x86_64          6.0-61.el7             updates          389 k
+ psmisc                            x86_64          22.20-17.el7           base             141 k
+
+Transaction Summary
+=================================================================================================
+Install  1 Package (+5 Dependent packages)
+
+Total download size: 2.0 M
+Installed size: 9.1 M
+Is this ok [y/d/N]: y
+Downloading packages:
+warning: /var/cache/yum/x86_64/7/base/packages/attr-2.4.46-13.el7.x86_64.rpm: Header V3 RSA/SHA256 Signature, key ID f4a80eb5: NOKEY
+Public key for attr-2.4.46-13.el7.x86_64.rpm is not installed
+(1/6): attr-2.4.46-13.el7.x86_64.rpm                                      |  66 kB  00:00:00
+Public key for glusterfs-6.0-61.el7.x86_64.rpm is not installed
+(2/6): glusterfs-6.0-61.el7.x86_64.rpm                                    | 586 kB  00:00:00
+(3/6): glusterfs-fuse-6.0-61.el7.x86_64.rpm                               | 129 kB  00:00:00
+(4/6): glusterfs-client-xlators-6.0-61.el7.x86_64.rpm                     | 786 kB  00:00:00
+(5/6): glusterfs-libs-6.0-61.el7.x86_64.rpm                               | 389 kB  00:00:00
+(6/6): psmisc-22.20-17.el7.x86_64.rpm                                     | 141 kB  00:00:00
+-------------------------------------------------------------------------------------------------
+Total                                                            2.9 MB/s | 2.0 MB  00:00:00
+Retrieving key from file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7
+Importing GPG key 0xF4A80EB5:
+ Userid     : "CentOS-7 Key (CentOS 7 Official Signing Key) <security@centos.org>"
+ Fingerprint: 6341 ab27 53d7 8a78 a7c2 7bb1 24c6 a8a7 f4a8 0eb5
+ Package    : centos-release-7-9.2009.0.el7.centos.x86_64 (@anaconda)
+ From       : /etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7
+Is this ok [y/N]: y
+Running transaction check
+Running transaction test
+Transaction test succeeded
+Running transaction
+  Installing : glusterfs-libs-6.0-61.el7.x86_64                                              1/6
+  Installing : glusterfs-client-xlators-6.0-61.el7.x86_64                                    2/6
+  Installing : glusterfs-6.0-61.el7.x86_64                                                   3/6
+  Installing : psmisc-22.20-17.el7.x86_64                                                    4/6
+  Installing : attr-2.4.46-13.el7.x86_64                                                     5/6
+  Installing : glusterfs-fuse-6.0-61.el7.x86_64                                              6/6
+  Verifying  : glusterfs-client-xlators-6.0-61.el7.x86_64                                    1/6
+  Verifying  : glusterfs-6.0-61.el7.x86_64                                                   2/6
+  Verifying  : glusterfs-fuse-6.0-61.el7.x86_64                                              3/6
+  Verifying  : glusterfs-libs-6.0-61.el7.x86_64                                              4/6
+  Verifying  : attr-2.4.46-13.el7.x86_64                                                     5/6
+  Verifying  : psmisc-22.20-17.el7.x86_64                                                    6/6
+
+Installed:
+  glusterfs-fuse.x86_64 0:6.0-61.el7
+
+Dependency Installed:
+  attr.x86_64 0:2.4.46-13.el7                          glusterfs.x86_64 0:6.0-61.el7
+  glusterfs-client-xlators.x86_64 0:6.0-61.el7         glusterfs-libs.x86_64 0:6.0-61.el7
+  psmisc.x86_64 0:22.20-17.el7
+
+Complete!
+[root@client ~]# mkdir /mnt/gdrive
+[root@client ~]# mount -t glusterfs node1.hpcsa.in:/gdisk3 /mnt/gdrive
+Mounting glusterfs on /mnt/gdrive failed.
+[root@client ~]# mount -t glusterfs node1.hpcsa.in:/gdisk3 /mnt/gdrive/
+Mounting glusterfs on /mnt/gdrive failed.
+[root@client ~]# systemctl status firewalld
+? firewalld.service - firewalld - dynamic firewall daemon
+   Loaded: loaded (/usr/lib/systemd/system/firewalld.service; enabled; vendor preset: enabled)
+   Active: inactive (dead) since Sat 2023-07-15 20:01:06 IST; 1h 0min ago
+     Docs: man:firewalld(1)
+ Main PID: 678 (code=exited, status=0/SUCCESS)
+
+Jul 15 19:46:31 localhost.localdomain systemd[1]: Starting firewalld - dynamic firewall daemon...
+Jul 15 19:46:31 localhost.localdomain systemd[1]: Started firewalld - dynamic firewall daemon.
+Jul 15 19:46:32 localhost.localdomain firewalld[678]: WARNING: AllowZoneDrifting is enabled....w.
+Jul 15 20:01:06 client.hpcsa.in systemd[1]: Stopping firewalld - dynamic firewall daemon...
+Jul 15 20:01:06 client.hpcsa.in systemd[1]: Stopped firewalld - dynamic firewall daemon.
+Hint: Some lines were ellipsized, use -l to show in full.
+[root@client ~]# cd /mnt/gdrive/
+[root@client gdrive]# cd
+[root@client ~]# mount -t glusterfs node1.hpcsa.in:/gdisk3 /mnt/gdrive/
+[root@client ~]# lsblk
+NAME            MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT
+sda               8:0    0   20G  0 disk
++-sda1            8:1    0    1G  0 part /boot
++-sda2            8:2    0   19G  0 part
+  +-centos-root 253:0    0   17G  0 lvm  /
+  +-centos-swap 253:1    0    2G  0 lvm  [SWAP]
+sr0              11:0    1  973M  0 rom
+[root@client ~]# cd /mnt/gdrive/
+[root@client gdrive]# ls
+[root@client gdrive]# dd if=/dev/zero of=file.txt bs=1024 count=520040
+520040+0 records in
+520040+0 records out
+532520960 bytes (533 MB) copied, 23.3268 s, 22.8 MB/s
+[root@client gdrive]# df -Th
+Filesystem              Type            Size  Used Avail Use% Mounted on
+devtmpfs                devtmpfs        475M     0  475M   0% /dev
+tmpfs                   tmpfs           487M     0  487M   0% /dev/shm
+tmpfs                   tmpfs           487M  7.7M  479M   2% /run
+tmpfs                   tmpfs           487M     0  487M   0% /sys/fs/cgroup
+/dev/mapper/centos-root xfs              17G  1.5G   16G   9% /
+/dev/sda1               xfs            1014M  138M  877M  14% /boot
+tmpfs                   tmpfs            98M     0   98M   0% /run/user/0
+node1.hpcsa.in:/gdisk3  fuse.glusterfs   20G  745M   20G   4% /mnt/gdrive
+[root@client gdrive]# cd
+[root@client ~]# mount -t glusterfs node1.hpcsa.in:/gdisk4 /mnt/gdrive/
+/sbin/mount.glusterfs: according to mtab, GlusterFS is already mounted on /mnt/gdrive
+[root@client ~]# cd /mnt/gdrive/
+[root@client gdrive]# df -Th
+Filesystem              Type            Size  Used Avail Use% Mounted on
+devtmpfs                devtmpfs        475M     0  475M   0% /dev
+tmpfs                   tmpfs           487M     0  487M   0% /dev/shm
+tmpfs                   tmpfs           487M  7.7M  479M   2% /run
+tmpfs                   tmpfs           487M     0  487M   0% /sys/fs/cgroup
+/dev/mapper/centos-root xfs              17G  1.5G   16G   9% /
+/dev/sda1               xfs            1014M  138M  877M  14% /boot
+tmpfs                   tmpfs            98M     0   98M   0% /run/user/0
+node1.hpcsa.in:/gdisk3  fuse.glusterfs   20G  745M   20G   4% /mnt/gdrive
+[root@client gdrive]# cd
+[root@client ~]# mkdir /mnt/gdrive1
+[root@client ~]# mount -t glusterfs node1.hpcsa.in:/gdisk4 /mnt/gdrive1/
+Mount failed. Check the log file  for more details.
+[root@client ~]# mount -t glusterfs node1.hpcsa.in:/gdisk4 /mnt/gdrive1/
+[root@client ~]# cd /mnt/gdrive1/
+[root@client gdrive1]# ll
+total 0
+[root@client gdrive1]# dd if=/dev/zero of=lab.txt bs=1024 count=820040
+820040+0 records in
+820040+0 records out
+839720960 bytes (840 MB) copied, 29.1461 s, 28.8 MB/s
+[root@client gdrive1]# df -h
+Filesystem               Size  Used Avail Use% Mounted on
+devtmpfs                 475M     0  475M   0% /dev
+tmpfs                    487M     0  487M   0% /dev/shm
+tmpfs                    487M  7.7M  479M   2% /run
+tmpfs                    487M     0  487M   0% /sys/fs/cgroup
+/dev/mapper/centos-root   17G  1.5G   16G   9% /
+/dev/sda1               1014M  138M  877M  14% /boot
+tmpfs                     98M     0   98M   0% /run/user/0
+node1.hpcsa.in:/gdisk3    20G  1.2G   19G   6% /mnt/gdrive
+node1.hpcsa.in:/gdisk4    40G  2.3G   38G   6% /mnt/gdrive1
+[root@client gdrive1]# ll
+total 820040
+-rw-r--r--. 1 root root 839720960 Jul 15 21:50 lab.txt
+[root@client gdrive1]# ll -h
+total 801M
+-rw-r--r--. 1 root root 801M Jul 15 21:50 lab.txt
+[root@client gdrive1]# dd if=/dev/zero of=lab1.txt bs=1024 count=820040
+820040+0 records in
+820040+0 records out
+839720960 bytes (840 MB) copied, 29.2368 s, 28.7 MB/s
+[root@client gdrive1]# ll -h
+total 1.6G
+-rw-r--r--. 1 root root 801M Jul 15 22:40 lab1.txt
+-rw-r--r--. 1 root root 801M Jul 15 21:50 lab.txt
+[root@client gdrive1]# dd if=/dev/zero of=lab3.txt bs=1024 count=120040
+120040+0 records in
+120040+0 records out
+122920960 bytes (123 MB) copied, 4.31638 s, 28.5 MB/s
+[root@client gdrive1]# dd if=/dev/zero of=lab2.txt bs=1024 count=220040
+220040+0 records in
+220040+0 records out
+225320960 bytes (225 MB) copied, 7.62101 s, 29.6 MB/s
+[root@client gdrive1]# ll -h
+total 1.9G
+-rw-r--r--. 1 root root 801M Jul 15 22:40 lab1.txt
+-rw-r--r--. 1 root root 215M Jul 15 22:42 lab2.txt
+-rw-r--r--. 1 root root 118M Jul 15 22:42 lab3.txt
+-rw-r--r--. 1 root root 801M Jul 15 21:50 lab.txt
+[root@client gdrive1]# dd if=/dev/zero of=lab4.txt bs=1024 count=320040
+320040+0 records in
+320040+0 records out
+327720960 bytes (328 MB) copied, 10.9507 s, 29.9 MB/s
+[root@client gdrive1]# ll -h
+total 2.2G
+-rw-r--r--. 1 root root 801M Jul 15 22:40 lab1.txt
+-rw-r--r--. 1 root root 215M Jul 15 22:42 lab2.txt
+-rw-r--r--. 1 root root 118M Jul 15 22:42 lab3.txt
+-rw-r--r--. 1 root root 313M Jul 15 22:52 lab4.txt
+-rw-r--r--. 1 root root 801M Jul 15 21:50 lab.txt
+[root@client gdrive1]# cd
+[root@client ~]#

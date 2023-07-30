@@ -1,0 +1,54 @@
+login as: root
+root@192.168.15.158's password:
+    +----------------------------------------------------------------------+
+    ¦                 • MobaXterm Personal Edition v23.0 •                 ¦
+    ¦               (SSH client, X server and network tools)               ¦
+    ¦                                                                      ¦
+    ¦ ? SSH session to root@192.168.15.158                                 ¦
+    ¦   • Direct SSH      :  ?                                             ¦
+    ¦   • SSH compression :  ?                                             ¦
+    ¦   • SSH-browser     :  ?                                             ¦
+    ¦   • X11-forwarding  :  ?  (disabled or not supported by server)      ¦
+    ¦                                                                      ¦
+    ¦ ? For more info, ctrl+click on help or visit our website.            ¦
+    +----------------------------------------------------------------------+
+
+Last login: Sat Jul 22 22:49:48 2023 from 192.168.15.1
+[root@bacula-server ~]# cd /var/www/html/
+[root@bacula-server html]# ll
+total 0
+[root@bacula-server html]# vim index.html
+[root@bacula-server html]# cat index.html
+hi this is SBM lab bacula
+[root@bacula-server html]# systemctl start httpd
+[root@bacula-server html]# systemctl enable httpd
+Created symlink from /etc/systemd/system/multi-user.target.wants/httpd.service to /usr/lib/systemd/system/httpd.service.
+[root@bacula-server html]# ll
+total 4
+-rw-r--r-- 1 root root 26 Jul 22 23:15 index.html
+[root@bacula-server html]# cd /bacula/
+[root@bacula-server bacula]# ll
+total 0
+drwx------ 2 bacula bacula 6 Jul 22 22:36 backup
+drwx------ 2 bacula bacula 6 Jul 22 22:36 restore
+[root@bacula-server bacula]# ll /bacula/backup/
+total 0
+[root@bacula-server bacula]# ll /bacula/restore/
+total 0
+[root@bacula-server bacula]# ll /bacula/backup/
+total 8
+-rw-r----- 1 bacula tape 199 Jul 22 23:55 demo
+-rw-r----- 1 bacula tape 200 Jul 22 23:49 denoo
+You have new mail in /var/spool/mail/root
+[root@bacula-server bacula]# ll /bacula/restore/
+total 0
+You have new mail in /var/spool/mail/root
+[root@bacula-server bacula]# ll /bacula/restore/
+total 0
+[root@bacula-server bacula]# ll /bacula/backup/
+total 12
+-rw-r----- 1 bacula tape 199 Jul 22 23:55 demo
+-rw-r----- 1 bacula tape 200 Jul 22 23:49 denoo
+-rw-r----- 1 bacula tape 200 Jul 22 23:58 indra
+You have new mail in /var/spool/mail/root
+[root@bacula-server bacula]#

@@ -1,0 +1,537 @@
+login as: root
+root@192.168.15.171's password:
+    ┌──────────────────────────────────────────────────────────────────────┐
+    │                 • MobaXterm Personal Edition v23.0 •                 │
+    │               (SSH client, X server and network tools)               │
+    │                                                                      │
+    │ ⮞ SSH session to root@192.168.15.171                                 │
+    │   • Direct SSH      :  ✓                                             │
+    │   • SSH compression :  ✓                                             │
+    │   • SSH-browser     :  ✓                                             │
+    │   • X11-forwarding  :  ✗  (disabled or not supported by server)      │
+    │                                                                      │
+    │ ⮞ For more info, ctrl+click on help or visit our website.            │
+    └──────────────────────────────────────────────────────────────────────┘
+
+Last login: Sun Jul  9 16:53:50 2023
+[root@localhost ~]# lsblk
+NAME            MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT
+sda               8:0    0   20G  0 disk
+├─sda1            8:1    0    1G  0 part /boot
+└─sda2            8:2    0   19G  0 part
+  ├─centos-root 253:0    0   17G  0 lvm  /
+  └─centos-swap 253:1    0    2G  0 lvm  [SWAP]
+sdb               8:16   0   20G  0 disk
+sr0              11:0    1  973M  0 rom
+[root@localhost ~]# init 0
+
+Remote side unexpectedly closed network connection
+
+───────────────────────────────────────────────────────────────────────────────────────────────────────
+
+Session stopped
+    - Press <Return> to exit tab
+    - Press R to restart session
+    - Press S to save terminal output to file
+login as: root
+root@192.168.15.171's password:
+    ┌──────────────────────────────────────────────────────────────────────┐
+    │                 • MobaXterm Personal Edition v23.0 •                 │
+    │               (SSH client, X server and network tools)               │
+    │                                                                      │
+    │ ⮞ SSH session to root@192.168.15.171                                 │
+    │   • Direct SSH      :  ✓                                             │
+    │   • SSH compression :  ✓                                             │
+    │   • SSH-browser     :  ✓                                             │
+    │   • X11-forwarding  :  ✗  (disabled or not supported by server)      │
+    │                                                                      │
+    │ ⮞ For more info, ctrl+click on help or visit our website.            │
+    └──────────────────────────────────────────────────────────────────────┘
+
+Last login: Sun Jul  9 17:05:22 2023
+[root@localhost ~]# lsblk
+NAME            MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT
+sda               8:0    0   20G  0 disk
+├─sda1            8:1    0    1G  0 part /boot
+└─sda2            8:2    0   19G  0 part
+  ├─centos-root 253:0    0   17G  0 lvm  /
+  └─centos-swap 253:1    0    2G  0 lvm  [SWAP]
+sdb               8:16   0   20G  0 disk
+sdc               8:32   0   20G  0 disk
+sr0              11:0    1  973M  0 rom
+[root@localhost ~]# pvcreate /dev/sdb /dev/sdc
+  Physical volume "/dev/sdb" successfully created.
+  Physical volume "/dev/sdc" successfully created.
+[root@localhost ~]# pvdisplay
+  --- Physical volume ---
+  PV Name               /dev/sda2
+  VG Name               centos
+  PV Size               <19.00 GiB / not usable 3.00 MiB
+  Allocatable           yes (but full)
+  PE Size               4.00 MiB
+  Total PE              4863
+  Free PE               0
+  Allocated PE          4863
+  PV UUID               tE23TB-FBVR-FRUb-0hLP-hF7k-IPsp-dpyXwJ
+
+  "/dev/sdb" is a new physical volume of "20.00 GiB"
+  --- NEW Physical volume ---
+  PV Name               /dev/sdb
+  VG Name
+  PV Size               20.00 GiB
+  Allocatable           NO
+  PE Size               0
+  Total PE              0
+  Free PE               0
+  Allocated PE          0
+  PV UUID               tVdjuD-3Z5I-Dmdn-3qtj-Xtoq-0vf1-f4h3ub
+
+  "/dev/sdc" is a new physical volume of "20.00 GiB"
+  --- NEW Physical volume ---
+  PV Name               /dev/sdc
+  VG Name
+  PV Size               20.00 GiB
+  Allocatable           NO
+  PE Size               0
+  Total PE              0
+  Free PE               0
+  Allocated PE          0
+  PV UUID               zzCW9I-RMDm-fgAe-DuY1-Blmm-G8T0-jAhJj1
+
+[root@localhost ~]# vgcreate HPCSA /dev/sdb /dev/sdc
+  Volume group "HPCSA" successfully created
+[root@localhost ~]# vgdisplay
+  --- Volume group ---
+  VG Name               HPCSA
+  System ID
+  Format                lvm2
+  Metadata Areas        2
+  Metadata Sequence No  1
+  VG Access             read/write
+  VG Status             resizable
+  MAX LV                0
+  Cur LV                0
+  Open LV               0
+  Max PV                0
+  Cur PV                2
+  Act PV                2
+  VG Size               39.99 GiB
+  PE Size               4.00 MiB
+  Total PE              10238
+  Alloc PE / Size       0 / 0
+  Free  PE / Size       10238 / 39.99 GiB
+  VG UUID               w13ac2-8AJl-Nlt3-sfsH-KlbK-RsBi-33n1OU
+
+  --- Volume group ---
+  VG Name               centos
+  System ID
+  Format                lvm2
+  Metadata Areas        1
+  Metadata Sequence No  3
+  VG Access             read/write
+  VG Status             resizable
+  MAX LV                0
+  Cur LV                2
+  Open LV               2
+  Max PV                0
+  Cur PV                1
+  Act PV                1
+  VG Size               <19.00 GiB
+  PE Size               4.00 MiB
+  Total PE              4863
+  Alloc PE / Size       4863 / <19.00 GiB
+  Free  PE / Size       0 / 0
+  VG UUID               l9ikUh-QLUp-8ljK-fCed-87tG-2H3a-9ABodM
+
+[root@localhost ~]# pvs
+  PV         VG     Fmt  Attr PSize   PFree
+  /dev/sda2  centos lvm2 a--  <19.00g      0
+  /dev/sdb   HPCSA  lvm2 a--  <20.00g <20.00g
+  /dev/sdc   HPCSA  lvm2 a--  <20.00g <20.00g
+[root@localhost ~]# lvcreate -n hpcsa_lab --size 1G HPCSA
+  Logical volume "hpcsa_lab" created.
+[root@localhost ~]# lvs
+  LV        VG     Attr       LSize   Pool Origin Data%  Meta%  Move Log Cpy%Sync Convert
+  hpcsa_lab HPCSA  -wi-a-----   1.00g
+  root      centos -wi-ao---- <17.00g
+  swap      centos -wi-ao----   2.00g
+[root@localhost ~]# fdisk /dev/mapper/HPCSA-hpcsa_lab
+Welcome to fdisk (util-linux 2.23.2).
+
+Changes will remain in memory only, until you decide to write them.
+Be careful before using the write command.
+
+Device does not contain a recognized partition table
+Building a new DOS disklabel with disk identifier 0x06aff900.
+
+Command (m for help): n
+Partition type:
+   p   primary (0 primary, 0 extended, 4 free)
+   e   extended
+Select (default p): p
+Partition number (1-4, default 1):
+First sector (2048-2097151, default 2048):
+Using default value 2048
+Last sector, +sectors or +size{K,M,G} (2048-2097151, default 2097151):
+Using default value 2097151
+Partition 1 of type Linux and of size 1023 MiB is set
+
+Command (m for help): w
+The partition table has been altered!
+
+Calling ioctl() to re-read partition table.
+
+WARNING: Re-reading the partition table failed with error 22: Invalid argument.
+The kernel still uses the old table. The new table will be used at
+the next reboot or after you run partprobe(8) or kpartx(8)
+Syncing disks.
+[root@localhost ~]# lvs
+  LV        VG     Attr       LSize   Pool Origin Data%  Meta%  Move Log Cpy%Sync Convert
+  hpcsa_lab HPCSA  -wi-a-----   1.00g
+  root      centos -wi-ao---- <17.00g
+  swap      centos -wi-ao----   2.00g
+[root@localhost ~]# fdisk /dev/mapper/HPCSA-hpcsa_lab
+Welcome to fdisk (util-linux 2.23.2).
+
+Changes will remain in memory only, until you decide to write them.
+Be careful before using the write command.
+
+
+Command (m for help): d
+Selected partition 1
+Partition 1 is deleted
+
+Command (m for help): n
+Partition type:
+   p   primary (0 primary, 0 extended, 4 free)
+   e   extended
+Select (default p):
+Using default response p
+Partition number (1-4, default 1):
+First sector (2048-2097151, default 2048):
+Using default value 2048
+Last sector, +sectors or +size{K,M,G} (2048-2097151, default 2097151):
+Using default value 2097151
+Partition 1 of type Linux and of size 1023 MiB is set
+
+Command (m for help): w
+The partition table has been altered!
+
+Calling ioctl() to re-read partition table.
+
+WARNING: Re-reading the partition table failed with error 22: Invalid argument.
+The kernel still uses the old table. The new table will be used at
+the next reboot or after you run partprobe(8) or kpartx(8)
+Syncing disks.
+[root@localhost ~]# partprobe /dev/sd
+sda   sda1  sda2  sdb   sdc
+[root@localhost ~]# partprobe /dev/mapper/
+centos-root      centos-swap      control          HPCSA-hpcsa_lab
+[root@localhost ~]# partprobe /dev/mapper/HPCSA-hpcsa_lab
+[root@localhost ~]# mkfs.ext4 /dev/mapper/HPCSA-hpcsa_lab
+mke2fs 1.42.9 (28-Dec-2013)
+/dev/mapper/HPCSA-hpcsa_lab is apparently in use by the system; will not make a filesystem here!
+[root@localhost ~]# mkdir lab
+[root@localhost ~]# mount /dev/mapper/HPCSA-hpcsa_lab lab
+mount: /dev/mapper/HPCSA-hpcsa_lab is already mounted or /root/lab busy
+[root@localhost ~]# lsblk
+NAME                 MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT
+sda                    8:0    0   20G  0 disk
+├─sda1                 8:1    0    1G  0 part /boot
+└─sda2                 8:2    0   19G  0 part
+  ├─centos-root      253:0    0   17G  0 lvm  /
+  └─centos-swap      253:1    0    2G  0 lvm  [SWAP]
+sdb                    8:16   0   20G  0 disk
+└─HPCSA-hpcsa_lab    253:2    0    1G  0 lvm
+  └─HPCSA-hpcsa_lab1 253:3    0 1023M  0 part
+sdc                    8:32   0   20G  0 disk
+sr0                   11:0    1  973M  0 rom
+[root@localhost ~]# lvextend -L +2G /dev/mapper/HPCSA-hpcsa_lab
+  Size of logical volume HPCSA/hpcsa_lab changed from 1.00 GiB (256 extents) to 3.00 GiB (768 extents).
+  Logical volume HPCSA/hpcsa_lab successfully resized.
+[root@localhost ~]# lsblk
+NAME                 MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT
+sda                    8:0    0   20G  0 disk
+├─sda1                 8:1    0    1G  0 part /boot
+└─sda2                 8:2    0   19G  0 part
+  ├─centos-root      253:0    0   17G  0 lvm  /
+  └─centos-swap      253:1    0    2G  0 lvm  [SWAP]
+sdb                    8:16   0   20G  0 disk
+└─HPCSA-hpcsa_lab    253:2    0    3G  0 lvm
+  └─HPCSA-hpcsa_lab1 253:3    0 1023M  0 part
+sdc                    8:32   0   20G  0 disk
+sr0                   11:0    1  973M  0 rom
+[root@localhost ~]# lvextend -L +1G /dev/mapper/HPCSA-hpcsa_lab1
+  Logical volume hpcsa_lab1 not found in volume group HPCSA.
+[root@localhost ~]# resizefs /dev/mapper/HPCSA-hpcsa_lab
+-bash: resizefs: command not found
+[root@localhost ~]# resize2fs /dev/mapper/HPCSA-hpcsa_lab
+resize2fs 1.42.9 (28-Dec-2013)
+resize2fs: Device or resource busy while trying to open /dev/mapper/HPCSA-hpcsa_lab
+Couldn't find valid filesystem superblock.
+[root@localhost ~]# lvcreate -L 1GB -s -n hpcsa_lab_snap /dev/mapper/HPCSA-hpcsa_lab
+  Logical volume "hpcsa_lab_snap" created.
+[root@localhost ~]# lvs
+  LV             VG     Attr       LSize   Pool Origin    Data%  Meta%  Move Log Cpy%Sync Convert
+  hpcsa_lab      HPCSA  owi-aos---   3.00g
+  hpcsa_lab_snap HPCSA  swi-a-s---   1.00g      hpcsa_lab 0.00
+  root           centos -wi-ao---- <17.00g
+  swap           centos -wi-ao----   2.00g
+[root@localhost ~]# lvdisplay
+  --- Logical volume ---
+  LV Path                /dev/HPCSA/hpcsa_lab
+  LV Name                hpcsa_lab
+  VG Name                HPCSA
+  LV UUID                ero3MM-qFcZ-hovF-CDZY-unBR-96XA-jCovIv
+  LV Write Access        read/write
+  LV Creation host, time localhost.localdomain, 2023-07-09 17:20:37 +0530
+  LV snapshot status     source of
+                         hpcsa_lab_snap [active]
+  LV Status              available
+  # open                 1
+  LV Size                3.00 GiB
+  Current LE             768
+  Segments               1
+  Allocation             inherit
+  Read ahead sectors     auto
+  - currently set to     8192
+  Block device           253:2
+
+  --- Logical volume ---
+  LV Path                /dev/HPCSA/hpcsa_lab_snap
+  LV Name                hpcsa_lab_snap
+  VG Name                HPCSA
+  LV UUID                W4R3L0-nYDs-h4Yw-8sOC-vF8u-MXXj-shWGGa
+  LV Write Access        read/write
+  LV Creation host, time localhost.localdomain, 2023-07-09 17:47:00 +0530
+  LV snapshot status     active destination for hpcsa_lab
+  LV Status              available
+  # open                 0
+  LV Size                3.00 GiB
+  Current LE             768
+  COW-table size         1.00 GiB
+  COW-table LE           256
+  Allocated to snapshot  0.00%
+  Snapshot chunk size    4.00 KiB
+  Segments               1
+  Allocation             inherit
+  Read ahead sectors     auto
+  - currently set to     8192
+  Block device           253:6
+
+  --- Logical volume ---
+  LV Path                /dev/centos/swap
+  LV Name                swap
+  VG Name                centos
+  LV UUID                eFS7lT-MRee-HJM8-jBVO-g9Ey-5pEY-jxTnrj
+  LV Write Access        read/write
+  LV Creation host, time localhost, 2022-11-27 00:26:15 +0530
+  LV Status              available
+  # open                 2
+  LV Size                2.00 GiB
+  Current LE             512
+  Segments               1
+  Allocation             inherit
+  Read ahead sectors     auto
+  - currently set to     8192
+  Block device           253:1
+
+  --- Logical volume ---
+  LV Path                /dev/centos/root
+  LV Name                root
+  VG Name                centos
+  LV UUID                yvgaUc-QjVw-K2Jb-XXe8-UUAC-mtmy-uQpKTj
+  LV Write Access        read/write
+  LV Creation host, time localhost, 2022-11-27 00:26:16 +0530
+  LV Status              available
+  # open                 1
+  LV Size                <17.00 GiB
+  Current LE             4351
+  Segments               1
+  Allocation             inherit
+  Read ahead sectors     auto
+  - currently set to     8192
+  Block device           253:0
+
+[root@localhost ~]# lvs
+  LV             VG     Attr       LSize   Pool Origin    Data%  Meta%  Move Log Cpy%Sync Convert
+  hpcsa_lab      HPCSA  owi-aos---   3.00g
+  hpcsa_lab_snap HPCSA  swi-a-s---   1.00g      hpcsa_lab 0.00
+  root           centos -wi-ao---- <17.00g
+  swap           centos -wi-ao----   2.00g
+[root@localhost ~]# lvconvert --merge /dev/mapper/HPCSA-hpcsa_lab
+  HPCSA/hpcsa_lab cannot be merged because --trackchanges was not used.
+[root@localhost ~]# cd lab/
+[root@localhost lab]# ll
+total 0
+[root@localhost lab]# echo "this is sbm lab" > test.txt
+[root@localhost lab]# cat test.txt
+this is sbm lab
+[root@localhost lab]# lsblk
+NAME                       MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT
+sda                          8:0    0   20G  0 disk
+├─sda1                       8:1    0    1G  0 part /boot
+└─sda2                       8:2    0   19G  0 part
+  ├─centos-root            253:0    0   17G  0 lvm  /
+  └─centos-swap            253:1    0    2G  0 lvm  [SWAP]
+sdb                          8:16   0   20G  0 disk
+├─HPCSA-hpcsa_lab-real     253:4    0    3G  0 lvm
+│ ├─HPCSA-hpcsa_lab        253:2    0    3G  0 lvm
+│ │ └─HPCSA-hpcsa_lab1     253:3    0 1023M  0 part
+│ └─HPCSA-hpcsa_lab_snap   253:6    0    3G  0 lvm
+└─HPCSA-hpcsa_lab_snap-cow 253:5    0    1G  0 lvm
+  └─HPCSA-hpcsa_lab_snap   253:6    0    3G  0 lvm
+sdc                          8:32   0   20G  0 disk
+sr0                         11:0    1  973M  0 rom
+[root@localhost lab]# lvcreate -L 500m -s -n hpcsa_lab_snap test.txt
+  The origin name should include the volume group.
+  Run `lvcreate --help' for more information.
+[root@localhost lab]# lvcreate -L 1GB -s -n hpcsa_lab_snap test.txt
+  The origin name should include the volume group.
+  Run `lvcreate --help' for more information.
+[root@localhost lab]# cd
+[root@localhost ~]# lvconvert --merge /dev/mapper/HPCSA-hpcsa_lab_snap
+  Delaying merge since origin is open.
+  Merging of snapshot HPCSA/hpcsa_lab_snap will occur on next activation of HPCSA/hpcsa_lab.
+[root@localhost ~]# lsblk
+NAME                       MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT
+sda                          8:0    0   20G  0 disk
+├─sda1                       8:1    0    1G  0 part /boot
+└─sda2                       8:2    0   19G  0 part
+  ├─centos-root            253:0    0   17G  0 lvm  /
+  └─centos-swap            253:1    0    2G  0 lvm  [SWAP]
+sdb                          8:16   0   20G  0 disk
+├─HPCSA-hpcsa_lab-real     253:4    0    3G  0 lvm
+│ ├─HPCSA-hpcsa_lab        253:2    0    3G  0 lvm
+│ │ └─HPCSA-hpcsa_lab1     253:3    0 1023M  0 part
+│ └─HPCSA-hpcsa_lab_snap   253:6    0    3G  0 lvm
+└─HPCSA-hpcsa_lab_snap-cow 253:5    0    1G  0 lvm
+  └─HPCSA-hpcsa_lab_snap   253:6    0    3G  0 lvm
+sdc                          8:32   0   20G  0 disk
+sr0                         11:0    1  973M  0 rom
+[root@localhost ~]# lvconvert --merge /dev/mapper/HPCSA-hpcsa_lab_snap
+  Command on LV HPCSA/hpcsa_lab_snap is invalid on LV with properties: lv_is_merging_cow .
+  Command not permitted on LV HPCSA/hpcsa_lab_snap.
+[root@localhost ~]# lvs
+  LV        VG     Attr       LSize   Pool Origin Data%  Meta%  Move Log Cpy%Sync Convert
+  hpcsa_lab HPCSA  Owi-aos---   3.00g
+  root      centos -wi-ao---- <17.00g
+  swap      centos -wi-ao----   2.00g
+[root@localhost ~]# lvdisplay
+  --- Logical volume ---
+  LV Path                /dev/HPCSA/hpcsa_lab
+  LV Name                hpcsa_lab
+  VG Name                HPCSA
+  LV UUID                ero3MM-qFcZ-hovF-CDZY-unBR-96XA-jCovIv
+  LV Write Access        read/write
+  LV Creation host, time localhost.localdomain, 2023-07-09 17:20:37 +0530
+  LV snapshot status     source of
+                         hpcsa_lab_snap [active]
+  LV Status              available
+  # open                 1
+  LV Size                3.00 GiB
+  Current LE             768
+  Segments               1
+  Allocation             inherit
+  Read ahead sectors     auto
+  - currently set to     8192
+  Block device           253:2
+
+  --- Logical volume ---
+  LV Path                /dev/centos/swap
+  LV Name                swap
+  VG Name                centos
+  LV UUID                eFS7lT-MRee-HJM8-jBVO-g9Ey-5pEY-jxTnrj
+  LV Write Access        read/write
+  LV Creation host, time localhost, 2022-11-27 00:26:15 +0530
+  LV Status              available
+  # open                 2
+  LV Size                2.00 GiB
+  Current LE             512
+  Segments               1
+  Allocation             inherit
+  Read ahead sectors     auto
+  - currently set to     8192
+  Block device           253:1
+
+  --- Logical volume ---
+  LV Path                /dev/centos/root
+  LV Name                root
+  VG Name                centos
+  LV UUID                yvgaUc-QjVw-K2Jb-XXe8-UUAC-mtmy-uQpKTj
+  LV Write Access        read/write
+  LV Creation host, time localhost, 2022-11-27 00:26:16 +0530
+  LV Status              available
+  # open                 1
+  LV Size                <17.00 GiB
+  Current LE             4351
+  Segments               1
+  Allocation             inherit
+  Read ahead sectors     auto
+  - currently set to     8192
+  Block device           253:0
+
+[root@localhost ~]# lvcreate -L 1GB -s -n hpcsa_lab_snap /dev/mapper/HPCSA-hpcsa_lab
+  Logical Volume "hpcsa_lab_snap" already exists in volume group "HPCSA"
+[root@localhost ~]# lvcreate -L 1GB -s -n snap1 /dev/mapper/HPCSA-hpcsa_lab
+  Snapshots of an origin that has a merging snapshot are not supported.
+[root@localhost ~]# lvcreate -L 1GB -s -n hpcsa_lab_snap1 /dev/mapper/HPCSA-hpcsa_lab
+  Snapshots of an origin that has a merging snapshot are not supported.
+[root@localhost ~]# lvcreate -L 1GB -s -n hpcsa_lab_snap111 /dev/mapper/HPCSA-hpcsa_lab
+  Snapshots of an origin that has a merging snapshot are not supported.
+[root@localhost ~]# lvcreate -L 1GB -s -n hpcsa_lab_snap3 /dev/mapper/HPCSA-hpcsa_lab3
+  Snapshot origin LV hpcsa_lab3 not found in Volume group HPCSA.
+[root@localhost ~]# lvcreate -L 1GB -s -n hpcsa_lab_snap3 /dev/mapper/HPCSA-hpcsa_lab
+  Snapshots of an origin that has a merging snapshot are not supported.
+[root@localhost ~]# lvs
+  LV        VG     Attr       LSize   Pool Origin Data%  Meta%  Move Log Cpy%Sync Convert
+  hpcsa_lab HPCSA  Owi-aos---   3.00g
+  root      centos -wi-ao---- <17.00g
+  swap      centos -wi-ao----   2.00g
+[root@localhost ~]# lvcreate -L 1GB -s -n hpcsa_lab_snap /dev/mapper/HPCSA-hpcsa_lab
+  Logical Volume "hpcsa_lab_snap" already exists in volume group "HPCSA"
+[root@localhost ~]# lvcreate -L 1G -m1 -n hpcsa_lab3 HPCSA
+  Logical volume "hpcsa_lab3" created.
+[root@localhost ~]# lvcreate -L 1G -m2 -n hpcsa_lab4 HPCSA
+  Insufficient suitable allocatable extents for logical volume hpcsa_lab4: 771 more required
+[root@localhost ~]# lvs
+  LV         VG     Attr       LSize   Pool Origin Data%  Meta%  Move Log Cpy%Sync Convert
+  hpcsa_lab  HPCSA  Owi-aos---   3.00g
+  hpcsa_lab3 HPCSA  rwi-a-r---   1.00g                                    100.00
+  root       centos -wi-ao---- <17.00g
+  swap       centos -wi-ao----   2.00g
+[root@localhost ~]# lvcreate -L 1GB -s -n hpcsa_lab_snap /dev/mapper/HPCSA-hpcsa_lab3
+  Logical Volume "hpcsa_lab_snap" already exists in volume group "HPCSA"
+[root@localhost ~]# lvcreate -L 1GB -s -n hpcsa_lab_snap3 /dev/mapper/HPCSA-hpcsa_lab3
+  Logical volume "hpcsa_lab_snap3" created.
+[root@localhost ~]# lvs
+  LV              VG     Attr       LSize   Pool Origin     Data%  Meta%  Move Log Cpy%Sync Convert
+  hpcsa_lab       HPCSA  Owi-aos---   3.00g
+  hpcsa_lab3      HPCSA  owi-a-r---   1.00g                                        100.00
+  hpcsa_lab_snap3 HPCSA  swi-a-s---   1.00g      hpcsa_lab3 0.00
+  root            centos -wi-ao---- <17.00g
+  swap            centos -wi-ao----   2.00g
+[root@localhost ~]# lvconvert --merge /dev/mapper/HPCSA-hpcsa_lab_snap3
+  Merging of volume HPCSA/hpcsa_lab_snap3 started.
+  HPCSA/hpcsa_lab3: Merged: 100.00%
+[root@localhost ~]# lvcreate -L 1GB -s -n hpcsa_lab_snap4 /dev/mapper/HPCSA-hpcsa_lab4
+  Snapshot origin LV hpcsa_lab4 not found in Volume group HPCSA.
+[root@localhost ~]# lvs
+  LV         VG     Attr       LSize   Pool Origin Data%  Meta%  Move Log Cpy%Sync Convert
+  hpcsa_lab  HPCSA  Owi-aos---   3.00g
+  hpcsa_lab3 HPCSA  rwi-a-r---   1.00g                                    100.00
+  root       centos -wi-ao---- <17.00g
+  swap       centos -wi-ao----   2.00g
+[root@localhost ~]# lvcreate -L 1GB -s -n hpcsa_lab_snap3 /dev/mapper/HPCSA-hpcsa_lab3
+  Logical volume "hpcsa_lab_snap3" created.
+[root@localhost ~]# lvconvert --merge /dev/mapper/HPCSA-hpcsa_lab_snap3
+  Merging of volume HPCSA/hpcsa_lab_snap3 started.
+  HPCSA/hpcsa_lab3: Merged: 100.00%
+[root@localhost ~]# lvcreate -L 1GB -s -n hpcsa_lab_snap3 /dev/mapper/HPCSA-hpcsa_lab5
+  Snapshot origin LV hpcsa_lab5 not found in Volume group HPCSA.
+[root@localhost ~]# lvcreate -L 1GB -s -n hpcsa_lab_snap5 /dev/mapper/HPCSA-hpcsa_lab3
+  Logical volume "hpcsa_lab_snap5" created.
+[root@localhost ~]# lvconvert --merge /dev/mapper/HPCSA-hpcsa_lab_snap5
+  Merging of volume HPCSA/hpcsa_lab_snap5 started.
+  HPCSA/hpcsa_lab3: Merged: 100.00%
+[root@localhost ~]#

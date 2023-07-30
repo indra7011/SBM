@@ -1,0 +1,370 @@
+login as: root
+root@192.168.15.157's password:
+    +----------------------------------------------------------------------+
+    ¦                 • MobaXterm Personal Edition v23.0 •                 ¦
+    ¦               (SSH client, X server and network tools)               ¦
+    ¦                                                                      ¦
+    ¦ ? SSH session to root@192.168.15.157                                 ¦
+    ¦   • Direct SSH      :  ?                                             ¦
+    ¦   • SSH compression :  ?                                             ¦
+    ¦   • SSH-browser     :  ?                                             ¦
+    ¦   • X11-forwarding  :  ?  (disabled or not supported by server)      ¦
+    ¦                                                                      ¦
+    ¦ ? For more info, ctrl+click on help or visit our website.            ¦
+    +----------------------------------------------------------------------+
+
+Last login: Sat Jul 22 16:23:51 2023
+[root@beegfs-client ~]# ip a
+1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+    inet 127.0.0.1/8 scope host lo
+       valid_lft forever preferred_lft forever
+    inet6 ::1/128 scope host
+       valid_lft forever preferred_lft forever
+2: ens33: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc pfifo_fast state UP group default qlen 1000
+    link/ether 00:0c:29:9a:70:f8 brd ff:ff:ff:ff:ff:ff
+    inet 192.168.15.157/24 brd 192.168.15.255 scope global dynamic ens33
+       valid_lft 1730sec preferred_lft 1730sec
+[root@beegfs-client ~]# vi /etc/selinux/config
+[root@beegfs-client ~]# init 6
+
+Remote side unexpectedly closed network connection
+
+---------------------------------------------------------------------------------------------------------
+
+Session stopped
+    - Press <Return> to exit tab
+    - Press R to restart session
+    - Press S to save terminal output to file
+login as: root
+root@192.168.15.157's password:
+    +----------------------------------------------------------------------+
+    ¦                 • MobaXterm Personal Edition v23.0 •                 ¦
+    ¦               (SSH client, X server and network tools)               ¦
+    ¦                                                                      ¦
+    ¦ ? SSH session to root@192.168.15.157                                 ¦
+    ¦   • Direct SSH      :  ?                                             ¦
+    ¦   • SSH compression :  ?                                             ¦
+    ¦   • SSH-browser     :  ?                                             ¦
+    ¦   • X11-forwarding  :  ?  (disabled or not supported by server)      ¦
+    ¦                                                                      ¦
+    ¦ ? For more info, ctrl+click on help or visit our website.            ¦
+    +----------------------------------------------------------------------+
+
+Last login: Sat Jul 22 16:48:01 2023
+[root@beegfs-client ~]# yum install -y kernel-devel beegfs-utils beegfs-client beegfs-mgmtd
+Loaded plugins: fastestmirror
+Loading mirror speeds from cached hostfile
+ * base: centos.mirror.net.in
+ * extras: centos.mirror.net.in
+ * updates: centos.mirror.net.in
+No package beegfs-utils available.
+No package beegfs-client available.
+No package beegfs-mgmtd available.
+Resolving Dependencies
+--> Running transaction check
+---> Package kernel-devel.x86_64 0:3.10.0-1160.92.1.el7 will be installed
+--> Finished Dependency Resolution
+
+Dependencies Resolved
+
+=========================================================================================================
+ Package                  Arch               Version                           Repository           Size
+=========================================================================================================
+Installing:
+ kernel-devel             x86_64             3.10.0-1160.92.1.el7              updates              18 M
+
+Transaction Summary
+=========================================================================================================
+Install  1 Package
+
+Total download size: 18 M
+Installed size: 38 M
+Downloading packages:
+Delta RPMs disabled because /usr/bin/applydeltarpm not installed.
+kernel-devel-3.10.0-1160.92.1.el7.x86_64.rpm                                      |  18 MB  00:00:00
+Running transaction check
+Running transaction test
+Transaction test succeeded
+Running transaction
+  Installing : kernel-devel-3.10.0-1160.92.1.el7.x86_64                                              1/1
+  Verifying  : kernel-devel-3.10.0-1160.92.1.el7.x86_64                                              1/1
+
+Installed:
+  kernel-devel.x86_64 0:3.10.0-1160.92.1.el7
+
+Complete!
+[root@beegfs-client ~]# mkdir /mnt/beegfs
+[root@beegfs-client ~]# /opt/beegfs/sbin/beegfs-setup-client -m 192.168.15.156
+-bash: /opt/beegfs/sbin/beegfs-setup-client: No such file or directory
+[root@beegfs-client ~]# history
+    1  dhclient
+    2  ifup ens33
+    3  yum install vim -y
+    4  yum install rsync -y
+    5  ip a
+    6  hostnamectl set-hostname beegfs-client
+    7  systemctl stop firewalld
+    8  systemctl disable firewalld
+    9  init 6
+   10  ip a
+   11  dhclient
+   12  ip a
+   13  ip a
+   14  vi /etc/selinux/config
+   15  init 6
+   16  yum install -y kernel-devel beegfs-utils beegfs-client beegfs-mgmtd
+   17  mkdir /mnt/beegfs
+   18  /opt/beegfs/sbin/beegfs-setup-client -m 192.168.15.156
+   19  history
+[root@beegfs-client ~]# ls
+anaconda-ks.cfg
+[root@beegfs-client ~]# cd /mnt/beegfs/
+[root@beegfs-client beegfs]# ls
+[root@beegfs-client beegfs]# systemctl start beegfs-client
+Failed to start beegfs-client.service: Unit not found.
+[root@beegfs-client beegfs]# cd
+[root@beegfs-client ~]# /opt/beegfs/sbin/beegfs-setup-client -m 192.168.15.156
+-bash: /opt/beegfs/sbin/beegfs-setup-client: No such file or directory
+[root@beegfs-client ~]# yum install -y kernel-devel beegfs-utils beegfs-client beegfs-mgmtd
+Loaded plugins: fastestmirror
+Loading mirror speeds from cached hostfile
+ * base: centos.mirror.net.in
+ * extras: centos.mirror.net.in
+ * updates: centos.mirror.net.in
+Package kernel-devel-3.10.0-1160.92.1.el7.x86_64 already installed and latest version
+No package beegfs-utils available.
+No package beegfs-client available.
+No package beegfs-mgmtd available.
+Nothing to do
+[root@beegfs-client ~]# yum install beegfs-utils
+Loaded plugins: fastestmirror
+Loading mirror speeds from cached hostfile
+ * base: centos.mirror.net.in
+ * extras: centos.mirror.net.in
+ * updates: centos.mirror.net.in
+No package beegfs-utils available.
+Error: Nothing to do
+[root@beegfs-client ~]# ping www.google.com
+PING www.google.com (142.250.183.68) 56(84) bytes of data.
+^C
+--- www.google.com ping statistics ---
+2 packets transmitted, 0 received, 100% packet loss, time 1002ms
+
+[root@beegfs-client ~]# yum install wget
+Loaded plugins: fastestmirror
+Loading mirror speeds from cached hostfile
+ * base: centos.mirror.net.in
+ * extras: centos.mirror.net.in
+ * updates: centos.mirror.net.in
+Resolving Dependencies
+--> Running transaction check
+---> Package wget.x86_64 0:1.14-18.el7_6.1 will be installed
+--> Finished Dependency Resolution
+
+Dependencies Resolved
+
+=========================================================================================================
+ Package              Arch                   Version                          Repository            Size
+=========================================================================================================
+Installing:
+ wget                 x86_64                 1.14-18.el7_6.1                  base                 547 k
+
+Transaction Summary
+=========================================================================================================
+Install  1 Package
+
+Total download size: 547 k
+Installed size: 2.0 M
+Is this ok [y/d/N]: y
+Downloading packages:
+wget-1.14-18.el7_6.1.x86_64.rpm                                                   | 547 kB  00:00:00
+Running transaction check
+Running transaction test
+Transaction test succeeded
+Running transaction
+  Installing : wget-1.14-18.el7_6.1.x86_64                                                           1/1
+  Verifying  : wget-1.14-18.el7_6.1.x86_64                                                           1/1
+
+Installed:
+  wget.x86_64 0:1.14-18.el7_6.1
+
+Complete!
+[root@beegfs-client ~]# wget --no-check-certificate -O /etc/yum.repos.d/beegfs.repo https://www.beegfs.io/release/beegfs_7.2/dists/beegfs-rhel7.repo
+--2023-07-22 17:38:27--  https://www.beegfs.io/release/beegfs_7.2/dists/beegfs-rhel7.repo
+Resolving www.beegfs.io (www.beegfs.io)... 178.254.21.65
+Connecting to www.beegfs.io (www.beegfs.io)|178.254.21.65|:443... connected.
+WARNING: cannot verify www.beegfs.io's certificate, issued by ‘/C=US/O=Let's Encrypt/CN=R3’:
+  Issued certificate has expired.
+HTTP request sent, awaiting response... 200 OK
+Length: 464
+Saving to: ‘/etc/yum.repos.d/beegfs.repo’
+
+100%[===============================================================>] 464         --.-K/s   in 0s
+
+2023-07-22 17:38:28 (44.1 MB/s) - ‘/etc/yum.repos.d/beegfs.repo’ saved [464/464]
+
+[root@beegfs-client ~]# yum install -y kernel-devel beegfs-utils beegfs-client beegfs-mgmtd
+Loaded plugins: fastestmirror
+Loading mirror speeds from cached hostfile
+ * base: centos.mirror.net.in
+ * extras: centos.mirror.net.in
+ * updates: centos.mirror.net.in
+beegfs                                                                            | 2.9 kB  00:00:00
+beegfs/primary_db                                                                 |  11 kB  00:00:00
+Package kernel-devel-3.10.0-1160.92.1.el7.x86_64 already installed and latest version
+Resolving Dependencies
+--> Running transaction check
+---> Package beegfs-client.noarch 20:7.2-el7 will be installed
+--> Processing Dependency: gcc-c++ for package: 20:beegfs-client-7.2-el7.noarch
+--> Processing Dependency: gcc for package: 20:beegfs-client-7.2-el7.noarch
+---> Package beegfs-mgmtd.x86_64 20:7.2-el7 will be installed
+--> Processing Dependency: beegfs-common = 20:7.2-el7 for package: 20:beegfs-mgmtd-7.2-el7.x86_64
+---> Package beegfs-utils.x86_64 20:7.2-el7 will be installed
+--> Running transaction check
+---> Package beegfs-common.noarch 20:7.2-el7 will be installed
+---> Package gcc.x86_64 0:4.8.5-44.el7 will be installed
+--> Processing Dependency: cpp = 4.8.5-44.el7 for package: gcc-4.8.5-44.el7.x86_64
+--> Processing Dependency: glibc-devel >= 2.2.90-12 for package: gcc-4.8.5-44.el7.x86_64
+--> Processing Dependency: libmpfr.so.4()(64bit) for package: gcc-4.8.5-44.el7.x86_64
+--> Processing Dependency: libmpc.so.3()(64bit) for package: gcc-4.8.5-44.el7.x86_64
+---> Package gcc-c++.x86_64 0:4.8.5-44.el7 will be installed
+--> Processing Dependency: libstdc++-devel = 4.8.5-44.el7 for package: gcc-c++-4.8.5-44.el7.x86_64
+--> Running transaction check
+---> Package cpp.x86_64 0:4.8.5-44.el7 will be installed
+---> Package glibc-devel.x86_64 0:2.17-326.el7_9 will be installed
+--> Processing Dependency: glibc-headers = 2.17-326.el7_9 for package: glibc-devel-2.17-326.el7_9.x86_64
+--> Processing Dependency: glibc = 2.17-326.el7_9 for package: glibc-devel-2.17-326.el7_9.x86_64
+--> Processing Dependency: glibc-headers for package: glibc-devel-2.17-326.el7_9.x86_64
+---> Package libmpc.x86_64 0:1.0.1-3.el7 will be installed
+---> Package libstdc++-devel.x86_64 0:4.8.5-44.el7 will be installed
+---> Package mpfr.x86_64 0:3.1.1-4.el7 will be installed
+--> Running transaction check
+---> Package glibc.x86_64 0:2.17-317.el7 will be updated
+--> Processing Dependency: glibc = 2.17-317.el7 for package: glibc-common-2.17-317.el7.x86_64
+---> Package glibc.x86_64 0:2.17-326.el7_9 will be an update
+---> Package glibc-headers.x86_64 0:2.17-326.el7_9 will be installed
+--> Processing Dependency: kernel-headers >= 2.2.1 for package: glibc-headers-2.17-326.el7_9.x86_64
+--> Processing Dependency: kernel-headers for package: glibc-headers-2.17-326.el7_9.x86_64
+--> Running transaction check
+---> Package glibc-common.x86_64 0:2.17-317.el7 will be updated
+---> Package glibc-common.x86_64 0:2.17-326.el7_9 will be an update
+---> Package kernel-headers.x86_64 0:3.10.0-1160.92.1.el7 will be installed
+--> Finished Dependency Resolution
+
+Dependencies Resolved
+
+=========================================================================================================
+ Package                    Arch              Version                           Repository          Size
+=========================================================================================================
+Installing:
+ beegfs-client              noarch            20:7.2-el7                        beegfs             395 k
+ beegfs-mgmtd               x86_64            20:7.2-el7                        beegfs             646 k
+ beegfs-utils               x86_64            20:7.2-el7                        beegfs             1.5 M
+Installing for dependencies:
+ beegfs-common              noarch            20:7.2-el7                        beegfs             9.0 k
+ cpp                        x86_64            4.8.5-44.el7                      base               5.9 M
+ gcc                        x86_64            4.8.5-44.el7                      base                16 M
+ gcc-c++                    x86_64            4.8.5-44.el7                      base               7.2 M
+ glibc-devel                x86_64            2.17-326.el7_9                    updates            1.1 M
+ glibc-headers              x86_64            2.17-326.el7_9                    updates            691 k
+ kernel-headers             x86_64            3.10.0-1160.92.1.el7              updates            9.1 M
+ libmpc                     x86_64            1.0.1-3.el7                       base                51 k
+ libstdc++-devel            x86_64            4.8.5-44.el7                      base               1.5 M
+ mpfr                       x86_64            3.1.1-4.el7                       base               203 k
+Updating for dependencies:
+ glibc                      x86_64            2.17-326.el7_9                    updates            3.6 M
+ glibc-common               x86_64            2.17-326.el7_9                    updates             12 M
+
+Transaction Summary
+=========================================================================================================
+Install  3 Packages (+10 Dependent packages)
+Upgrade             (  2 Dependent packages)
+
+Total download size: 60 M
+Downloading packages:
+Delta RPMs disabled because /usr/bin/applydeltarpm not installed.
+(1/15): beegfs-common-7.2-el7.noarch.rpm                                          | 9.0 kB  00:00:00
+(2/15): beegfs-client-7.2-el7.noarch.rpm                                          | 395 kB  00:00:01
+(3/15): beegfs-mgmtd-7.2-el7.x86_64.rpm                                           | 646 kB  00:00:00
+(4/15): gcc-4.8.5-44.el7.x86_64.rpm                                               |  16 MB  00:00:00
+(5/15): beegfs-utils-7.2-el7.x86_64.rpm                                           | 1.5 MB  00:00:00
+(6/15): gcc-c++-4.8.5-44.el7.x86_64.rpm                                           | 7.2 MB  00:00:00
+(7/15): cpp-4.8.5-44.el7.x86_64.rpm                                               | 5.9 MB  00:00:00
+(8/15): glibc-common-2.17-326.el7_9.x86_64.rpm                                    |  12 MB  00:00:00
+(9/15): glibc-devel-2.17-326.el7_9.x86_64.rpm                                     | 1.1 MB  00:00:00
+(10/15): glibc-2.17-326.el7_9.x86_64.rpm                                          | 3.6 MB  00:00:00
+(11/15): glibc-headers-2.17-326.el7_9.x86_64.rpm                                  | 691 kB  00:00:00
+(12/15): libmpc-1.0.1-3.el7.x86_64.rpm                                            |  51 kB  00:00:00
+(13/15): mpfr-3.1.1-4.el7.x86_64.rpm                                              | 203 kB  00:00:00
+(14/15): kernel-headers-3.10.0-1160.92.1.el7.x86_64.rpm                           | 9.1 MB  00:00:00
+(15/15): libstdc++-devel-4.8.5-44.el7.x86_64.rpm                                  | 1.5 MB  00:00:00
+---------------------------------------------------------------------------------------------------------
+Total                                                                     19 MB/s |  60 MB  00:00:03
+Running transaction check
+Running transaction test
+Transaction test succeeded
+Running transaction
+  Installing : 20:beegfs-common-7.2-el7.noarch                                                      1/17
+  Updating   : glibc-2.17-326.el7_9.x86_64                                                          2/17
+  Updating   : glibc-common-2.17-326.el7_9.x86_64                                                   3/17
+  Installing : mpfr-3.1.1-4.el7.x86_64                                                              4/17
+  Installing : libmpc-1.0.1-3.el7.x86_64                                                            5/17
+  Installing : cpp-4.8.5-44.el7.x86_64                                                              6/17
+  Installing : kernel-headers-3.10.0-1160.92.1.el7.x86_64                                           7/17
+  Installing : glibc-headers-2.17-326.el7_9.x86_64                                                  8/17
+  Installing : glibc-devel-2.17-326.el7_9.x86_64                                                    9/17
+  Installing : gcc-4.8.5-44.el7.x86_64                                                             10/17
+  Installing : libstdc++-devel-4.8.5-44.el7.x86_64                                                 11/17
+  Installing : gcc-c++-4.8.5-44.el7.x86_64                                                         12/17
+  Installing : 20:beegfs-client-7.2-el7.noarch                                                     13/17
+Created symlink from /etc/systemd/system/multi-user.target.wants/beegfs-client.service to /usr/lib/systemd/system/beegfs-client.service.
+  Installing : 20:beegfs-mgmtd-7.2-el7.x86_64                                                      14/17
+Created symlink from /etc/systemd/system/multi-user.target.wants/beegfs-mgmtd.service to /usr/lib/systemd/system/beegfs-mgmtd.service.
+  Installing : 20:beegfs-utils-7.2-el7.x86_64                                                      15/17
+  Cleanup    : glibc-2.17-317.el7.x86_64                                                           16/17
+  Cleanup    : glibc-common-2.17-317.el7.x86_64                                                    17/17
+  Verifying  : gcc-c++-4.8.5-44.el7.x86_64                                                          1/17
+  Verifying  : glibc-common-2.17-326.el7_9.x86_64                                                   2/17
+  Verifying  : 20:beegfs-mgmtd-7.2-el7.x86_64                                                       3/17
+  Verifying  : 20:beegfs-client-7.2-el7.noarch                                                      4/17
+  Verifying  : mpfr-3.1.1-4.el7.x86_64                                                              5/17
+  Verifying  : glibc-devel-2.17-326.el7_9.x86_64                                                    6/17
+  Verifying  : cpp-4.8.5-44.el7.x86_64                                                              7/17
+  Verifying  : glibc-headers-2.17-326.el7_9.x86_64                                                  8/17
+  Verifying  : gcc-4.8.5-44.el7.x86_64                                                              9/17
+  Verifying  : libstdc++-devel-4.8.5-44.el7.x86_64                                                 10/17
+  Verifying  : libmpc-1.0.1-3.el7.x86_64                                                           11/17
+  Verifying  : glibc-2.17-326.el7_9.x86_64                                                         12/17
+  Verifying  : kernel-headers-3.10.0-1160.92.1.el7.x86_64                                          13/17
+  Verifying  : 20:beegfs-common-7.2-el7.noarch                                                     14/17
+  Verifying  : 20:beegfs-utils-7.2-el7.x86_64                                                      15/17
+  Verifying  : glibc-2.17-317.el7.x86_64                                                           16/17
+  Verifying  : glibc-common-2.17-317.el7.x86_64                                                    17/17
+
+Installed:
+  beegfs-client.noarch 20:7.2-el7    beegfs-mgmtd.x86_64 20:7.2-el7    beegfs-utils.x86_64 20:7.2-el7
+
+Dependency Installed:
+  beegfs-common.noarch 20:7.2-el7                        cpp.x86_64 0:4.8.5-44.el7
+  gcc.x86_64 0:4.8.5-44.el7                              gcc-c++.x86_64 0:4.8.5-44.el7
+  glibc-devel.x86_64 0:2.17-326.el7_9                    glibc-headers.x86_64 0:2.17-326.el7_9
+  kernel-headers.x86_64 0:3.10.0-1160.92.1.el7           libmpc.x86_64 0:1.0.1-3.el7
+  libstdc++-devel.x86_64 0:4.8.5-44.el7                  mpfr.x86_64 0:3.1.1-4.el7
+
+Dependency Updated:
+  glibc.x86_64 0:2.17-326.el7_9                   glibc-common.x86_64 0:2.17-326.el7_9
+
+Complete!
+[root@beegfs-client ~]# /opt/beegfs/sbin/beegfs-setup-client -m 192.168.15.156
+Updating config file: /etc/beegfs/beegfs-client.conf
+ * Setting management host: 192.168.15.156
+All done.
+[root@beegfs-client ~]# vim /etc/beegfs/beegfs-mounts.conf
+[root@beegfs-client ~]# cat /etc/beegfs/beegfs-mounts.conf
+/mnt/beegfs /etc/beegfs/beegfs-client.conf
+[root@beegfs-client ~]# cd /mnt/beegfs/
+[root@beegfs-client beegfs]# ls
+[root@beegfs-client beegfs]# systemctl start beegfs-client
+Job for beegfs-client.service failed because the control process exited with error code. See "systemctl status beegfs-client.service" and "journalctl -xe" for details.
+[root@beegfs-client beegfs]#

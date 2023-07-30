@@ -1,0 +1,1867 @@
+login as: root
+root@192.168.15.158's password:
+    +----------------------------------------------------------------------+
+    ¦                 • MobaXterm Personal Edition v23.0 •                 ¦
+    ¦               (SSH client, X server and network tools)               ¦
+    ¦                                                                      ¦
+    ¦ ? SSH session to root@192.168.15.158                                 ¦
+    ¦   • Direct SSH      :  ?                                             ¦
+    ¦   • SSH compression :  ?                                             ¦
+    ¦   • SSH-browser     :  ?                                             ¦
+    ¦   • X11-forwarding  :  ?  (disabled or not supported by server)      ¦
+    ¦                                                                      ¦
+    ¦ ? For more info, ctrl+click on help or visit our website.            ¦
+    +----------------------------------------------------------------------+
+
+Last login: Sat Jul 22 22:21:36 2023
+[root@bacula-server ~]# vi /etc/hosts
+[root@bacula-server ~]# cat /etc/hosts
+127.0.0.1   localhost localhost.localdomain localhost4 localhost4.localdomain4
+::1         localhost localhost.localdomain localhost6 localhost6.localdomain6
+192.168.15.158 bacula-server backup.hpcsa.com
+
+[root@bacula-server ~]# yum install -y bacula-director bacula-storage bacula-console bacula-client mariadb-server vim httpd
+Loaded plugins: fastestmirror
+Determining fastest mirrors
+ * base: centos.mirror.net.in
+ * extras: centos.mirror.net.in
+ * updates: centos.mirror.net.in
+base                                                                              | 3.6 kB  00:00:00
+extras                                                                            | 2.9 kB  00:00:00
+updates                                                                           | 2.9 kB  00:00:00
+(1/4): base/7/x86_64/group_gz                                                     | 153 kB  00:00:00
+(2/4): extras/7/x86_64/primary_db                                                 | 250 kB  00:00:00
+(3/4): updates/7/x86_64/primary_db                                                |  22 MB  00:00:00
+(4/4): base/7/x86_64/primary_db                                                   | 6.1 MB  00:00:00
+Resolving Dependencies
+--> Running transaction check
+---> Package bacula-client.x86_64 0:5.2.13-23.1.el7 will be installed
+--> Processing Dependency: bacula-common(x86-64) = 5.2.13-23.1.el7 for package: bacula-client-5.2.13-23.1.el7.x86_64
+--> Processing Dependency: libbacpy-5.2.13.so()(64bit) for package: bacula-client-5.2.13-23.1.el7.x86_64
+--> Processing Dependency: libbacfind-5.2.13.so()(64bit) for package: bacula-client-5.2.13-23.1.el7.x86_64
+--> Processing Dependency: libbaccfg-5.2.13.so()(64bit) for package: bacula-client-5.2.13-23.1.el7.x86_64
+--> Processing Dependency: libbac-5.2.13.so()(64bit) for package: bacula-client-5.2.13-23.1.el7.x86_64
+---> Package bacula-console.x86_64 0:5.2.13-23.1.el7 will be installed
+---> Package bacula-director.x86_64 0:5.2.13-23.1.el7 will be installed
+--> Processing Dependency: perl(strict) for package: bacula-director-5.2.13-23.1.el7.x86_64
+--> Processing Dependency: perl(POSIX) for package: bacula-director-5.2.13-23.1.el7.x86_64
+--> Processing Dependency: perl(Logwatch) for package: bacula-director-5.2.13-23.1.el7.x86_64
+--> Processing Dependency: logwatch for package: bacula-director-5.2.13-23.1.el7.x86_64
+--> Processing Dependency: /usr/bin/perl for package: bacula-director-5.2.13-23.1.el7.x86_64
+--> Processing Dependency: libbacsql-5.2.13.so()(64bit) for package: bacula-director-5.2.13-23.1.el7.x86_64
+--> Processing Dependency: libbaccats-5.2.13.so()(64bit) for package: bacula-director-5.2.13-23.1.el7.x86_64
+---> Package bacula-storage.x86_64 0:5.2.13-23.1.el7 will be installed
+--> Processing Dependency: mt-st for package: bacula-storage-5.2.13-23.1.el7.x86_64
+---> Package httpd.x86_64 0:2.4.6-99.el7.centos.1 will be installed
+--> Processing Dependency: httpd-tools = 2.4.6-99.el7.centos.1 for package: httpd-2.4.6-99.el7.centos.1.x86_64
+--> Processing Dependency: /etc/mime.types for package: httpd-2.4.6-99.el7.centos.1.x86_64
+--> Processing Dependency: libaprutil-1.so.0()(64bit) for package: httpd-2.4.6-99.el7.centos.1.x86_64
+--> Processing Dependency: libapr-1.so.0()(64bit) for package: httpd-2.4.6-99.el7.centos.1.x86_64
+---> Package mariadb-server.x86_64 1:5.5.68-1.el7 will be installed
+--> Processing Dependency: mariadb(x86-64) = 1:5.5.68-1.el7 for package: 1:mariadb-server-5.5.68-1.el7.x86_64
+--> Processing Dependency: perl-DBI for package: 1:mariadb-server-5.5.68-1.el7.x86_64
+--> Processing Dependency: perl-DBD-MySQL for package: 1:mariadb-server-5.5.68-1.el7.x86_64
+--> Processing Dependency: perl(Getopt::Long) for package: 1:mariadb-server-5.5.68-1.el7.x86_64
+--> Processing Dependency: perl(File::Temp) for package: 1:mariadb-server-5.5.68-1.el7.x86_64
+--> Processing Dependency: perl(File::Path) for package: 1:mariadb-server-5.5.68-1.el7.x86_64
+--> Processing Dependency: perl(Data::Dumper) for package: 1:mariadb-server-5.5.68-1.el7.x86_64
+--> Processing Dependency: perl(DBI) for package: 1:mariadb-server-5.5.68-1.el7.x86_64
+---> Package vim-enhanced.x86_64 2:7.4.629-8.el7_9 will be installed
+--> Processing Dependency: vim-common = 2:7.4.629-8.el7_9 for package: 2:vim-enhanced-7.4.629-8.el7_9.x86_64
+--> Processing Dependency: libperl.so()(64bit) for package: 2:vim-enhanced-7.4.629-8.el7_9.x86_64
+--> Processing Dependency: libgpm.so.2()(64bit) for package: 2:vim-enhanced-7.4.629-8.el7_9.x86_64
+--> Running transaction check
+---> Package apr.x86_64 0:1.4.8-7.el7 will be installed
+---> Package apr-util.x86_64 0:1.5.2-6.el7_9.1 will be installed
+---> Package bacula-common.x86_64 0:5.2.13-23.1.el7 will be installed
+---> Package bacula-libs.x86_64 0:5.2.13-23.1.el7 will be installed
+---> Package bacula-libs-sql.x86_64 0:5.2.13-23.1.el7 will be installed
+--> Processing Dependency: libpq.so.5()(64bit) for package: bacula-libs-sql-5.2.13-23.1.el7.x86_64
+---> Package gpm-libs.x86_64 0:1.20.7-6.el7 will be installed
+---> Package httpd-tools.x86_64 0:2.4.6-99.el7.centos.1 will be installed
+---> Package logwatch.noarch 0:7.4.0-35.20130522svn140.el7_5 will be installed
+--> Processing Dependency: perl(Sys::MemInfo) for package: logwatch-7.4.0-35.20130522svn140.el7_5.noarch
+--> Processing Dependency: perl(Sys::CPU) for package: logwatch-7.4.0-35.20130522svn140.el7_5.noarch
+--> Processing Dependency: perl(Exporter) for package: logwatch-7.4.0-35.20130522svn140.el7_5.noarch
+--> Processing Dependency: perl(Date::Manip) for package: logwatch-7.4.0-35.20130522svn140.el7_5.noarch
+--> Processing Dependency: mailx for package: logwatch-7.4.0-35.20130522svn140.el7_5.noarch
+---> Package mailcap.noarch 0:2.1.41-2.el7 will be installed
+---> Package mariadb.x86_64 1:5.5.68-1.el7 will be installed
+---> Package mt-st.x86_64 0:1.1-14.el7 will be installed
+---> Package perl.x86_64 4:5.16.3-299.el7_9 will be installed
+--> Processing Dependency: perl(Socket) >= 1.3 for package: 4:perl-5.16.3-299.el7_9.x86_64
+--> Processing Dependency: perl(Scalar::Util) >= 1.10 for package: 4:perl-5.16.3-299.el7_9.x86_64
+--> Processing Dependency: perl-macros for package: 4:perl-5.16.3-299.el7_9.x86_64
+--> Processing Dependency: perl(threads::shared) for package: 4:perl-5.16.3-299.el7_9.x86_64
+--> Processing Dependency: perl(threads) for package: 4:perl-5.16.3-299.el7_9.x86_64
+--> Processing Dependency: perl(constant) for package: 4:perl-5.16.3-299.el7_9.x86_64
+--> Processing Dependency: perl(Time::Local) for package: 4:perl-5.16.3-299.el7_9.x86_64
+--> Processing Dependency: perl(Time::HiRes) for package: 4:perl-5.16.3-299.el7_9.x86_64
+--> Processing Dependency: perl(Storable) for package: 4:perl-5.16.3-299.el7_9.x86_64
+--> Processing Dependency: perl(Socket) for package: 4:perl-5.16.3-299.el7_9.x86_64
+--> Processing Dependency: perl(Scalar::Util) for package: 4:perl-5.16.3-299.el7_9.x86_64
+--> Processing Dependency: perl(Pod::Simple::XHTML) for package: 4:perl-5.16.3-299.el7_9.x86_64
+--> Processing Dependency: perl(Pod::Simple::Search) for package: 4:perl-5.16.3-299.el7_9.x86_64
+--> Processing Dependency: perl(Filter::Util::Call) for package: 4:perl-5.16.3-299.el7_9.x86_64
+--> Processing Dependency: perl(File::Spec::Unix) for package: 4:perl-5.16.3-299.el7_9.x86_64
+--> Processing Dependency: perl(File::Spec::Functions) for package: 4:perl-5.16.3-299.el7_9.x86_64
+--> Processing Dependency: perl(File::Spec) for package: 4:perl-5.16.3-299.el7_9.x86_64
+--> Processing Dependency: perl(Cwd) for package: 4:perl-5.16.3-299.el7_9.x86_64
+--> Processing Dependency: perl(Carp) for package: 4:perl-5.16.3-299.el7_9.x86_64
+---> Package perl-DBD-MySQL.x86_64 0:4.023-6.el7 will be installed
+---> Package perl-DBI.x86_64 0:1.627-4.el7 will be installed
+--> Processing Dependency: perl(RPC::PlServer) >= 0.2001 for package: perl-DBI-1.627-4.el7.x86_64
+--> Processing Dependency: perl(RPC::PlClient) >= 0.2000 for package: perl-DBI-1.627-4.el7.x86_64
+---> Package perl-Data-Dumper.x86_64 0:2.145-3.el7 will be installed
+---> Package perl-File-Path.noarch 0:2.09-2.el7 will be installed
+---> Package perl-File-Temp.noarch 0:0.23.01-3.el7 will be installed
+---> Package perl-Getopt-Long.noarch 0:2.40-3.el7 will be installed
+--> Processing Dependency: perl(Pod::Usage) >= 1.14 for package: perl-Getopt-Long-2.40-3.el7.noarch
+--> Processing Dependency: perl(Text::ParseWords) for package: perl-Getopt-Long-2.40-3.el7.noarch
+---> Package perl-libs.x86_64 4:5.16.3-299.el7_9 will be installed
+---> Package vim-common.x86_64 2:7.4.629-8.el7_9 will be installed
+--> Processing Dependency: vim-filesystem for package: 2:vim-common-7.4.629-8.el7_9.x86_64
+--> Running transaction check
+---> Package mailx.x86_64 0:12.5-19.el7 will be installed
+---> Package perl-Carp.noarch 0:1.26-244.el7 will be installed
+---> Package perl-Date-Manip.noarch 0:6.41-2.el7 will be installed
+--> Processing Dependency: perl(Encode) for package: perl-Date-Manip-6.41-2.el7.noarch
+---> Package perl-Exporter.noarch 0:5.68-3.el7 will be installed
+---> Package perl-Filter.x86_64 0:1.49-3.el7 will be installed
+---> Package perl-PathTools.x86_64 0:3.40-5.el7 will be installed
+---> Package perl-PlRPC.noarch 0:0.2020-14.el7 will be installed
+--> Processing Dependency: perl(Net::Daemon) >= 0.13 for package: perl-PlRPC-0.2020-14.el7.noarch
+--> Processing Dependency: perl(Net::Daemon::Test) for package: perl-PlRPC-0.2020-14.el7.noarch
+--> Processing Dependency: perl(Net::Daemon::Log) for package: perl-PlRPC-0.2020-14.el7.noarch
+--> Processing Dependency: perl(Compress::Zlib) for package: perl-PlRPC-0.2020-14.el7.noarch
+---> Package perl-Pod-Simple.noarch 1:3.28-4.el7 will be installed
+--> Processing Dependency: perl(Pod::Escapes) >= 1.04 for package: 1:perl-Pod-Simple-3.28-4.el7.noarch
+---> Package perl-Pod-Usage.noarch 0:1.63-3.el7 will be installed
+--> Processing Dependency: perl(Pod::Text) >= 3.15 for package: perl-Pod-Usage-1.63-3.el7.noarch
+--> Processing Dependency: perl-Pod-Perldoc for package: perl-Pod-Usage-1.63-3.el7.noarch
+---> Package perl-Scalar-List-Utils.x86_64 0:1.27-248.el7 will be installed
+---> Package perl-Socket.x86_64 0:2.010-5.el7 will be installed
+---> Package perl-Storable.x86_64 0:2.45-3.el7 will be installed
+---> Package perl-Sys-CPU.x86_64 0:0.54-4.el7 will be installed
+---> Package perl-Sys-MemInfo.x86_64 0:0.91-7.el7 will be installed
+---> Package perl-Text-ParseWords.noarch 0:3.29-4.el7 will be installed
+---> Package perl-Time-HiRes.x86_64 4:1.9725-3.el7 will be installed
+---> Package perl-Time-Local.noarch 0:1.2300-2.el7 will be installed
+---> Package perl-constant.noarch 0:1.27-2.el7 will be installed
+---> Package perl-macros.x86_64 4:5.16.3-299.el7_9 will be installed
+---> Package perl-threads.x86_64 0:1.87-4.el7 will be installed
+---> Package perl-threads-shared.x86_64 0:1.43-6.el7 will be installed
+---> Package postgresql-libs.x86_64 0:9.2.24-8.el7_9 will be installed
+---> Package vim-filesystem.x86_64 2:7.4.629-8.el7_9 will be installed
+--> Running transaction check
+---> Package perl-Encode.x86_64 0:2.51-7.el7 will be installed
+---> Package perl-IO-Compress.noarch 0:2.061-2.el7 will be installed
+--> Processing Dependency: perl(Compress::Raw::Zlib) >= 2.061 for package: perl-IO-Compress-2.061-2.el7.noarch
+--> Processing Dependency: perl(Compress::Raw::Bzip2) >= 2.061 for package: perl-IO-Compress-2.061-2.el7.noarch
+---> Package perl-Net-Daemon.noarch 0:0.48-5.el7 will be installed
+---> Package perl-Pod-Escapes.noarch 1:1.04-299.el7_9 will be installed
+---> Package perl-Pod-Perldoc.noarch 0:3.20-4.el7 will be installed
+--> Processing Dependency: perl(parent) for package: perl-Pod-Perldoc-3.20-4.el7.noarch
+--> Processing Dependency: perl(HTTP::Tiny) for package: perl-Pod-Perldoc-3.20-4.el7.noarch
+---> Package perl-podlators.noarch 0:2.5.1-3.el7 will be installed
+--> Running transaction check
+---> Package perl-Compress-Raw-Bzip2.x86_64 0:2.061-3.el7 will be installed
+---> Package perl-Compress-Raw-Zlib.x86_64 1:2.061-4.el7 will be installed
+---> Package perl-HTTP-Tiny.noarch 0:0.033-3.el7 will be installed
+---> Package perl-parent.noarch 1:0.225-244.el7 will be installed
+--> Finished Dependency Resolution
+
+Dependencies Resolved
+
+=========================================================================================================
+ Package                        Arch          Version                               Repository      Size
+=========================================================================================================
+Installing:
+ bacula-client                  x86_64        5.2.13-23.1.el7                       base           101 k
+ bacula-console                 x86_64        5.2.13-23.1.el7                       base            37 k
+ bacula-director                x86_64        5.2.13-23.1.el7                       base           307 k
+ bacula-storage                 x86_64        5.2.13-23.1.el7                       base           409 k
+ httpd                          x86_64        2.4.6-99.el7.centos.1                 updates        2.7 M
+ mariadb-server                 x86_64        1:5.5.68-1.el7                        base            11 M
+ vim-enhanced                   x86_64        2:7.4.629-8.el7_9                     updates        1.1 M
+Installing for dependencies:
+ apr                            x86_64        1.4.8-7.el7                           base           104 k
+ apr-util                       x86_64        1.5.2-6.el7_9.1                       updates         92 k
+ bacula-common                  x86_64        5.2.13-23.1.el7                       base            97 k
+ bacula-libs                    x86_64        5.2.13-23.1.el7                       base           214 k
+ bacula-libs-sql                x86_64        5.2.13-23.1.el7                       base            95 k
+ gpm-libs                       x86_64        1.20.7-6.el7                          base            32 k
+ httpd-tools                    x86_64        2.4.6-99.el7.centos.1                 updates         94 k
+ logwatch                       noarch        7.4.0-35.20130522svn140.el7_5         base           403 k
+ mailcap                        noarch        2.1.41-2.el7                          base            31 k
+ mailx                          x86_64        12.5-19.el7                           base           245 k
+ mariadb                        x86_64        1:5.5.68-1.el7                        base           8.8 M
+ mt-st                          x86_64        1.1-14.el7                            base            45 k
+ perl                           x86_64        4:5.16.3-299.el7_9                    updates        8.0 M
+ perl-Carp                      noarch        1.26-244.el7                          base            19 k
+ perl-Compress-Raw-Bzip2        x86_64        2.061-3.el7                           base            32 k
+ perl-Compress-Raw-Zlib         x86_64        1:2.061-4.el7                         base            57 k
+ perl-DBD-MySQL                 x86_64        4.023-6.el7                           base           140 k
+ perl-DBI                       x86_64        1.627-4.el7                           base           802 k
+ perl-Data-Dumper               x86_64        2.145-3.el7                           base            47 k
+ perl-Date-Manip                noarch        6.41-2.el7                            base           1.2 M
+ perl-Encode                    x86_64        2.51-7.el7                            base           1.5 M
+ perl-Exporter                  noarch        5.68-3.el7                            base            28 k
+ perl-File-Path                 noarch        2.09-2.el7                            base            26 k
+ perl-File-Temp                 noarch        0.23.01-3.el7                         base            56 k
+ perl-Filter                    x86_64        1.49-3.el7                            base            76 k
+ perl-Getopt-Long               noarch        2.40-3.el7                            base            56 k
+ perl-HTTP-Tiny                 noarch        0.033-3.el7                           base            38 k
+ perl-IO-Compress               noarch        2.061-2.el7                           base           260 k
+ perl-Net-Daemon                noarch        0.48-5.el7                            base            51 k
+ perl-PathTools                 x86_64        3.40-5.el7                            base            82 k
+ perl-PlRPC                     noarch        0.2020-14.el7                         base            36 k
+ perl-Pod-Escapes               noarch        1:1.04-299.el7_9                      updates         52 k
+ perl-Pod-Perldoc               noarch        3.20-4.el7                            base            87 k
+ perl-Pod-Simple                noarch        1:3.28-4.el7                          base           216 k
+ perl-Pod-Usage                 noarch        1.63-3.el7                            base            27 k
+ perl-Scalar-List-Utils         x86_64        1.27-248.el7                          base            36 k
+ perl-Socket                    x86_64        2.010-5.el7                           base            49 k
+ perl-Storable                  x86_64        2.45-3.el7                            base            77 k
+ perl-Sys-CPU                   x86_64        0.54-4.el7                            base            14 k
+ perl-Sys-MemInfo               x86_64        0.91-7.el7                            base            15 k
+ perl-Text-ParseWords           noarch        3.29-4.el7                            base            14 k
+ perl-Time-HiRes                x86_64        4:1.9725-3.el7                        base            45 k
+ perl-Time-Local                noarch        1.2300-2.el7                          base            24 k
+ perl-constant                  noarch        1.27-2.el7                            base            19 k
+ perl-libs                      x86_64        4:5.16.3-299.el7_9                    updates        690 k
+ perl-macros                    x86_64        4:5.16.3-299.el7_9                    updates         44 k
+ perl-parent                    noarch        1:0.225-244.el7                       base            12 k
+ perl-podlators                 noarch        2.5.1-3.el7                           base           112 k
+ perl-threads                   x86_64        1.87-4.el7                            base            49 k
+ perl-threads-shared            x86_64        1.43-6.el7                            base            39 k
+ postgresql-libs                x86_64        9.2.24-8.el7_9                        updates        235 k
+ vim-common                     x86_64        2:7.4.629-8.el7_9                     updates        5.9 M
+ vim-filesystem                 x86_64        2:7.4.629-8.el7_9                     updates         11 k
+
+Transaction Summary
+=========================================================================================================
+Install  7 Packages (+53 Dependent packages)
+
+Total download size: 46 M
+Installed size: 199 M
+Downloading packages:
+warning: /var/cache/yum/x86_64/7/updates/packages/apr-util-1.5.2-6.el7_9.1.x86_64.rpm: Header V3 RSA/SHA256 Signature, key ID f4a80eb5: NOKEY
+Public key for apr-util-1.5.2-6.el7_9.1.x86_64.rpm is not installed
+(1/60): apr-util-1.5.2-6.el7_9.1.x86_64.rpm                                       |  92 kB  00:00:00
+Public key for apr-1.4.8-7.el7.x86_64.rpm is not installed
+(2/60): apr-1.4.8-7.el7.x86_64.rpm                                                | 104 kB  00:00:00
+(3/60): bacula-common-5.2.13-23.1.el7.x86_64.rpm                                  |  97 kB  00:00:00
+(4/60): bacula-client-5.2.13-23.1.el7.x86_64.rpm                                  | 101 kB  00:00:00
+(5/60): bacula-console-5.2.13-23.1.el7.x86_64.rpm                                 |  37 kB  00:00:00
+(6/60): bacula-libs-5.2.13-23.1.el7.x86_64.rpm                                    | 214 kB  00:00:00
+(7/60): bacula-libs-sql-5.2.13-23.1.el7.x86_64.rpm                                |  95 kB  00:00:00
+(8/60): bacula-director-5.2.13-23.1.el7.x86_64.rpm                                | 307 kB  00:00:00
+(9/60): gpm-libs-1.20.7-6.el7.x86_64.rpm                                          |  32 kB  00:00:00
+(10/60): bacula-storage-5.2.13-23.1.el7.x86_64.rpm                                | 409 kB  00:00:00
+(11/60): mailcap-2.1.41-2.el7.noarch.rpm                                          |  31 kB  00:00:00
+(12/60): httpd-tools-2.4.6-99.el7.centos.1.x86_64.rpm                             |  94 kB  00:00:00
+(13/60): mailx-12.5-19.el7.x86_64.rpm                                             | 245 kB  00:00:00
+(14/60): logwatch-7.4.0-35.20130522svn140.el7_5.noarch.rpm                        | 403 kB  00:00:00
+(15/60): mariadb-server-5.5.68-1.el7.x86_64.rpm                                   |  11 MB  00:00:00
+(16/60): mt-st-1.1-14.el7.x86_64.rpm                                              |  45 kB  00:00:00
+(17/60): perl-Carp-1.26-244.el7.noarch.rpm                                        |  19 kB  00:00:00
+(18/60): perl-Compress-Raw-Bzip2-2.061-3.el7.x86_64.rpm                           |  32 kB  00:00:00
+(19/60): perl-Compress-Raw-Zlib-2.061-4.el7.x86_64.rpm                            |  57 kB  00:00:00
+(20/60): perl-DBD-MySQL-4.023-6.el7.x86_64.rpm                                    | 140 kB  00:00:00
+(21/60): mariadb-5.5.68-1.el7.x86_64.rpm                                          | 8.8 MB  00:00:00
+(22/60): perl-Data-Dumper-2.145-3.el7.x86_64.rpm                                  |  47 kB  00:00:00
+(23/60): httpd-2.4.6-99.el7.centos.1.x86_64.rpm                                   | 2.7 MB  00:00:00
+(24/60): perl-DBI-1.627-4.el7.x86_64.rpm                                          | 802 kB  00:00:00
+(25/60): perl-Date-Manip-6.41-2.el7.noarch.rpm                                    | 1.2 MB  00:00:00
+(26/60): perl-Exporter-5.68-3.el7.noarch.rpm                                      |  28 kB  00:00:00
+(27/60): perl-File-Path-2.09-2.el7.noarch.rpm                                     |  26 kB  00:00:00
+(28/60): perl-Encode-2.51-7.el7.x86_64.rpm                                        | 1.5 MB  00:00:00
+(29/60): perl-File-Temp-0.23.01-3.el7.noarch.rpm                                  |  56 kB  00:00:00
+(30/60): perl-Getopt-Long-2.40-3.el7.noarch.rpm                                   |  56 kB  00:00:00
+(31/60): perl-Filter-1.49-3.el7.x86_64.rpm                                        |  76 kB  00:00:00
+(32/60): perl-HTTP-Tiny-0.033-3.el7.noarch.rpm                                    |  38 kB  00:00:00
+(33/60): perl-Net-Daemon-0.48-5.el7.noarch.rpm                                    |  51 kB  00:00:00
+(34/60): perl-PathTools-3.40-5.el7.x86_64.rpm                                     |  82 kB  00:00:00
+(35/60): perl-PlRPC-0.2020-14.el7.noarch.rpm                                      |  36 kB  00:00:00
+(36/60): perl-IO-Compress-2.061-2.el7.noarch.rpm                                  | 260 kB  00:00:00
+(37/60): perl-Pod-Perldoc-3.20-4.el7.noarch.rpm                                   |  87 kB  00:00:00
+(38/60): perl-Pod-Usage-1.63-3.el7.noarch.rpm                                     |  27 kB  00:00:00
+(39/60): perl-Scalar-List-Utils-1.27-248.el7.x86_64.rpm                           |  36 kB  00:00:00
+(40/60): perl-Pod-Escapes-1.04-299.el7_9.noarch.rpm                               |  52 kB  00:00:00
+(41/60): perl-Socket-2.010-5.el7.x86_64.rpm                                       |  49 kB  00:00:00
+(42/60): perl-Pod-Simple-3.28-4.el7.noarch.rpm                                    | 216 kB  00:00:00
+(43/60): perl-Sys-CPU-0.54-4.el7.x86_64.rpm                                       |  14 kB  00:00:00
+(44/60): perl-Storable-2.45-3.el7.x86_64.rpm                                      |  77 kB  00:00:00
+(45/60): perl-Sys-MemInfo-0.91-7.el7.x86_64.rpm                                   |  15 kB  00:00:00
+(46/60): perl-Text-ParseWords-3.29-4.el7.noarch.rpm                               |  14 kB  00:00:00
+(47/60): perl-Time-HiRes-1.9725-3.el7.x86_64.rpm                                  |  45 kB  00:00:00
+(48/60): perl-Time-Local-1.2300-2.el7.noarch.rpm                                  |  24 kB  00:00:00
+(49/60): perl-constant-1.27-2.el7.noarch.rpm                                      |  19 kB  00:00:00
+(50/60): perl-libs-5.16.3-299.el7_9.x86_64.rpm                                    | 690 kB  00:00:00
+(51/60): perl-macros-5.16.3-299.el7_9.x86_64.rpm                                  |  44 kB  00:00:00
+(52/60): perl-parent-0.225-244.el7.noarch.rpm                                     |  12 kB  00:00:00
+(53/60): perl-threads-1.87-4.el7.x86_64.rpm                                       |  49 kB  00:00:00
+(54/60): perl-podlators-2.5.1-3.el7.noarch.rpm                                    | 112 kB  00:00:00
+(55/60): perl-threads-shared-1.43-6.el7.x86_64.rpm                                |  39 kB  00:00:00
+(56/60): postgresql-libs-9.2.24-8.el7_9.x86_64.rpm                                | 235 kB  00:00:00
+(57/60): perl-5.16.3-299.el7_9.x86_64.rpm                                         | 8.0 MB  00:00:01
+(58/60): vim-enhanced-7.4.629-8.el7_9.x86_64.rpm                                  | 1.1 MB  00:00:00
+(59/60): vim-filesystem-7.4.629-8.el7_9.x86_64.rpm                                |  11 kB  00:00:00
+(60/60): vim-common-7.4.629-8.el7_9.x86_64.rpm                                    | 5.9 MB  00:00:00
+---------------------------------------------------------------------------------------------------------
+Total                                                                     18 MB/s |  46 MB  00:00:02
+Retrieving key from file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7
+Importing GPG key 0xF4A80EB5:
+ Userid     : "CentOS-7 Key (CentOS 7 Official Signing Key) <security@centos.org>"
+ Fingerprint: 6341 ab27 53d7 8a78 a7c2 7bb1 24c6 a8a7 f4a8 0eb5
+ Package    : centos-release-7-9.2009.0.el7.centos.x86_64 (@anaconda)
+ From       : /etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7
+Running transaction check
+Running transaction test
+Transaction test succeeded
+Running transaction
+  Installing : bacula-libs-5.2.13-23.1.el7.x86_64                                                   1/60
+  Installing : bacula-common-5.2.13-23.1.el7.x86_64                                                 2/60
+  Installing : apr-1.4.8-7.el7.x86_64                                                               3/60
+  Installing : apr-util-1.5.2-6.el7_9.1.x86_64                                                      4/60
+  Installing : httpd-tools-2.4.6-99.el7.centos.1.x86_64                                             5/60
+  Installing : 1:perl-parent-0.225-244.el7.noarch                                                   6/60
+  Installing : perl-HTTP-Tiny-0.033-3.el7.noarch                                                    7/60
+  Installing : perl-podlators-2.5.1-3.el7.noarch                                                    8/60
+  Installing : perl-Pod-Perldoc-3.20-4.el7.noarch                                                   9/60
+  Installing : 1:perl-Pod-Escapes-1.04-299.el7_9.noarch                                            10/60
+  Installing : perl-Encode-2.51-7.el7.x86_64                                                       11/60
+  Installing : perl-Text-ParseWords-3.29-4.el7.noarch                                              12/60
+  Installing : perl-Pod-Usage-1.63-3.el7.noarch                                                    13/60
+  Installing : 4:perl-macros-5.16.3-299.el7_9.x86_64                                               14/60
+  Installing : perl-threads-1.87-4.el7.x86_64                                                      15/60
+  Installing : perl-Exporter-5.68-3.el7.noarch                                                     16/60
+  Installing : perl-Socket-2.010-5.el7.x86_64                                                      17/60
+  Installing : 4:perl-Time-HiRes-1.9725-3.el7.x86_64                                               18/60
+  Installing : perl-threads-shared-1.43-6.el7.x86_64                                               19/60
+  Installing : perl-PathTools-3.40-5.el7.x86_64                                                    20/60
+  Installing : perl-Scalar-List-Utils-1.27-248.el7.x86_64                                          21/60
+  Installing : perl-Storable-2.45-3.el7.x86_64                                                     22/60
+  Installing : perl-Time-Local-1.2300-2.el7.noarch                                                 23/60
+  Installing : 1:perl-Pod-Simple-3.28-4.el7.noarch                                                 24/60
+  Installing : perl-constant-1.27-2.el7.noarch                                                     25/60
+  Installing : perl-File-Temp-0.23.01-3.el7.noarch                                                 26/60
+  Installing : perl-File-Path-2.09-2.el7.noarch                                                    27/60
+  Installing : perl-Filter-1.49-3.el7.x86_64                                                       28/60
+  Installing : perl-Carp-1.26-244.el7.noarch                                                       29/60
+  Installing : 4:perl-libs-5.16.3-299.el7_9.x86_64                                                 30/60
+  Installing : perl-Getopt-Long-2.40-3.el7.noarch                                                  31/60
+  Installing : 4:perl-5.16.3-299.el7_9.x86_64                                                      32/60
+  Installing : perl-Data-Dumper-2.145-3.el7.x86_64                                                 33/60
+  Installing : 1:perl-Compress-Raw-Zlib-2.061-4.el7.x86_64                                         34/60
+  Installing : perl-Sys-MemInfo-0.91-7.el7.x86_64                                                  35/60
+  Installing : perl-Net-Daemon-0.48-5.el7.noarch                                                   36/60
+  Installing : perl-Date-Manip-6.41-2.el7.noarch                                                   37/60
+  Installing : perl-Compress-Raw-Bzip2-2.061-3.el7.x86_64                                          38/60
+  Installing : perl-IO-Compress-2.061-2.el7.noarch                                                 39/60
+  Installing : perl-PlRPC-0.2020-14.el7.noarch                                                     40/60
+  Installing : perl-DBI-1.627-4.el7.x86_64                                                         41/60
+  Installing : perl-DBD-MySQL-4.023-6.el7.x86_64                                                   42/60
+  Installing : 1:mariadb-5.5.68-1.el7.x86_64                                                       43/60
+  Installing : perl-Sys-CPU-0.54-4.el7.x86_64                                                      44/60
+  Installing : mailx-12.5-19.el7.x86_64                                                            45/60
+  Installing : logwatch-7.4.0-35.20130522svn140.el7_5.noarch                                       46/60
+  Installing : gpm-libs-1.20.7-6.el7.x86_64                                                        47/60
+  Installing : postgresql-libs-9.2.24-8.el7_9.x86_64                                               48/60
+  Installing : bacula-libs-sql-5.2.13-23.1.el7.x86_64                                              49/60
+  Installing : mailcap-2.1.41-2.el7.noarch                                                         50/60
+  Installing : 2:vim-filesystem-7.4.629-8.el7_9.x86_64                                             51/60
+  Installing : 2:vim-common-7.4.629-8.el7_9.x86_64                                                 52/60
+  Installing : mt-st-1.1-14.el7.x86_64                                                             53/60
+  Installing : bacula-storage-5.2.13-23.1.el7.x86_64                                               54/60
+  Installing : 2:vim-enhanced-7.4.629-8.el7_9.x86_64                                               55/60
+  Installing : httpd-2.4.6-99.el7.centos.1.x86_64                                                  56/60
+  Installing : bacula-director-5.2.13-23.1.el7.x86_64                                              57/60
+  Installing : 1:mariadb-server-5.5.68-1.el7.x86_64                                                58/60
+  Installing : bacula-client-5.2.13-23.1.el7.x86_64                                                59/60
+  Installing : bacula-console-5.2.13-23.1.el7.x86_64                                               60/60
+  Verifying  : perl-HTTP-Tiny-0.033-3.el7.noarch                                                    1/60
+  Verifying  : logwatch-7.4.0-35.20130522svn140.el7_5.noarch                                        2/60
+  Verifying  : bacula-libs-sql-5.2.13-23.1.el7.x86_64                                               3/60
+  Verifying  : 1:mariadb-server-5.5.68-1.el7.x86_64                                                 4/60
+  Verifying  : perl-threads-shared-1.43-6.el7.x86_64                                                5/60
+  Verifying  : 2:vim-common-7.4.629-8.el7_9.x86_64                                                  6/60
+  Verifying  : perl-threads-1.87-4.el7.x86_64                                                       7/60
+  Verifying  : perl-Exporter-5.68-3.el7.noarch                                                      8/60
+  Verifying  : httpd-2.4.6-99.el7.centos.1.x86_64                                                   9/60
+  Verifying  : 2:vim-enhanced-7.4.629-8.el7_9.x86_64                                               10/60
+  Verifying  : bacula-console-5.2.13-23.1.el7.x86_64                                               11/60
+  Verifying  : bacula-libs-5.2.13-23.1.el7.x86_64                                                  12/60
+  Verifying  : perl-Socket-2.010-5.el7.x86_64                                                      13/60
+  Verifying  : 1:perl-Compress-Raw-Zlib-2.061-4.el7.x86_64                                         14/60
+  Verifying  : perl-PathTools-3.40-5.el7.x86_64                                                    15/60
+  Verifying  : perl-Sys-MemInfo-0.91-7.el7.x86_64                                                  16/60
+  Verifying  : 1:perl-parent-0.225-244.el7.noarch                                                  17/60
+  Verifying  : 4:perl-macros-5.16.3-299.el7_9.x86_64                                               18/60
+  Verifying  : perl-Net-Daemon-0.48-5.el7.noarch                                                   19/60
+  Verifying  : mt-st-1.1-14.el7.x86_64                                                             20/60
+  Verifying  : bacula-common-5.2.13-23.1.el7.x86_64                                                21/60
+  Verifying  : apr-util-1.5.2-6.el7_9.1.x86_64                                                     22/60
+  Verifying  : apr-1.4.8-7.el7.x86_64                                                              23/60
+  Verifying  : 2:vim-filesystem-7.4.629-8.el7_9.x86_64                                             24/60
+  Verifying  : perl-File-Temp-0.23.01-3.el7.noarch                                                 25/60
+  Verifying  : 1:perl-Pod-Simple-3.28-4.el7.noarch                                                 26/60
+  Verifying  : bacula-client-5.2.13-23.1.el7.x86_64                                                27/60
+  Verifying  : perl-Time-Local-1.2300-2.el7.noarch                                                 28/60
+  Verifying  : 1:perl-Pod-Escapes-1.04-299.el7_9.noarch                                            29/60
+  Verifying  : perl-Pod-Perldoc-3.20-4.el7.noarch                                                  30/60
+  Verifying  : perl-DBI-1.627-4.el7.x86_64                                                         31/60
+  Verifying  : mailcap-2.1.41-2.el7.noarch                                                         32/60
+  Verifying  : perl-Date-Manip-6.41-2.el7.noarch                                                   33/60
+  Verifying  : postgresql-libs-9.2.24-8.el7_9.x86_64                                               34/60
+  Verifying  : bacula-director-5.2.13-23.1.el7.x86_64                                              35/60
+  Verifying  : perl-Data-Dumper-2.145-3.el7.x86_64                                                 36/60
+  Verifying  : perl-Compress-Raw-Bzip2-2.061-3.el7.x86_64                                          37/60
+  Verifying  : 4:perl-Time-HiRes-1.9725-3.el7.x86_64                                               38/60
+  Verifying  : perl-Scalar-List-Utils-1.27-248.el7.x86_64                                          39/60
+  Verifying  : bacula-storage-5.2.13-23.1.el7.x86_64                                               40/60
+  Verifying  : perl-IO-Compress-2.061-2.el7.noarch                                                 41/60
+  Verifying  : perl-Pod-Usage-1.63-3.el7.noarch                                                    42/60
+  Verifying  : perl-PlRPC-0.2020-14.el7.noarch                                                     43/60
+  Verifying  : perl-Encode-2.51-7.el7.x86_64                                                       44/60
+  Verifying  : perl-Storable-2.45-3.el7.x86_64                                                     45/60
+  Verifying  : httpd-tools-2.4.6-99.el7.centos.1.x86_64                                            46/60
+  Verifying  : perl-podlators-2.5.1-3.el7.noarch                                                   47/60
+  Verifying  : perl-constant-1.27-2.el7.noarch                                                     48/60
+  Verifying  : 4:perl-5.16.3-299.el7_9.x86_64                                                      49/60
+  Verifying  : perl-File-Path-2.09-2.el7.noarch                                                    50/60
+  Verifying  : perl-DBD-MySQL-4.023-6.el7.x86_64                                                   51/60
+  Verifying  : 1:mariadb-5.5.68-1.el7.x86_64                                                       52/60
+  Verifying  : gpm-libs-1.20.7-6.el7.x86_64                                                        53/60
+  Verifying  : perl-Filter-1.49-3.el7.x86_64                                                       54/60
+  Verifying  : perl-Getopt-Long-2.40-3.el7.noarch                                                  55/60
+  Verifying  : perl-Text-ParseWords-3.29-4.el7.noarch                                              56/60
+  Verifying  : perl-Carp-1.26-244.el7.noarch                                                       57/60
+  Verifying  : mailx-12.5-19.el7.x86_64                                                            58/60
+  Verifying  : 4:perl-libs-5.16.3-299.el7_9.x86_64                                                 59/60
+  Verifying  : perl-Sys-CPU-0.54-4.el7.x86_64                                                      60/60
+
+Installed:
+  bacula-client.x86_64 0:5.2.13-23.1.el7              bacula-console.x86_64 0:5.2.13-23.1.el7
+  bacula-director.x86_64 0:5.2.13-23.1.el7            bacula-storage.x86_64 0:5.2.13-23.1.el7
+  httpd.x86_64 0:2.4.6-99.el7.centos.1                mariadb-server.x86_64 1:5.5.68-1.el7
+  vim-enhanced.x86_64 2:7.4.629-8.el7_9
+
+Dependency Installed:
+  apr.x86_64 0:1.4.8-7.el7                          apr-util.x86_64 0:1.5.2-6.el7_9.1
+  bacula-common.x86_64 0:5.2.13-23.1.el7            bacula-libs.x86_64 0:5.2.13-23.1.el7
+  bacula-libs-sql.x86_64 0:5.2.13-23.1.el7          gpm-libs.x86_64 0:1.20.7-6.el7
+  httpd-tools.x86_64 0:2.4.6-99.el7.centos.1        logwatch.noarch 0:7.4.0-35.20130522svn140.el7_5
+  mailcap.noarch 0:2.1.41-2.el7                     mailx.x86_64 0:12.5-19.el7
+  mariadb.x86_64 1:5.5.68-1.el7                     mt-st.x86_64 0:1.1-14.el7
+  perl.x86_64 4:5.16.3-299.el7_9                    perl-Carp.noarch 0:1.26-244.el7
+  perl-Compress-Raw-Bzip2.x86_64 0:2.061-3.el7      perl-Compress-Raw-Zlib.x86_64 1:2.061-4.el7
+  perl-DBD-MySQL.x86_64 0:4.023-6.el7               perl-DBI.x86_64 0:1.627-4.el7
+  perl-Data-Dumper.x86_64 0:2.145-3.el7             perl-Date-Manip.noarch 0:6.41-2.el7
+  perl-Encode.x86_64 0:2.51-7.el7                   perl-Exporter.noarch 0:5.68-3.el7
+  perl-File-Path.noarch 0:2.09-2.el7                perl-File-Temp.noarch 0:0.23.01-3.el7
+  perl-Filter.x86_64 0:1.49-3.el7                   perl-Getopt-Long.noarch 0:2.40-3.el7
+  perl-HTTP-Tiny.noarch 0:0.033-3.el7               perl-IO-Compress.noarch 0:2.061-2.el7
+  perl-Net-Daemon.noarch 0:0.48-5.el7               perl-PathTools.x86_64 0:3.40-5.el7
+  perl-PlRPC.noarch 0:0.2020-14.el7                 perl-Pod-Escapes.noarch 1:1.04-299.el7_9
+  perl-Pod-Perldoc.noarch 0:3.20-4.el7              perl-Pod-Simple.noarch 1:3.28-4.el7
+  perl-Pod-Usage.noarch 0:1.63-3.el7                perl-Scalar-List-Utils.x86_64 0:1.27-248.el7
+  perl-Socket.x86_64 0:2.010-5.el7                  perl-Storable.x86_64 0:2.45-3.el7
+  perl-Sys-CPU.x86_64 0:0.54-4.el7                  perl-Sys-MemInfo.x86_64 0:0.91-7.el7
+  perl-Text-ParseWords.noarch 0:3.29-4.el7          perl-Time-HiRes.x86_64 4:1.9725-3.el7
+  perl-Time-Local.noarch 0:1.2300-2.el7             perl-constant.noarch 0:1.27-2.el7
+  perl-libs.x86_64 4:5.16.3-299.el7_9               perl-macros.x86_64 4:5.16.3-299.el7_9
+  perl-parent.noarch 1:0.225-244.el7                perl-podlators.noarch 0:2.5.1-3.el7
+  perl-threads.x86_64 0:1.87-4.el7                  perl-threads-shared.x86_64 0:1.43-6.el7
+  postgresql-libs.x86_64 0:9.2.24-8.el7_9           vim-common.x86_64 2:7.4.629-8.el7_9
+  vim-filesystem.x86_64 2:7.4.629-8.el7_9
+
+Complete!
+[root@bacula-server ~]# systemctl enable mariadb && systemctl start mariadb && systemctl status mariadb
+Created symlink from /etc/systemd/system/multi-user.target.wants/mariadb.service to /usr/lib/systemd/system/mariadb.service.
+? mariadb.service - MariaDB database server
+   Loaded: loaded (/usr/lib/systemd/system/mariadb.service; enabled; vendor preset: disabled)
+   Active: active (running) since Sat 2023-07-22 22:33:42 IST; 5ms ago
+  Process: 1824 ExecStartPost=/usr/libexec/mariadb-wait-ready $MAINPID (code=exited, status=0/SUCCESS)
+  Process: 1739 ExecStartPre=/usr/libexec/mariadb-prepare-db-dir %n (code=exited, status=0/SUCCESS)
+ Main PID: 1822 (mysqld_safe)
+   CGroup: /system.slice/mariadb.service
+           +-1822 /bin/sh /usr/bin/mysqld_safe --basedir=/usr
+           +-1987 /usr/libexec/mysqld --basedir=/usr --datadir=/var/lib/mysql --plugin-dir=/usr/lib64/...
+
+Jul 22 22:33:40 bacula-server mariadb-prepare-db-dir[1739]: MySQL manual for more instructions.
+Jul 22 22:33:40 bacula-server mariadb-prepare-db-dir[1739]: Please report any problems at http://mar...ra
+Jul 22 22:33:40 bacula-server mariadb-prepare-db-dir[1739]: The latest information about MariaDB is .../.
+Jul 22 22:33:40 bacula-server mariadb-prepare-db-dir[1739]: You can find additional information abou...t:
+Jul 22 22:33:40 bacula-server mariadb-prepare-db-dir[1739]: http://dev.mysql.com
+Jul 22 22:33:40 bacula-server mariadb-prepare-db-dir[1739]: Consider joining MariaDB's strong and vi...y:
+Jul 22 22:33:40 bacula-server mariadb-prepare-db-dir[1739]: https://mariadb.org/get-involved/
+Jul 22 22:33:40 bacula-server mysqld_safe[1822]: 230722 22:33:40 mysqld_safe Logging to '/var/log/m...g'.
+Jul 22 22:33:40 bacula-server mysqld_safe[1822]: 230722 22:33:40 mysqld_safe Starting mysqld daemon...sql
+Jul 22 22:33:42 bacula-server systemd[1]: Started MariaDB database server.
+Hint: Some lines were ellipsized, use -l to show in full.
+[root@bacula-server ~]# /usr/libexec/bacula/grant_mysql_privileges
+Host    User    Password        Select_priv     Insert_priv     Update_priv     Delete_priv     Create_priv      Drop_priv       Reload_priv     Shutdown_priv   Process_priv    File_priv       Grant_priv      References_priv  Index_priv      Alter_priv      Show_db_priv    Super_priv      Create_tmp_table_priv   Lock_tables_priv Execute_priv    Repl_slave_priv Repl_client_priv        Create_view_priv        Show_view_priv   Create_routine_priv     Alter_routine_priv      Create_user_priv        Event_priv      Trigger_priv     Create_tablespace_priv  ssl_type        ssl_cipher      x509_issuer     x509_subject    max_questions    max_updates     max_connections max_user_connections    plugin  authentication_string
+localhost       root            Y       Y       Y       Y       Y       Y       Y       Y       Y       YY       Y       Y       Y       Y       Y       Y       Y       Y       Y       Y       Y       Y       YY       Y       Y       Y       Y                                       0       0       0       0
+bacula-server   root            Y       Y       Y       Y       Y       Y       Y       Y       Y       YY       Y       Y       Y       Y       Y       Y       Y       Y       Y       Y       Y       Y       YY       Y       Y       Y       Y                                       0       0       0       0
+127.0.0.1       root            Y       Y       Y       Y       Y       Y       Y       Y       Y       YY       Y       Y       Y       Y       Y       Y       Y       Y       Y       Y       Y       Y       YY       Y       Y       Y       Y                                       0       0       0       0
+::1     root            Y       Y       Y       Y       Y       Y       Y       Y       Y       Y       YY       Y       Y       Y       Y       Y       Y       Y       Y       Y       Y       Y       Y       YY       Y       Y       Y                                       0       0       0       0
+localhost                       N       N       N       N       N       N       N       N       N       NN       N       N       N       N       N       N       N       N       N       N       N       N       NN       N       N       N       N                                       0       0       0       0
+bacula-server                   N       N       N       N       N       N       N       N       N       NN       N       N       N       N       N       N       N       N       N       N       N       N       NN       N       N       N       N                                       0       0       0       0
+localhost       bacula          N       N       N       N       N       N       N       N       N       NN       N       N       N       N       N       N       N       N       N       N       N       N       NN       N       N       N       N                                       0       0       0       0
+%       bacula          N       N       N       N       N       N       N       N       N       N       NN       N       N       N       N       N       N       N       N       N       N       N       N       NN       N       N       N                                       0       0       0       0
+Privileges for user bacula granted on database bacula.
+[root@bacula-server ~]# /usr/libexec/bacula/create_mysql_database -u root
+Creation of bacula database succeeded.
+[root@bacula-server ~]# /usr/libexec/bacula/make_mysql_tables -u bacula
+Creation of Bacula MySQL tables succeeded.
+[root@bacula-server ~]# mysql_secure_installation
+
+NOTE: RUNNING ALL PARTS OF THIS SCRIPT IS RECOMMENDED FOR ALL MariaDB
+      SERVERS IN PRODUCTION USE!  PLEASE READ EACH STEP CAREFULLY!
+
+In order to log into MariaDB to secure it, we'll need the current
+password for the root user.  If you've just installed MariaDB, and
+you haven't set the root password yet, the password will be blank,
+so you should just press enter here.
+
+Enter current password for root (enter for none):
+ERROR 1045 (28000): Access denied for user 'root'@'localhost' (using password: YES)
+Enter current password for root (enter for none):
+OK, successfully used password, moving on...
+
+Setting the root password ensures that nobody can log into the MariaDB
+root user without the proper authorisation.
+
+Set root password? [Y/n] n
+ ... skipping.
+
+By default, a MariaDB installation has an anonymous user, allowing anyone
+to log into MariaDB without having to have a user account created for
+them.  This is intended only for testing, and to make the installation
+go a bit smoother.  You should remove them before moving into a
+production environment.
+
+Remove anonymous users? [Y/n] n
+ ... skipping.
+
+Normally, root should only be allowed to connect from 'localhost'.  This
+ensures that someone cannot guess at the root password from the network.
+
+Disallow root login remotely? [Y/n] n
+ ... skipping.
+
+By default, MariaDB comes with a database named 'test' that anyone can
+access.  This is also intended only for testing, and should be removed
+before moving into a production environment.
+
+Remove test database and access to it? [Y/n] n
+ ... skipping.
+
+Reloading the privilege tables will ensure that all changes made so far
+will take effect immediately.
+
+Reload privilege tables now? [Y/n] n
+ ... skipping.
+
+Cleaning up...
+
+All done!  If you've completed all of the above steps, your MariaDB
+installation should now be secure.
+
+Thanks for using MariaDB!
+[root@bacula-server ~]# alternatives --config libbaccats.so
+
+There are 3 programs which provide 'libbaccats.so'.
+
+  Selection    Command
+-----------------------------------------------
+   1           /usr/lib64/libbaccats-mysql.so
+   2           /usr/lib64/libbaccats-sqlite3.so
+*+ 3           /usr/lib64/libbaccats-postgresql.so
+
+Enter to keep the current selection[+], or type selection number: 1
+[root@bacula-server ~]# mkdir -p /bacula/backup /bacula/restore
+[root@bacula-server ~]# chown -R bacula:bacula /bacula
+[root@bacula-server ~]# chmod -R 700 /bacula
+[root@bacula-server ~]# vim /etc/bacula/bacula-dir.conf
+[root@bacula-server ~]# mysql_secure_installation
+
+NOTE: RUNNING ALL PARTS OF THIS SCRIPT IS RECOMMENDED FOR ALL MariaDB
+      SERVERS IN PRODUCTION USE!  PLEASE READ EACH STEP CAREFULLY!
+
+In order to log into MariaDB to secure it, we'll need the current
+password for the root user.  If you've just installed MariaDB, and
+you haven't set the root password yet, the password will be blank,
+so you should just press enter here.
+
+Enter current password for root (enter for none):
+ERROR 1045 (28000): Access denied for user 'root'@'localhost' (using password: YES)
+Enter current password for root (enter for none):
+ERROR 1045 (28000): Access denied for user 'root'@'localhost' (using password: YES)
+Enter current password for root (enter for none):
+ERROR 1045 (28000): Access denied for user 'root'@'localhost' (using password: YES)
+Enter current password for root (enter for none):
+OK, successfully used password, moving on...
+
+Setting the root password ensures that nobody can log into the MariaDB
+root user without the proper authorisation.
+
+Set root password? [Y/n] y
+New password:
+Re-enter new password:
+Password updated successfully!
+Reloading privilege tables..
+ ... Success!
+
+
+By default, a MariaDB installation has an anonymous user, allowing anyone
+to log into MariaDB without having to have a user account created for
+them.  This is intended only for testing, and to make the installation
+go a bit smoother.  You should remove them before moving into a
+production environment.
+
+Remove anonymous users? [Y/n] n
+ ... skipping.
+
+Normally, root should only be allowed to connect from 'localhost'.  This
+ensures that someone cannot guess at the root password from the network.
+
+Disallow root login remotely? [Y/n] n
+ ... skipping.
+
+By default, MariaDB comes with a database named 'test' that anyone can
+#
+# Default Bacula Director Configuration file
+#
+#  The only thing that MUST be changed is to add one or more
+#   file or directory names in the Include directive of the
+#   FileSet resource.
+#
+#  For Bacula release 5.2.13 (19 February 2013) -- redhat (Core)
+#
+#  You might also want to change the default email address
+#   from root to your address.  See the "mail" and "operator"
+#   directives in the Messages resource.
+#
+
+Director {                            # define myself
+  Name = bacula-dir
+  DIRport = 9101                # where we listen for UA connections
+  QueryFile = "/etc/bacula/query.sql"
+  WorkingDirectory = "/var/spool/bacula"
+  PidDirectory = "/var/run"
+  Maximum Concurrent Jobs = 1
+  Password = "cdac"         # Console password
+  Messages = Daemon
+  DirAddress = 127.0.0.1 #DIR address
+}
+
+JobDefs {
+Network error: Software caused connection abort
+  Type = Backup
+---------------------------------------------------------------------------------------------------------
+  Client = bacula-fd
+Session stoppedll Set"
+    - Press <Return> to exit tab
+    - Press R to restart session
+    - Press S to save terminal output to file
+  Pool = File
+  Priority = 10
+  Write Bootstrap = "/var/spool/bacula/%c.bsr"
+}
+
+
+#
+# Define the main nightly save backup job
+#   By default, this job will back up to disk in /tmp
+Job {
+  Name = "BackupClient1"
+  JobDefs = "DefaultJob"
+}
+
+#Job {
+#  Name = "BackupClient2"
+#  Client = bacula2-fd
+#  JobDefs = "DefaultJob"
+#}
+
+# Backup the catalog database (after the nightly save)
+Job {
+-- INSERT --                                                                           27,2          Top
+login as: root
+root@192.168.15.158's password:
+    +----------------------------------------------------------------------+
+    ¦                 • MobaXterm Personal Edition v23.0 •                 ¦
+    ¦               (SSH client, X server and network tools)               ¦
+    ¦                                                                      ¦
+    ¦ ? SSH session to root@192.168.15.158                                 ¦
+    ¦   • Direct SSH      :  ?                                             ¦
+    ¦   • SSH compression :  ?                                             ¦
+    ¦   • SSH-browser     :  ?                                             ¦
+    ¦   • X11-forwarding  :  ?  (disabled or not supported by server)      ¦
+    ¦                                                                      ¦
+    ¦ ? For more info, ctrl+click on help or visit our website.            ¦
+    +----------------------------------------------------------------------+
+
+Last login: Sat Jul 22 22:30:45 2023 from 192.168.15.1
+[root@bacula-server ~]# mysql_secure_installation
+
+NOTE: RUNNING ALL PARTS OF THIS SCRIPT IS RECOMMENDED FOR ALL MariaDB
+      SERVERS IN PRODUCTION USE!  PLEASE READ EACH STEP CAREFULLY!
+
+In order to log into MariaDB to secure it, we'll need the current
+password for the root user.  If you've just installed MariaDB, and
+you haven't set the root password yet, the password will be blank,
+so you should just press enter here.
+
+Enter current password for root (enter for none):
+ERROR 1045 (28000): Access denied for user 'root'@'localhost' (using password: NO)
+Enter current password for root (enter for none):
+ERROR 1045 (28000): Access denied for user 'root'@'localhost' (using password: NO)
+Enter current password for root (enter for none):
+ERROR 1045 (28000): Access denied for user 'root'@'localhost' (using password: YES)
+Enter current password for root (enter for none):
+ERROR 1045 (28000): Access denied for user 'root'@'localhost' (using password: YES)
+Enter current password for root (enter for none):
+ERROR 1045 (28000): Access denied for user 'root'@'localhost' (using password: NO)
+Enter current password for root (enter for none):
+ERROR 1045 (28000): Access denied for user 'root'@'localhost' (using password: YES)
+Enter current password for root (enter for none):
+ERROR 1045 (28000): Access denied for user 'root'@'localhost' (using password: YES)
+Enter current password for root (enter for none):
+ERROR 1045 (28000): Access denied for user 'root'@'localhost' (using password: NO)
+Enter current password for root (enter for none):
+Aborting!
+
+Cleaning up...
+[root@bacula-server ~]# mysql_secure_installation
+
+NOTE: RUNNING ALL PARTS OF THIS SCRIPT IS RECOMMENDED FOR ALL MariaDB
+      SERVERS IN PRODUCTION USE!  PLEASE READ EACH STEP CAREFULLY!
+
+In order to log into MariaDB to secure it, we'll need the current
+password for the root user.  If you've just installed MariaDB, and
+you haven't set the root password yet, the password will be blank,
+so you should just press enter here.
+
+Enter current password for root (enter for none):
+ERROR 1045 (28000): Access denied for user 'root'@'localhost' (using password: NO)
+Enter current password for root (enter for none):
+OK, successfully used password, moving on...
+
+Setting the root password ensures that nobody can log into the MariaDB
+root user without the proper authorisation.
+
+You already have a root password set, so you can safely answer 'n'.
+
+Change the root password? [Y/n] y
+New password:
+Re-enter new password:
+Password updated successfully!
+Reloading privilege tables..
+ ... Success!
+
+
+By default, a MariaDB installation has an anonymous user, allowing anyone
+to log into MariaDB without having to have a user account created for
+them.  This is intended only for testing, and to make the installation
+go a bit smoother.  You should remove them before moving into a
+production environment.
+
+Remove anonymous users? [Y/n] y
+ ... Success!
+
+Normally, root should only be allowed to connect from 'localhost'.  This
+ensures that someone cannot guess at the root password from the network.
+
+Disallow root login remotely? [Y/n] y
+ ... Success!
+
+By default, MariaDB comes with a database named 'test' that anyone can
+access.  This is also intended only for testing, and should be removed
+before moving into a production environment.
+
+Remove test database and access to it? [Y/n] y
+ - Dropping test database...
+ ... Success!
+ - Removing privileges on test database...
+ ... Success!
+
+Reloading the privilege tables will ensure that all changes made so far
+will take effect immediately.
+
+Reload privilege tables now? [Y/n] y
+ ... Success!
+
+Cleaning up...
+
+All done!  If you've completed all of the above steps, your MariaDB
+installation should now be secure.
+
+Thanks for using MariaDB!
+[root@bacula-server ~]# alternatives --config libbaccats.so
+
+There are 3 programs which provide 'libbaccats.so'.
+
+  Selection    Command
+-----------------------------------------------
+ + 1           /usr/lib64/libbaccats-mysql.so
+   2           /usr/lib64/libbaccats-sqlite3.so
+*  3           /usr/lib64/libbaccats-postgresql.so
+
+Enter to keep the current selection[+], or type selection number: 1
+[root@bacula-server ~]# vim /etc/bacula/bacula-dir.conf
+[root@bacula-server ~]# bacula-dir -tc /etc/bacula/bacula-dir.conf
+[root@bacula-server ~]# vim /etc/bacula/bacula-sd.conf
+[root@bacula-server ~]# cat /etc/bacula/bacula-dir.conf
+#
+# Default Bacula Director Configuration file
+#
+#  The only thing that MUST be changed is to add one or more
+#   file or directory names in the Include directive of the
+#   FileSet resource.
+#
+#  For Bacula release 5.2.13 (19 February 2013) -- redhat (Core)
+#
+#  You might also want to change the default email address
+#   from root to your address.  See the "mail" and "operator"
+#   directives in the Messages resource.
+#
+
+Director {                            # define myself
+  Name = bacula-dir
+  DIRport = 9101                # where we listen for UA connections
+  QueryFile = "/etc/bacula/query.sql"
+  WorkingDirectory = "/var/spool/bacula"
+  PidDirectory = "/var/run"
+  Maximum Concurrent Jobs = 1
+  Password = "cdac"         # Console password
+  Messages = Daemon
+  DirAddress = 127.0.0.1 #DIR address
+}
+
+JobDefs {
+  Name = "DefaultJob"
+  Type = Backup
+  Level = Incremental
+  Client = bacula-fd
+  FileSet = "Full Set"
+  Schedule = "WeeklyCycle"
+  Storage = File
+  Messages = Standard
+  Pool = File
+  Priority = 10
+  Write Bootstrap = "/var/spool/bacula/%c.bsr"
+}
+
+
+#
+# Define the main nightly save backup job
+#   By default, this job will back up to disk in /tmp
+Job {
+  Name = "BackupLocalfiles"
+  JobDefs = "DefaultJob"
+}
+
+#Job {
+#  Name = "BackupClient2"
+#  Client = bacula2-fd
+#  JobDefs = "DefaultJob"
+#}
+
+# Backup the catalog database (after the nightly save)
+Job {
+  Name = "BackupCatalog"
+  JobDefs = "DefaultJob"
+  Level = Full
+  FileSet="Catalog"
+  Schedule = "WeeklyCycleAfterBackup"
+  # This creates an ASCII copy of the catalog
+  # Arguments to make_catalog_backup.pl are:
+  #  make_catalog_backup.pl <catalog-name>
+  RunBeforeJob = "/usr/libexec/bacula/make_catalog_backup.pl MyCatalog"
+  # This deletes the copy of the catalog
+  RunAfterJob  = "/usr/libexec/bacula/delete_catalog_backup"
+  Write Bootstrap = "/var/spool/bacula/%n.bsr"
+  Priority = 11                   # run after main backup
+}
+
+#
+# Standard Restore template, to be changed by Console program
+#  Only one such job is needed for all Jobs/Clients/Storage ...
+#
+Job {
+  Name = "RestoreLocalFiles"
+  Type = Restore
+  Client=bacula-fd
+  FileSet="Full Set"
+  Storage = File
+  Pool = Default
+  Messages = Standard
+  Where = /bacula/restore
+}
+
+
+# List of files to be backed up
+FileSet {
+  Name = "Full Set"
+  Include {
+    Options {
+      signature = MD5
+        compression = GZIP
+    }
+#
+#  Put your list of files here, preceded by 'File =', one per line
+#    or include an external list with:
+#
+#    File = <file-name
+#
+#  Note: / backs up everything on the root partition.
+#    if you have other partitions such as /usr or /home
+#    you will probably want to add them too.
+#
+#  By default this is defined to point to the Bacula binary
+#    directory to give a reasonable FileSet to backup to
+#    disk storage during initial testing.
+#
+    File = /var/www/html
+  }
+
+#
+# If you backup the root directory, the following two excluded
+#   files can be useful
+#
+  Exclude {
+    File = /var/spool/bacula
+    File = /tmp
+    File = /proc
+    File = /tmp
+    File = /.journal
+    File = /.fsck
+    File = /bacula
+  }
+}
+
+#
+# When to do the backups, full backup on first sunday of the month,
+#  differential (i.e. incremental since full) every other sunday,
+#  and incremental backups other days
+Schedule {
+  Name = "WeeklyCycle"
+  Run = Full 1st sun at 23:05
+  Run = Differential 2nd-5th sun at 23:05
+  Run = Incremental mon-sat at 23:05
+}
+
+# This schedule does the catalog. It starts after the WeeklyCycle
+Schedule {
+  Name = "WeeklyCycleAfterBackup"
+  Run = Full sun-sat at 23:10
+}
+
+# This is the backup of the catalog
+FileSet {
+  Name = "Catalog"
+  Include {
+    Options {
+      signature = MD5
+    }
+    File = "/var/spool/bacula/bacula.sql"
+  }
+}
+
+# Client (File Services) to backup
+Client {
+  Name = bacula-fd
+  Address = localhost
+  FDPort = 9102
+  Catalog = MyCatalog
+  Password = "@@FD_PASSWORD@@"          # password for FileDaemon
+  File Retention = 30 days            # 30 days
+  Job Retention = 6 months            # six months
+  AutoPrune = yes                     # Prune expired Jobs/Files
+}
+
+#
+# Second Client (File Services) to backup
+#  You should change Name, Address, and Password before using
+#
+#Client {
+#  Name = bacula2-fd
+#  Address = localhost2
+#  FDPort = 9102
+#  Catalog = MyCatalog
+#  Password = "@@FD_PASSWORD@@2"         # password for FileDaemon 2
+#  File Retention = 30 days            # 30 days
+#  Job Retention = 6 months            # six months
+#  AutoPrune = yes                     # Prune expired Jobs/Files
+#}
+
+
+# Definition of file storage device
+Storage {
+  Name = File
+# Do not use "localhost" here
+  Address = localhost                # N.B. Use a fully qualified name here
+  SDPort = 9103
+  Password = "@@SD_PASSWORD@@"
+  Device = FileStorage
+  Media Type = File
+}
+
+
+
+# Definition of DDS tape storage device
+#Storage {
+#  Name = DDS-4
+#  Do not use "localhost" here
+#  Address = localhost                # N.B. Use a fully qualified name here
+#  SDPort = 9103
+#  Password = "@@SD_PASSWORD@@"          # password for Storage daemon
+#  Device = DDS-4                      # must be same as Device in Storage daemon
+#  Media Type = DDS-4                  # must be same as MediaType in Storage daemon
+#  Autochanger = yes                   # enable for autochanger device
+#}
+
+# Definition of 8mm tape storage device
+#Storage {
+#  Name = "8mmDrive"
+#  Do not use "localhost" here
+#  Address = localhost                # N.B. Use a fully qualified name here
+#  SDPort = 9103
+#  Password = "@@SD_PASSWORD@@"
+#  Device = "Exabyte 8mm"
+#  MediaType = "8mm"
+#}
+
+# Definition of DVD storage device
+#Storage {
+#  Name = "DVD"
+#  Do not use "localhost" here
+#  Address = localhost                # N.B. Use a fully qualified name here
+#  SDPort = 9103
+#  Password = "@@SD_PASSWORD@@"
+#  Device = "DVD Writer"
+#  MediaType = "DVD"
+#}
+
+
+# Generic catalog service
+Catalog {
+  Name = MyCatalog
+# Uncomment the following line if you want the dbi driver
+# dbdriver = "dbi:postgresql"; dbaddress = 127.0.0.1; dbport =
+  dbname = "bacula"; dbuser = "root"; dbpassword = "cdac"
+}
+
+# Reasonable message delivery -- send most everything to email address
+#  and to the console
+Messages {
+  Name = Standard
+#
+# NOTE! If you send to two email or more email addresses, you will need
+#  to replace the %r in the from field (-f part) with a single valid
+#  email address in both the mailcommand and the operatorcommand.
+#  What this does is, it sets the email address that emails would display
+#  in the FROM field, which is by default the same email as they're being
+#  sent to.  However, if you send email to more than one address, then
+#  you'll have to set the FROM address manually, to a single address.
+#  for example, a 'no-reply@mydomain.com', is better since that tends to
+#  tell (most) people that its coming from an automated source.
+
+#
+  mailcommand = "/usr/sbin/bsmtp -h localhost -f \"\(Bacula\) \<%r\>\" -s \"Bacula: %t %e of %c %l\" %r"
+  operatorcommand = "/usr/sbin/bsmtp -h localhost -f \"\(Bacula\) \<%r\>\" -s \"Bacula: Intervention needed for %j\" %r"
+  mail = root@localhost = all, !skipped
+  operator = root@localhost = mount
+  console = all, !skipped, !saved
+#
+# WARNING! the following will create a file that you must cycle from
+#          time to time as it will grow indefinitely. However, it will
+#          also keep all your messages if they scroll off the console.
+#
+  append = "/var/log/bacula/bacula.log" = all, !skipped
+  catalog = all
+}
+
+
+#
+# Message delivery for daemon messages (no job).
+Messages {
+  Name = Daemon
+  mailcommand = "/usr/sbin/bsmtp -h localhost -f \"\(Bacula\) \<%r\>\" -s \"Bacula daemon message\" %r"
+  mail = root@localhost = all, !skipped
+  console = all, !skipped, !saved
+  append = "/var/log/bacula/bacula.log" = all, !skipped
+}
+
+# Default pool definition
+Pool {
+  Name = Default
+  Pool Type = Backup
+  Recycle = yes                       # Bacula can automatically recycle Volumes
+  AutoPrune = yes                     # Prune expired volumes
+  Volume Retention = 365 days         # one year
+}
+
+# File Pool definition
+Pool {
+  Name = File
+  Pool Type = Backup
+  Label Format = Local-
+  Recycle = yes                       # Bacula can automatically recycle Volumes
+  AutoPrune = yes                     # Prune expired volumes
+  Volume Retention = 365 days         # one year
+  Maximum Volume Bytes = 10G          # Limit Volume size to something reasonable
+  Maximum Volumes = 100               # Limit number of Volumes in Pool
+}
+
+
+# Scratch pool definition
+Pool {
+  Name = Scratch
+  Pool Type = Backup
+}
+
+#
+# Restricted console used by tray-monitor to get the status of the director
+#
+Console {
+  Name = bacula-mon
+  Password = "@@MON_DIR_PASSWORD@@"
+  CommandACL = status, .status
+}
+[root@bacula-server ~]# cat /etc/bacula/bacula-sd.conf
+#
+# Default Bacula Storage Daemon Configuration file
+#
+#  For Bacula release 5.2.13 (19 February 2013) -- redhat (Core)
+#
+# You may need to change the name of your tape drive
+#   on the "Archive Device" directive in the Device
+#   resource.  If you change the Name and/or the
+#   "Media Type" in the Device resource, please ensure
+#   that dird.conf has corresponding changes.
+#
+
+Storage {                             # definition of myself
+  Name = bacula-sd
+  SDPort = 9103                  # Director's port
+  WorkingDirectory = "/var/spool/bacula"
+  Pid Directory = "/var/run"
+  Maximum Concurrent Jobs = 20
+  SDAddress = bacula-server
+}
+
+#
+# List Directors who are permitted to contact Storage daemon
+#
+Director {
+  Name = bacula-dir
+  Password = "@@SD_PASSWORD@@"
+}
+
+#
+# Restricted Director, used by tray-monitor to get the
+#   status of the storage daemon
+#
+Director {
+  Name = bacula-mon
+  Password = "@@MON_SD_PASSWORD@@"
+  Monitor = yes
+}
+
+#
+# Note, for a list of additional Device templates please
+#  see the directory <bacula-source>/examples/devices
+# Or follow the following link:
+#  http://bacula.svn.sourceforge.net/viewvc/bacula/trunk/bacula/examples/devices/
+#
+
+#
+# Devices supported by this Storage daemon
+# To connect, the Director's bacula-dir.conf must have the
+#  same Name and MediaType.
+#
+
+Device {
+  Name = FileStorage
+  Media Type = File
+  Archive Device = /bacula/backup
+  LabelMedia = yes;                   # lets Bacula label unlabeled media
+  Random Access = Yes;
+  AutomaticMount = yes;               # when device opened, read it
+  RemovableMedia = no;
+  AlwaysOpen = no;
+}
+
+#
+# An autochanger device with two drives
+#
+#Autochanger {
+#  Name = Autochanger
+#  Device = Drive-1
+#  Device = Drive-2
+#  Changer Command = "/usr/libexec/bacula/mtx-changer %c %o %S %a %d"
+#  Changer Device = /dev/sg0
+#}
+
+#Device {
+#  Name = Drive-1                      #
+#  Drive Index = 0
+#  Media Type = DLT-8000
+#  Archive Device = /dev/nst0
+#  AutomaticMount = yes;               # when device opened, read it
+#  AlwaysOpen = yes;
+#  RemovableMedia = yes;
+#  RandomAccess = no;
+#  AutoChanger = yes
+#  #
+#  # Enable the Alert command only if you have the mtx package loaded
+#  # Note, apparently on some systems, tapeinfo resets the SCSI controller
+#  #  thus if you turn this on, make sure it does not reset your SCSI
+#  #  controller.  I have never had any problems, and smartctl does
+#  #  not seem to cause such problems.
+#  #
+#  Alert Command = "sh -c 'tapeinfo -f %c |grep TapeAlert|cat'"
+#  If you have smartctl, enable this, it has more info than tapeinfo
+#  Alert Command = "sh -c 'smartctl -H -l error %c'"
+#}
+
+#Device {
+#  Name = Drive-2                      #
+#  Drive Index = 1
+#  Media Type = DLT-8000
+#  Archive Device = /dev/nst1
+#  AutomaticMount = yes;               # when device opened, read it
+#  AlwaysOpen = yes;
+#  RemovableMedia = yes;
+#  RandomAccess = no;
+#  AutoChanger = yes
+#  # Enable the Alert command only if you have the mtx package loaded
+#  Alert Command = "sh -c 'tapeinfo -f %c |grep TapeAlert|cat'"
+#  If you have smartctl, enable this, it has more info than tapeinfo
+#  Alert Command = "sh -c 'smartctl -H -l error %c'"
+#}
+
+#
+# A Linux or Solaris LTO-2 tape drive
+#
+#Device {
+#  Name = LTO-2
+#  Media Type = LTO-2
+#  Archive Device = /dev/nst0
+#  AutomaticMount = yes;               # when device opened, read it
+#  AlwaysOpen = yes;
+#  RemovableMedia = yes;
+#  RandomAccess = no;
+#  Maximum File Size = 3GB
+## Changer Command = "/usr/libexec/bacula/mtx-changer %c %o %S %a %d"
+## Changer Device = /dev/sg0
+## AutoChanger = yes
+#  # Enable the Alert command only if you have the mtx package loaded
+## Alert Command = "sh -c 'tapeinfo -f %c |grep TapeAlert|cat'"
+## If you have smartctl, enable this, it has more info than tapeinfo
+## Alert Command = "sh -c 'smartctl -H -l error %c'"
+#}
+
+#
+# A Linux or Solaris LTO-3 tape drive
+#
+#Device {
+#  Name = LTO-3
+#  Media Type = LTO-3
+#  Archive Device = /dev/nst0
+#  AutomaticMount = yes;               # when device opened, read it
+#  AlwaysOpen = yes;
+#  RemovableMedia = yes;
+#  RandomAccess = no;
+#  Maximum File Size = 4GB
+## Changer Command = "/usr/libexec/bacula/mtx-changer %c %o %S %a %d"
+## Changer Device = /dev/sg0
+## AutoChanger = yes
+#  # Enable the Alert command only if you have the mtx package loaded
+## Alert Command = "sh -c 'tapeinfo -f %c |grep TapeAlert|cat'"
+## If you have smartctl, enable this, it has more info than tapeinfo
+## Alert Command = "sh -c 'smartctl -H -l error %c'"
+#}
+
+#
+# A Linux or Solaris LTO-4 tape drive
+#
+#Device {
+#  Name = LTO-4
+#  Media Type = LTO-4
+#  Archive Device = /dev/nst0
+#  AutomaticMount = yes;               # when device opened, read it
+#  AlwaysOpen = yes;
+#  RemovableMedia = yes;
+#  RandomAccess = no;
+#  Maximum File Size = 5GB
+## Changer Command = "/usr/libexec/bacula/mtx-changer %c %o %S %a %d"
+## Changer Device = /dev/sg0
+## AutoChanger = yes
+#  # Enable the Alert command only if you have the mtx package loaded
+## Alert Command = "sh -c 'tapeinfo -f %c |grep TapeAlert|cat'"
+## If you have smartctl, enable this, it has more info than tapeinfo
+## Alert Command = "sh -c 'smartctl -H -l error %c'"
+#}
+
+
+
+
+#
+# A FreeBSD tape drive
+#
+#Device {
+#  Name = DDS-4
+#  Description = "DDS-4 for FreeBSD"
+#  Media Type = DDS-4
+#  Archive Device = /dev/nsa1
+#  AutomaticMount = yes;               # when device opened, read it
+#  AlwaysOpen = yes
+#  Offline On Unmount = no
+#  Hardware End of Medium = no
+#  BSF at EOM = yes
+#  Backward Space Record = no
+#  Fast Forward Space File = no
+#  TWO EOF = yes
+#  If you have smartctl, enable this, it has more info than tapeinfo
+#  Alert Command = "sh -c 'smartctl -H -l error %c'"
+#}
+
+#
+# Send all messages to the Director,
+# mount messages also are sent to the email address
+#
+Messages {
+  Name = Standard
+  director = bacula-dir = all
+}
+[root@bacula-server ~]# bacula-sd -tc /etc/bacula/bacula-sd.conf
+[root@bacula-server ~]# systemctl enable bacula-dir &&  systemctl start bacula-dir &&  systemctl status bacula-dir
+Created symlink from /etc/systemd/system/multi-user.target.wants/bacula-dir.service to /usr/lib/systemd/system/bacula-dir.service.
+? bacula-dir.service - Bacula-Director, the Backup-server
+   Loaded: loaded (/usr/lib/systemd/system/bacula-dir.service; enabled; vendor preset: disabled)
+   Active: active (running) since Sat 2023-07-22 23:12:04 IST; 7ms ago
+     Docs: man:bacula-dir(8)
+ Main PID: 2428 (bacula-dir)
+   CGroup: /system.slice/bacula-dir.service
+           +-2428 /usr/sbin/bacula-dir -f -c /etc/bacula/bacula-dir.conf -u bacula -g bacula
+
+Jul 22 23:12:04 bacula-server systemd[1]: Started Bacula-Director, the Backup-server.
+[root@bacula-server ~]# systemctl enable bacula-sd &&  systemctl start bacula-sd &&  systemctl status bacula-sd
+Created symlink from /etc/systemd/system/multi-user.target.wants/bacula-sd.service to /usr/lib/systemd/system/bacula-sd.service.
+? bacula-sd.service - Bacula-StorageDaemon, the storage-server
+   Loaded: loaded (/usr/lib/systemd/system/bacula-sd.service; enabled; vendor preset: disabled)
+   Active: active (running) since Sat 2023-07-22 23:12:14 IST; 6ms ago
+     Docs: man:bacula-sd(8)
+ Main PID: 2459 (bacula-sd)
+   CGroup: /system.slice/bacula-sd.service
+           +-2459 /usr/sbin/bacula-sd -f -c /etc/bacula/bacula-sd.conf -u bacula -g tape
+
+Jul 22 23:12:14 bacula-server systemd[1]: Started Bacula-StorageDaemon, the storage-server.
+[root@bacula-server ~]# systemctl enable bacula-fd &&  systemctl start bacula-fd &&  systemctl status bacula-fd
+Created symlink from /etc/systemd/system/multi-user.target.wants/bacula-fd.service to /usr/lib/systemd/system/bacula-fd.service.
+? bacula-fd.service - Bacula-FileDaemon, a Backup-client
+   Loaded: loaded (/usr/lib/systemd/system/bacula-fd.service; enabled; vendor preset: disabled)
+   Active: active (running) since Sat 2023-07-22 23:12:23 IST; 7ms ago
+     Docs: man:bacula-fd(8)
+ Main PID: 2488 (bacula-fd)
+   CGroup: /system.slice/bacula-fd.service
+           +-2488 /usr/sbin/bacula-fd -f -c /etc/bacula/bacula-fd.conf -u root -g root
+
+Jul 22 23:12:23 bacula-server systemd[1]: Started Bacula-FileDaemon, a Backup-client.
+[root@bacula-server ~]# vim /etc/bacula/bconsole.conf
+[root@bacula-server ~]# cat /etc/bacula/bconsole.conf
+#
+# Bacula User Agent (or Console) Configuration File
+#
+
+Director {
+  Name = bacula-dir
+  DIRport = 9101
+  address = localhost
+  Password = "cdac"
+}
+[root@bacula-server ~]# bconsole
+Connecting to Director localhost:9101
+1000 OK: bacula-dir Version: 5.2.13 (19 February 2013)
+Enter a period to cancel a command.
+*label
+Automatically selected Catalog: MyCatalog
+Using Catalog "MyCatalog"
+Automatically selected Storage: File
+Enter new Volume name: demo
+Defined Pools:
+     1: Default
+     2: File
+     3: Scratch
+Select the Pool (1-3): 1
+Connecting to Storage daemon File at localhost:9103 ...
+^C
+[root@bacula-server ~]# bconsole
+Connecting to Director localhost:9101
+1000 OK: bacula-dir Version: 5.2.13 (19 February 2013)
+Enter a period to cancel a command.
+*label
+Automatically selected Catalog: MyCatalog
+Using Catalog "MyCatalog"
+Automatically selected Storage: File
+Enter new Volume name: demo
+Defined Pools:
+     1: Default
+     2: File
+     3: Scratch
+Select the Pool (1-3): 1
+Connecting to Storage daemon File at localhost:9103 ...
+^C
+[root@bacula-server ~]# bconsole
+Connecting to Director localhost:9101
+1000 OK: bacula-dir Version: 5.2.13 (19 February 2013)
+Enter a period to cancel a command.
+*label
+Automatically selected Catalog: MyCatalog
+Using Catalog "MyCatalog"
+Automatically selected Storage: File
+Enter new Volume name: demo1
+Defined Pools:
+     1: Default
+     2: File
+     3: Scratch
+Select the Pool (1-3): 2
+Connecting to Storage daemon File at localhost:9103 ...
+^C
+[root@bacula-server ~]# bconsole
+Connecting to Director localhost:9101
+1000 OK: bacula-dir Version: 5.2.13 (19 February 2013)
+Enter a period to cancel a command.
+*run
+Automatically selected Catalog: MyCatalog
+Using Catalog "MyCatalog"
+A job name must be specified.
+The defined Job resources are:
+     1: BackupLocalfiles
+     2: BackupCatalog
+     3: RestoreLocalFiles
+Select Job resource (1-3): 1
+Run Backup job
+JobName:  BackupLocalfiles
+Level:    Incremental
+Client:   bacula-fd
+FileSet:  Full Set
+Pool:     File (From Job resource)
+Storage:  File (From Job resource)
+When:     2023-07-22 23:22:32
+Priority: 10
+OK to run? (yes/mod/no): yes
+Job queued. JobId=1
+You have messages.
+*
+[root@bacula-server ~]# cd /etc/bacula/
+[root@bacula-server bacula]# vim bacula-fd.conf
+[root@bacula-server bacula]# vim bacula-sd.conf
+[root@bacula-server bacula]# cd
+[root@bacula-server ~]# bconsole
+Connecting to Director localhost:9101
+1000 OK: bacula-dir Version: 5.2.13 (19 February 2013)
+Enter a period to cancel a command.
+*label
+Automatically selected Catalog: MyCatalog
+Using Catalog "MyCatalog"
+Automatically selected Storage: File
+Enter new Volume name: demo1
+Defined Pools:
+     1: Default
+     2: File
+     3: Scratch
+Select the Pool (1-3): 1
+Connecting to Storage daemon File at localhost:9103 ...
+^C
+[root@bacula-server ~]# vim /etc/ba
+bacula/            bash_completion.d/ bashrc
+[root@bacula-server ~]# vim /etc/bacula/bacula-dir.conf
+[root@bacula-server ~]# cat /etc/hosts
+127.0.0.1   localhost localhost.localdomain localhost4 localhost4.localdomain4
+::1         localhost localhost.localdomain localhost6 localhost6.localdomain6
+192.168.15.158 bacula-server
+[root@bacula-server ~]# vim /etc/bacula/bacula-dir.conf
+[root@bacula-server ~]# cat /etc/hosts
+127.0.0.1   localhost localhost.localdomain localhost4 localhost4.localdomain4
+::1         localhost localhost.localdomain localhost6 localhost6.localdomain6
+192.168.15.158 bacula-server
+[root@bacula-server ~]# vim /etc/hosts
+[root@bacula-server ~]# vim /etc/bacula/bacula-dir.conf
+[root@bacula-server ~]# vim /etc/bacula/bacula-sd.conf
+[root@bacula-server ~]# vim /etc/bacula/bacula-sd.conf
+[root@bacula-server ~]#
+[root@bacula-server ~]#
+[root@bacula-server ~]#
+[root@bacula-server ~]# systemctl restart bacula-sd
+[root@bacula-server ~]# systemctl restart bacula-dir
+
+
+
+[root@bacula-server ~]#
+[root@bacula-server ~]#
+[root@bacula-server ~]#
+[root@bacula-server ~]# systemctl status  bacula-dir
+? bacula-dir.service - Bacula-Director, the Backup-server
+   Loaded: loaded (/usr/lib/systemd/system/bacula-dir.service; enabled; vendor preset: disabled)
+   Active: active (running) since Sat 2023-07-22 23:34:19 IST; 28s ago
+     Docs: man:bacula-dir(8)
+ Main PID: 13098 (bacula-dir)
+   CGroup: /system.slice/bacula-dir.service
+           +-13098 /usr/sbin/bacula-dir -f -c /etc/bacula/bacula-dir.conf -u bacula -g bacula
+
+Jul 22 23:34:19 bacula-server systemd[1]: Started Bacula-Director, the Backup-server.
+[root@bacula-server ~]# bconsole
+Connecting to Director localhost:9101
+1000 OK: bacula-dir Version: 5.2.13 (19 February 2013)
+Enter a period to cancel a command.
+*label
+Automatically selected Catalog: MyCatalog
+Using Catalog "MyCatalog"
+Automatically selected Storage: File
+Enter new Volume name: test
+Defined Pools:
+     1: Default
+     2: File
+     3: Scratch
+Select the Pool (1-3): 1
+Connecting to Storage daemon File at backup.hpcsa.com:9102 ...
+Failed to connect to Storage daemon.
+Do not forget to mount the drive!!!
+You have messages.
+*
+[root@bacula-server ~]#
+[root@bacula-server ~]#
+[root@bacula-server ~]# yum install net-tools
+Loaded plugins: fastestmirror
+Loading mirror speeds from cached hostfile
+ * base: centos.mirror.net.in
+ * extras: centos.mirror.net.in
+ * updates: centos.mirror.net.in
+Resolving Dependencies
+--> Running transaction check
+---> Package net-tools.x86_64 0:2.0-0.25.20131004git.el7 will be installed
+--> Finished Dependency Resolution
+
+Dependencies Resolved
+
+=========================================================================================================
+ Package                                         Arch                                         Version
+=========================================================================================================
+Installing:
+ net-tools                                       x86_64                                       2.0-0.25.20
+
+Transaction Summary
+=========================================================================================================
+Install  1 Package
+
+Total download size: 306 k
+Installed size: 917 k
+Is this ok [y/d/N]: y
+Downloading packages:
+net-tools-2.0-0.25.20131004git.el7.x86_64.rpm
+Running transaction check
+Running transaction test
+Transaction test succeeded
+Running transaction
+  Installing : net-tools-2.0-0.25.20131004git.el7.x86_64
+  Verifying  : net-tools-2.0-0.25.20131004git.el7.x86_64
+
+Installed:
+  net-tools.x86_64 0:2.0-0.25.20131004git.el7
+
+Complete!
+[root@bacula-server ~]# netstat -atpn | grep 9102
+tcp        0      0 0.0.0.0:9102            0.0.0.0:*               LISTEN      2488/bacula-fd
+You have mail in /var/spool/mail/root
+[root@bacula-server ~]# systemctl status firewalld
+? firewalld.service - firewalld - dynamic firewall daemon
+   Loaded: loaded (/usr/lib/systemd/system/firewalld.service; disabled; vendor preset: enabled)
+   Active: inactive (dead)
+     Docs: man:firewalld(1)
+[root@bacula-server ~]# ping backup.hpcsa.com
+PING bacula-server (192.168.15.158) 56(84) bytes of data.
+64 bytes from bacula-server (192.168.15.158): icmp_seq=1 ttl=64 time=0.011 ms
+64 bytes from bacula-server (192.168.15.158): icmp_seq=2 ttl=64 time=0.056 ms
+^C
+--- bacula-server ping statistics ---
+2 packets transmitted, 2 received, 0% packet loss, time 1001ms
+rtt min/avg/max/mdev = 0.011/0.033/0.056/0.023 ms
+[root@bacula-server ~]# ip a
+1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+    inet 127.0.0.1/8 scope host lo
+       valid_lft forever preferred_lft forever
+    inet6 ::1/128 scope host
+       valid_lft forever preferred_lft forever
+2: ens33: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc pfifo_fast state UP group default qlen 1000
+    link/ether 00:0c:29:7f:db:f8 brd ff:ff:ff:ff:ff:ff
+    inet 192.168.15.158/24 brd 192.168.15.255 scope global dynamic ens33
+       valid_lft 1194sec preferred_lft 1194sec
+[root@bacula-server ~]# setenforce 0
+setenforce: SELinux is disabled
+[root@bacula-server ~]# vim /etc/bacula/bacula-dir.conf
+[root@bacula-server ~]# vim /etc/bacula/bacula-dir.conf
+[root@bacula-server ~]# systemctl restart bacula-dir
+[root@bacula-server ~]# systemctl restart bacula-sd
+[root@bacula-server ~]# bconsole
+Connecting to Director localhost:9101
+1000 OK: bacula-dir Version: 5.2.13 (19 February 2013)
+Enter a period to cancel a command.
+*label
+Automatically selected Catalog: MyCatalog
+Using Catalog "MyCatalog"
+Automatically selected Storage: File
+Enter new Volume name: demo2
+Defined Pools:
+     1: Default
+     2: File
+     3: Scratch
+Select the Pool (1-3): 1
+Connecting to Storage daemon File at backup.hpcsa.com:9102 ...
+Failed to connect to Storage daemon.
+Do not forget to mount the drive!!!
+You have messages.
+*
+[root@bacula-server ~]# vim /etc/bacula/bacula-dir.conf
+[root@bacula-server ~]# systemctl restart bacula-dir
+[root@bacula-server ~]# vim /etc/bacula/bacula-sd.conf
+You have new mail in /var/spool/mail/root
+[root@bacula-server ~]# systemctl restart bacula-dir
+[root@bacula-server ~]# systemctl restart bacula-sd
+[root@bacula-server ~]# bconsole
+Connecting to Director localhost:9101
+1000 OK: bacula-dir Version: 5.2.13 (19 February 2013)
+Enter a period to cancel a command.
+*label
+Automatically selected Catalog: MyCatalog
+Using Catalog "MyCatalog"
+Automatically selected Storage: File
+Enter new Volume name: denoo
+Defined Pools:
+     1: Default
+     2: File
+     3: Scratch
+Select the Pool (1-3): 1
+Connecting to Storage daemon File at backup.hpcsa.com:9103 ...
+Sending label command for Volume "denoo" Slot 0 ...
+3000 OK label. VolBytes=200 DVD=0 Volume="denoo" Device="FileStorage" (/bacula/backup)
+Catalog record for Volume "denoo", Slot 0  successfully created.
+Requesting to mount FileStorage ...
+3906 File device ""FileStorage" (/bacula/backup)" is always mounted.
+You have messages.
+*
+[root@bacula-server ~]# cat /etc/bacula/bacula-sd.conf
+#
+# Default Bacula Storage Daemon Configuration file
+#
+#  For Bacula release 5.2.13 (19 February 2013) -- redhat (Core)
+#
+# You may need to change the name of your tape drive
+#   on the "Archive Device" directive in the Device
+#   resource.  If you change the Name and/or the
+#   "Media Type" in the Device resource, please ensure
+#   that dird.conf has corresponding changes.
+#
+
+Storage {                             # definition of myself
+  Name = bacula-sd
+  SDPort = 9103                  # Director's port
+  WorkingDirectory = "/var/spool/bacula"
+  Pid Directory = "/var/run"
+  Maximum Concurrent Jobs = 20
+  SDAddress = backup.hpcsa.com
+}
+
+#
+# List Directors who are permitted to contact Storage daemon
+#
+Director {
+  Name = bacula-dir
+  Password = "@@SD_PASSWORD@@"
+}
+
+#
+# Restricted Director, used by tray-monitor to get the
+#   status of the storage daemon
+#
+Director {
+  Name = bacula-mon
+  Password = "@@MON_SD_PASSWORD@@"
+  Monitor = yes
+}
+
+#
+# Note, for a list of additional Device templates please
+#  see the directory <bacula-source>/examples/devices
+# Or follow the following link:
+#  http://bacula.svn.sourceforge.net/viewvc/bacula/trunk/bacula/examples/devices/
+#
+
+#
+# Devices supported by this Storage daemon
+# To connect, the Director's bacula-dir.conf must have the
+#  same Name and MediaType.
+#
+
+Device {
+  Name = FileStorage
+  Media Type = File
+  Archive Device = /bacula/backup
+  LabelMedia = yes;                   # lets Bacula label unlabeled media
+  Random Access = Yes;
+  AutomaticMount = yes;               # when device opened, read it
+  RemovableMedia = no;
+  AlwaysOpen = no;
+}
+
+#
+# An autochanger device with two drives
+#
+#Autochanger {
+#  Name = Autochanger
+#  Device = Drive-1
+#  Device = Drive-2
+#  Changer Command = "/usr/libexec/bacula/mtx-changer %c %o %S %a %d"
+#  Changer Device = /dev/sg0
+#}
+
+#Device {
+#  Name = Drive-1                      #
+#  Drive Index = 0
+#  Media Type = DLT-8000
+#  Archive Device = /dev/nst0
+#  AutomaticMount = yes;               # when device opened, read it
+#  AlwaysOpen = yes;
+#  RemovableMedia = yes;
+#  RandomAccess = no;
+#  AutoChanger = yes
+#  #
+#  # Enable the Alert command only if you have the mtx package loaded
+#  # Note, apparently on some systems, tapeinfo resets the SCSI controller
+#  #  thus if you turn this on, make sure it does not reset your SCSI
+#  #  controller.  I have never had any problems, and smartctl does
+#  #  not seem to cause such problems.
+#  #
+#  Alert Command = "sh -c 'tapeinfo -f %c |grep TapeAlert|cat'"
+#  If you have smartctl, enable this, it has more info than tapeinfo
+#  Alert Command = "sh -c 'smartctl -H -l error %c'"
+#}
+
+#Device {
+#  Name = Drive-2                      #
+#  Drive Index = 1
+#  Media Type = DLT-8000
+#  Archive Device = /dev/nst1
+#  AutomaticMount = yes;               # when device opened, read it
+#  AlwaysOpen = yes;
+#  RemovableMedia = yes;
+#  RandomAccess = no;
+#  AutoChanger = yes
+#  # Enable the Alert command only if you have the mtx package loaded
+#  Alert Command = "sh -c 'tapeinfo -f %c |grep TapeAlert|cat'"
+#  If you have smartctl, enable this, it has more info than tapeinfo
+#  Alert Command = "sh -c 'smartctl -H -l error %c'"
+#}
+
+#
+# A Linux or Solaris LTO-2 tape drive
+#
+#Device {
+#  Name = LTO-2
+#  Media Type = LTO-2
+#  Archive Device = /dev/nst0
+#  AutomaticMount = yes;               # when device opened, read it
+#  AlwaysOpen = yes;
+#  RemovableMedia = yes;
+#  RandomAccess = no;
+#  Maximum File Size = 3GB
+## Changer Command = "/usr/libexec/bacula/mtx-changer %c %o %S %a %d"
+## Changer Device = /dev/sg0
+## AutoChanger = yes
+#  # Enable the Alert command only if you have the mtx package loaded
+## Alert Command = "sh -c 'tapeinfo -f %c |grep TapeAlert|cat'"
+## If you have smartctl, enable this, it has more info than tapeinfo
+## Alert Command = "sh -c 'smartctl -H -l error %c'"
+#}
+
+#
+# A Linux or Solaris LTO-4 tape drive
+#
+#Device {
+#  Name = LTO-3
+#  Media Type = LTO-3
+#  Archive Device = /dev/nst0
+#  AutomaticMount = yes;               # when device opened, read it
+#  AlwaysOpen = yes;
+#  RemovableMedia = yes;
+#  RandomAccess = no;
+#  Maximum File Size = 4GB
+## Changer Command = "/usr/libexec/bacula/mtx-changer %c %o %S %a %d"
+## Changer Device = /dev/sg0
+## AutoChanger = yes
+#  # Enable the Alert command only if you have the mtx package loaded
+## Alert Command = "sh -c 'tapeinfo -f %c |grep TapeAlert|cat'"
+## If you have smartctl, enable this, it has more info than tapeinfo
+## Alert Command = "sh -c 'smartctl -H -l error %c'"
+#}
+
+#
+# A Linux or Solaris LTO-4 tape drive
+#
+#Device {
+#  Name = LTO-4
+#  Media Type = LTO-4
+#  Archive Device = /dev/nst0
+#  AutomaticMount = yes;               # when device opened, read it
+#  AlwaysOpen = yes;
+#  RemovableMedia = yes;
+#  RandomAccess = no;
+#  Maximum File Size = 5GB
+## Changer Command = "/usr/libexec/bacula/mtx-changer %c %o %S %a %d"
+## Changer Device = /dev/sg0
+## AutoChanger = yes
+#  # Enable the Alert command only if you have the mtx package loaded
+## Alert Command = "sh -c 'tapeinfo -f %c |grep TapeAlert|cat'"
+## If you have smartctl, enable this, it has more info than tapeinfo
+## Alert Command = "sh -c 'smartctl -H -l error %c'"
+#}
+
+
+
+
+#
+# A FreeBSD tape drive
+#
+#Device {
+#  Name = DDS-4
+#  Description = "DDS-4 for FreeBSD"
+#  Media Type = DDS-4
+#  Archive Device = /dev/nsa1
+#  AutomaticMount = yes;               # when device opened, read it
+#  AlwaysOpen = yes
+#  Offline On Unmount = no
+#  Hardware End of Medium = no
+#  BSF at EOM = yes
+#  Backward Space Record = no
+#  Fast Forward Space File = no
+#  TWO EOF = yes
+#  If you have smartctl, enable this, it has more info than tapeinfo
+#  Alert Command = "sh -c 'smartctl -H -l error %c'"
+#}
+
+#
+# Send all messages to the Director,
+# mount messages also are sent to the email address
+#
+Messages {
+  Name = Standard
+  director = bacula-dir = all
+}
+[root@bacula-server ~]#

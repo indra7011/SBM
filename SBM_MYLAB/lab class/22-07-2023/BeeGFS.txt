@@ -1,0 +1,64 @@
+
+1. Download BeeGFS Repository:
+    To start with, we will download the BeeGFS repository to our system:
+
+    
+    wget -O /etc/yum.repos.d/beegfs.repo https://www.beegfs.io/release/beegfs_7.2/dists/beegfs-rhel7.repo
+    
+
+    Please replace "7.2" with the current BeeGFS version, and "rhel7" with your OS version.
+
+2. Install BeeGFS Packages:
+    Install BeeGFS packages with the following commands:
+
+    
+    yum install beegfs-utils beegfs-client beegfs-meta beegfs-storage
+    
+
+3. Configure BeeGFS:
+    Now, we will configure the metadata server (MDS), storage server (SS), and client. You will need to replace `<MDS IP>`, `<SS IP>`, and `<client IP>` with your corresponding IPs.
+
+    On the metadata server:
+
+    
+    /opt/beegfs/sbin/beegfs-setup-meta -p /data/beegfs/meta -s 1 -m <MDS IP>
+    
+
+    On the storage server:
+
+    
+    /opt/beegfs/sbin/beegfs-setup-storage -p /data/beegfs/storage -s 2 -i 1 -m <MDS IP>
+    
+
+    On the client machine:
+
+    
+    /opt/beegfs/sbin/beegfs-setup-client -m <MDS IP> -p /mnt/beegfs
+    
+
+4. Start BeeGFS Services:
+    On the metadata server and storage server:
+
+    
+    systemctl start beegfs-meta
+    systemctl enable beegfs-meta
+
+    systemctl start beegfs-storage
+    systemctl enable beegfs-storage
+    
+
+    On the client:
+
+    
+    systemctl start beegfs-client
+    systemctl enable beegfs-client
+    
+
+5. Check Your Installation:
+    After starting BeeGFS, you can check your installation using the following command on any of the servers:
+
+    
+    /opt/beegfs/sbin/beegfs-check-servers
+    
+
+    If your servers are running correctly, you will see a message indicating that they are reachable.

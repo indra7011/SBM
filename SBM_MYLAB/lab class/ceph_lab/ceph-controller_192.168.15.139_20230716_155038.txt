@@ -1,0 +1,143 @@
+login as: root
+root@192.168.15.139's password:
+    +----------------------------------------------------------------------+
+    ¦                 • MobaXterm Personal Edition v23.0 •                 ¦
+    ¦               (SSH client, X server and network tools)               ¦
+    ¦                                                                      ¦
+    ¦ ? SSH session to root@192.168.15.139                                 ¦
+    ¦   • Direct SSH      :  ?                                             ¦
+    ¦   • SSH compression :  ?                                             ¦
+    ¦   • SSH-browser     :  ?                                             ¦
+    ¦   • X11-forwarding  :  ?  (disabled or not supported by server)      ¦
+    ¦                                                                      ¦
+    ¦ ? For more info, ctrl+click on help or visit our website.            ¦
+    +----------------------------------------------------------------------+
+
+Last login: Sun Jul 16 19:53:45 2023
+[root@localhost ~]# hostnamectl set-hostname ceph-controller
+[root@localhost ~]# hostname
+ceph-controller
+[root@localhost ~]# exit
+logout
+
+---------------------------------------------------------------------------------------------------------
+
+Session stopped
+    - Press <Return> to exit tab
+    - Press R to restart session
+    - Press S to save terminal output to file
+login as: root
+root@192.168.15.139's password:
+    +----------------------------------------------------------------------+
+    ¦                 • MobaXterm Personal Edition v23.0 •                 ¦
+    ¦               (SSH client, X server and network tools)               ¦
+    ¦                                                                      ¦
+    ¦ ? SSH session to root@192.168.15.139                                 ¦
+    ¦   • Direct SSH      :  ?                                             ¦
+    ¦   • SSH compression :  ?                                             ¦
+    ¦   • SSH-browser     :  ?                                             ¦
+    ¦   • X11-forwarding  :  ?  (disabled or not supported by server)      ¦
+    ¦                                                                      ¦
+    ¦ ? For more info, ctrl+click on help or visit our website.            ¦
+    +----------------------------------------------------------------------+
+
+Last login: Sun Jul 16 20:08:28 2023 from 192.168.15.1
+[root@ceph-controller ~]# cat /etc/hosts
+127.0.0.1   localhost localhost.localdomain localhost4 localhost4.localdomain4
+::1         localhost localhost.localdomain localhost6 localhost6.localdomain6
+192.168.15.138 ceph-monitor
+192.168.15.139 ceph-controller
+192.168.15.140 ceph-compute01
+192.168.15.141 ceph-compute02
+192.168.15.142 ceph-client
+[root@ceph-controller ~]# systemctl stop firewalld
+[root@ceph-controller ~]# systemctl disable firewalld
+Removed symlink /etc/systemd/system/multi-user.target.wants/firewalld.service.
+Removed symlink /etc/systemd/system/dbus-org.fedoraproject.FirewallD1.service.
+[root@ceph-controller ~]# vi /etc/selinux/config
+[root@ceph-controller ~]# init 6
+
+Remote side unexpectedly closed network connection
+
+---------------------------------------------------------------------------------------------------------
+
+Session stopped
+    - Press <Return> to exit tab
+    - Press R to restart session
+    - Press S to save terminal output to file
+login as: root
+root@192.168.15.139's password:
+    +----------------------------------------------------------------------+
+    ¦                 • MobaXterm Personal Edition v23.0 •                 ¦
+    ¦               (SSH client, X server and network tools)               ¦
+    ¦                                                                      ¦
+    ¦ ? SSH session to root@192.168.15.139                                 ¦
+    ¦   • Direct SSH      :  ?                                             ¦
+    ¦   • SSH compression :  ?                                             ¦
+    ¦   • SSH-browser     :  ?                                             ¦
+    ¦   • X11-forwarding  :  ?  (disabled or not supported by server)      ¦
+    ¦                                                                      ¦
+    ¦ ? For more info, ctrl+click on help or visit our website.            ¦
+    +----------------------------------------------------------------------+
+
+Last login: Sun Jul 16 20:52:24 2023
+[root@ceph-controller ~]# yum install chrony -y
+Loaded plugins: fastestmirror
+Loading mirror speeds from cached hostfile
+ * base: centos.mirror.net.in
+ * extras: centos.mirror.net.in
+ * updates: centos.mirror.net.in
+Package chrony-3.4-1.el7.x86_64 already installed and latest version
+Nothing to do
+[root@ceph-controller ~]# chronyc sourcestats
+210 Number of sources = 4
+Name/IP Address            NP  NR  Span  Frequency  Freq Skew  Offset  Std Dev
+==============================================================================
+ntp7.mum-in.hosts.301-mo>   0   0     0     +0.000   2000.000     +0ns  4000ms
+ntp5.mum-in.hosts.301-mo>   0   0     0     +0.000   2000.000     +0ns  4000ms
+157.245.102.2               0   0     0     +0.000   2000.000     +0ns  4000ms
+103.146.168.7.ipacct.in     0   0     0     +0.000   2000.000     +0ns  4000ms
+[root@ceph-controller ~]# useradd cephadm && echo "cdac" | passwd --stdin cephadm
+Changing password for user cephadm.
+passwd: all authentication tokens updated successfully.
+[root@ceph-controller ~]# echo "cephadm ALL = (root) NOPASSWD:ALL" | sudo tee /etc/sudoers.d/cephadm
+cephadm ALL = (root) NOPASSWD:ALL
+[root@ceph-controller ~]# chmod 0440 /etc/sudoers.d/cephadm
+[root@ceph-controller ~]# sed -i --follow-symlinks 's/SELINUX=enforcing/SELINUX=disabled/g' /etc/sysconfig/selinux
+[root@ceph-controller ~]# sudo yum install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
+Loaded plugins: fastestmirror
+epel-release-latest-7.noarch.rpm                                                  |  15 kB  00:00:00
+Examining /var/tmp/yum-root-EkIT9F/epel-release-latest-7.noarch.rpm: epel-release-7-14.noarch
+Marking /var/tmp/yum-root-EkIT9F/epel-release-latest-7.noarch.rpm to be installed
+Resolving Dependencies
+--> Running transaction check
+---> Package epel-release.noarch 0:7-14 will be installed
+--> Finished Dependency Resolution
+
+Dependencies Resolved
+
+=========================================================================================================
+ Package                Arch             Version           Repository                               Size
+=========================================================================================================
+Installing:
+ epel-release           noarch           7-14              /epel-release-latest-7.noarch            25 k
+
+Transaction Summary
+=========================================================================================================
+Install  1 Package
+
+Total size: 25 k
+Installed size: 25 k
+Downloading packages:
+Running transaction check
+Running transaction test
+Transaction test succeeded
+Running transaction
+  Installing : epel-release-7-14.noarch                                                              1/1
+  Verifying  : epel-release-7-14.noarch                                                              1/1
+
+Installed:
+  epel-release.noarch 0:7-14
+
+Complete!
+[root@ceph-controller ~]#

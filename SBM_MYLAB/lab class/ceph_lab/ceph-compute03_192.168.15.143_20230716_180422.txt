@@ -1,0 +1,202 @@
+login as: root
+root@192.168.15.143's password:
+    +----------------------------------------------------------------------+
+    ¦                 • MobaXterm Personal Edition v23.0 •                 ¦
+    ¦               (SSH client, X server and network tools)               ¦
+    ¦                                                                      ¦
+    ¦ ? SSH session to root@192.168.15.143                                 ¦
+    ¦   • Direct SSH      :  ?                                             ¦
+    ¦   • SSH compression :  ?                                             ¦
+    ¦   • SSH-browser     :  ?                                             ¦
+    ¦   • X11-forwarding  :  ?  (disabled or not supported by server)      ¦
+    ¦                                                                      ¦
+    ¦ ? For more info, ctrl+click on help or visit our website.            ¦
+    +----------------------------------------------------------------------+
+
+Last login: Sun Jul 16 22:38:14 2023
+[root@localhost ~]#
+[root@localhost ~]# hostnamectl set-hostname ceph-compute03
+[root@localhost ~]# yum install rysnc -y
+Loaded plugins: fastestmirror
+Determining fastest mirrors
+ * base: centos.mirror.net.in
+ * extras: centos.mirror.net.in
+ * updates: centos.mirror.net.in
+base                                                                              | 3.6 kB  00:00:00
+extras                                                                            | 2.9 kB  00:00:00
+updates                                                                           | 2.9 kB  00:00:00
+(1/4): base/7/x86_64/group_gz                                                     | 153 kB  00:00:00
+(2/4): extras/7/x86_64/primary_db                                                 | 250 kB  00:00:00
+(3/4): updates/7/x86_64/primary_db                                                |  22 MB  00:00:00
+(4/4): base/7/x86_64/primary_db                                                   | 6.1 MB  00:00:01
+No package rysnc available.
+Error: Nothing to do
+[root@localhost ~]# nmcli networking off
+[root@localhost ~]#
+Network error: Software caused connection abort
+
+---------------------------------------------------------------------------------------------------------
+
+Session stopped
+    - Press <Return> to exit tab
+    - Press R to restart session
+    - Press S to save terminal output to file
+login as: root
+root@192.168.15.143's password:
+Access denied
+root@192.168.15.143's password:
+    +----------------------------------------------------------------------+
+    ¦                 • MobaXterm Personal Edition v23.0 •                 ¦
+    ¦               (SSH client, X server and network tools)               ¦
+    ¦                                                                      ¦
+    ¦ ? SSH session to root@192.168.15.143                                 ¦
+    ¦   • Direct SSH      :  ?                                             ¦
+    ¦   • SSH compression :  ?                                             ¦
+    ¦   • SSH-browser     :  ?                                             ¦
+    ¦   • X11-forwarding  :  ?  (disabled or not supported by server)      ¦
+    ¦                                                                      ¦
+    ¦ ? For more info, ctrl+click on help or visit our website.            ¦
+    +----------------------------------------------------------------------+
+
+Last failed login: Sun Jul 16 22:45:33 IST 2023 from 192.168.15.1 on ssh:notty
+There was 1 failed login attempt since the last successful login.
+Last login: Sun Jul 16 22:44:36 2023
+[root@ceph-compute03 ~]# yum install chrony
+Loaded plugins: fastestmirror
+Loading mirror speeds from cached hostfile
+ * base: centos.mirror.net.in
+ * extras: centos.mirror.net.in
+ * updates: centos.mirror.net.in
+Package chrony-3.4-1.el7.x86_64 already installed and latest version
+Nothing to do
+[root@ceph-compute03 ~]# chronyc sourcestats
+210 Number of sources = 4
+Name/IP Address            NP  NR  Span  Frequency  Freq Skew  Offset  Std Dev
+==============================================================================
+164.100.255.123             0   0     0     +0.000   2000.000     +0ns  4000ms
+ntp-mumbai.gombadi.com      0   0     0     +0.000   2000.000     +0ns  4000ms
+129.154.46.154              0   0     0     +0.000   2000.000     +0ns  4000ms
+157.245.102.2               0   0     0     +0.000   2000.000     +0ns  4000ms
+[root@ceph-compute03 ~]# cat /etc/hosts
+127.0.0.1   localhost localhost.localdomain localhost4 localhost4.localdomain4
+::1         localhost localhost.localdomain localhost6 localhost6.localdomain6
+192.168.15.138 ceph-monitor
+192.168.15.139 ceph-controller
+192.168.15.140 ceph-compute01
+192.168.15.141 ceph-compute02
+192.168.15.142 ceph-client
+192.168.15.143 ceph-compute03
+[root@ceph-compute03 ~]# useradd cephadm && echo "cdac" | passwd --stdin cephadm
+Changing password for user cephadm.
+passwd: all authentication tokens updated successfully.
+[root@ceph-compute03 ~]# echo "cephadm ALL = (root) NOPASSWD:ALL" | sudo tee /etc/sudoers.d/cephadm
+cephadm ALL = (root) NOPASSWD:ALL
+[root@ceph-compute03 ~]# chmod 0440 /etc/sudoers.d/cephadm
+[root@ceph-compute03 ~]# sudo yum install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
+Loaded plugins: fastestmirror
+epel-release-latest-7.noarch.rpm                                                  |  15 kB  00:00:00
+Examining /var/tmp/yum-root-tWRlvK/epel-release-latest-7.noarch.rpm: epel-release-7-14.noarch
+Marking /var/tmp/yum-root-tWRlvK/epel-release-latest-7.noarch.rpm to be installed
+Resolving Dependencies
+--> Running transaction check
+---> Package epel-release.noarch 0:7-14 will be installed
+--> Finished Dependency Resolution
+
+Dependencies Resolved
+
+=========================================================================================================
+ Package                Arch             Version           Repository                               Size
+=========================================================================================================
+Installing:
+ epel-release           noarch           7-14              /epel-release-latest-7.noarch            25 k
+
+Transaction Summary
+=========================================================================================================
+Install  1 Package
+
+Total size: 25 k
+Installed size: 25 k
+Downloading packages:
+Running transaction check
+Running transaction test
+Transaction test succeeded
+Running transaction
+  Installing : epel-release-7-14.noarch                                                              1/1
+  Verifying  : epel-release-7-14.noarch                                                              1/1
+
+Installed:
+  epel-release.noarch 0:7-14
+
+Complete!
+[root@ceph-compute03 ~]# vim /etc/chrony.conf
+[root@ceph-compute03 ~]# cat /etc/chrony.conf
+# Use public servers from the pool.ntp.org project.
+# Please consider joining the pool (http://www.pool.ntp.org/join.html).
+#server 0.centos.pool.ntp.org iburst
+#server 1.centos.pool.ntp.org iburst
+#server 2.centos.pool.ntp.org iburst
+#server 3.centos.pool.ntp.org iburst
+server ceph-controller
+
+# Record the rate at which the system clock gains/losses time.
+driftfile /var/lib/chrony/drift
+
+# Allow the system clock to be stepped in the first three updates
+# if its offset is larger than 1 second.
+makestep 1.0 3
+
+# Enable kernel synchronization of the real-time clock (RTC).
+rtcsync
+
+# Enable hardware timestamping on all interfaces that support it.
+#hwtimestamp *
+
+# Increase the minimum number of selectable sources required to adjust
+# the system clock.
+#minsources 2
+
+# Allow NTP client access from local network.
+#allow 192.168.0.0/16
+
+# Serve time even if not synchronized to a time source.
+#local stratum 10
+
+# Specify file containing keys for NTP authentication.
+#keyfile /etc/chrony.keys
+
+# Specify directory for log files.
+logdir /var/log/chrony
+
+# Select which information is logged.
+#log measurements statistics tracking
+[root@ceph-compute03 ~]# systemctl restart chronyd
+[root@ceph-compute03 ~]# lsblk
+NAME                                                                  MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT
+sda                                                                     8:0    0   20G  0 disk
++-sda1                                                                  8:1    0    1G  0 part /boot
++-sda2                                                                  8:2    0   19G  0 part
+  +-centos-root                                                       253:0    0   17G  0 lvm  /
+  +-centos-swap                                                       253:1    0    2G  0 lvm  [SWAP]
+sdb                                                                     8:16   0   20G  0 disk
++-ceph--7286c8f1--b6ec--4c3f--b836--cd8ce485494c-osd--block--c3d7c2b1--c2de--4957--aa87--9b29be46ca3f
+                                                                      253:2    0   20G  0 lvm
+sdc                                                                     8:32   0   20G  0 disk
++-ceph--7e1fd066--41e7--430c--aea5--dda458c5a88d-osd--block--19b2ae9b--6266--4188--ab79--396abb94a9e0
+                                                                      253:3    0   20G  0 lvm
+sdd                                                                     8:48   0   20G  0 disk
++-ceph--e57329b7--9624--4bf6--b071--177ed40e7d39-osd--block--73c5b537--144b--4b27--bb50--c1f17fc1a6d7
+                                                                      253:4    0   20G  0 lvm
+sr0                                                                    11:0    1  973M  0 rom
+[root@ceph-compute03 ~]# df -Th
+Filesystem              Type      Size  Used Avail Use% Mounted on
+devtmpfs                devtmpfs  475M     0  475M   0% /dev
+tmpfs                   tmpfs     487M     0  487M   0% /dev/shm
+tmpfs                   tmpfs     487M  7.7M  479M   2% /run
+tmpfs                   tmpfs     487M     0  487M   0% /sys/fs/cgroup
+/dev/mapper/centos-root xfs        17G  1.8G   16G  11% /
+/dev/sda1               xfs      1014M  138M  877M  14% /boot
+tmpfs                   tmpfs      98M     0   98M   0% /run/user/0
+tmpfs                   tmpfs     487M   52K  487M   1% /var/lib/ceph/osd/ceph-6
+tmpfs                   tmpfs     487M   52K  487M   1% /var/lib/ceph/osd/ceph-7
+tmpfs                   tmpfs     487M   52K  487M   1% /var/lib/ceph/osd/ceph-8
+[root@ceph-compute03 ~]#

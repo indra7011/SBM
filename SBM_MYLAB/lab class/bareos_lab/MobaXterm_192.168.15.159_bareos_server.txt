@@ -1,0 +1,869 @@
+login as: root
+root@192.168.15.159's password:
+    +----------------------------------------------------------------------+
+    ¦                 • MobaXterm Personal Edition v23.0 •                 ¦
+    ¦               (SSH client, X server and network tools)               ¦
+    ¦                                                                      ¦
+    ¦ ? SSH session to root@192.168.15.159                                 ¦
+    ¦   • Direct SSH      :  ?                                             ¦
+    ¦   • SSH compression :  ?                                             ¦
+    ¦   • SSH-browser     :  ?                                             ¦
+    ¦   • X11-forwarding  :  ?  (disabled or not supported by server)      ¦
+    ¦                                                                      ¦
+    ¦ ? For more info, ctrl+click on help or visit our website.            ¦
+    +----------------------------------------------------------------------+
+
+Last login: Sun Jul 23 01:10:34 2023
+[root@bareos-server ~]# ip a
+1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+    inet 127.0.0.1/8 scope host lo
+       valid_lft forever preferred_lft forever
+    inet6 ::1/128 scope host
+       valid_lft forever preferred_lft forever
+2: ens160: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc mq state UP group default qlen 1000
+    link/ether 00:0c:29:5a:04:b8 brd ff:ff:ff:ff:ff:ff
+    altname enp3s0
+    inet 192.168.15.159/24 brd 192.168.15.255 scope global dynamic noprefixroute ens160
+       valid_lft 1682sec preferred_lft 1682sec
+    inet6 fe80::20c:29ff:fe5a:4b8/64 scope link noprefixroute
+       valid_lft forever preferred_lft forever
+[root@bareos-server ~]# sestatus
+SELinux status:                 disabled
+[root@bareos-server ~]# dnf install @postgresql:13
+CentOS Stream 8 - AppStream                                              5.7 MB/s |  31 MB     00:05
+CentOS Stream 8 - BaseOS                                                  32 MB/s |  41 MB     00:01
+CentOS Stream 8 - Extras                                                  32 kB/s |  18 kB     00:00
+CentOS Stream 8 - Extras common packages                                 8.8 kB/s | 6.6 kB     00:00
+Dependencies resolved.
+=========================================================================================================
+ Package                 Architecture Version                                      Repository       Size
+=========================================================================================================
+Installing group/module packages:
+ postgresql-server       x86_64       13.7-2.module_el8.6.0+1152+d0162c0a          appstream       5.6 M
+Installing dependencies:
+ libicu                  x86_64       60.3-2.el8_1                                 baseos          8.8 M
+ libpq                   x86_64       13.5-1.el8                                   appstream       198 k
+ postgresql              x86_64       13.7-2.module_el8.6.0+1152+d0162c0a          appstream       1.5 M
+Installing module profiles:
+ postgresql/server
+Enabling module streams:
+ postgresql                           13
+
+Transaction Summary
+=========================================================================================================
+Install  4 Packages
+
+Total download size: 16 M
+Installed size: 61 M
+Is this ok [y/N]: y
+Downloading Packages:
+(1/4): libpq-13.5-1.el8.x86_64.rpm                                       882 kB/s | 198 kB     00:00
+(2/4): postgresql-13.7-2.module_el8.6.0+1152+d0162c0a.x86_64.rpm         2.6 MB/s | 1.5 MB     00:00
+(3/4): postgresql-server-13.7-2.module_el8.6.0+1152+d0162c0a.x86_64.rpm  6.6 MB/s | 5.6 MB     00:00
+(4/4): libicu-60.3-2.el8_1.x86_64.rpm                                    8.6 MB/s | 8.8 MB     00:01
+---------------------------------------------------------------------------------------------------------
+Total                                                                    8.3 MB/s |  16 MB     00:01
+CentOS Stream 8 - AppStream                                              1.6 MB/s | 1.6 kB     00:00
+Importing GPG key 0x8483C65D:
+ Userid     : "CentOS (CentOS Official Signing Key) <security@centos.org>"
+ Fingerprint: 99DB 70FA E1D7 CE22 7FB6 4882 05B5 55B3 8483 C65D
+ From       : /etc/pki/rpm-gpg/RPM-GPG-KEY-centosofficial
+Is this ok [y/N]: y
+Key imported successfully
+Running transaction check
+Transaction check succeeded.
+Running transaction test
+Transaction test succeeded.
+Running transaction
+  Preparing        :                                                                                 1/1
+  Installing       : libpq-13.5-1.el8.x86_64                                                         1/4
+  Installing       : postgresql-13.7-2.module_el8.6.0+1152+d0162c0a.x86_64                           2/4
+  Installing       : libicu-60.3-2.el8_1.x86_64                                                      3/4
+  Running scriptlet: libicu-60.3-2.el8_1.x86_64                                                      3/4
+  Running scriptlet: postgresql-server-13.7-2.module_el8.6.0+1152+d0162c0a.x86_64                    4/4
+  Installing       : postgresql-server-13.7-2.module_el8.6.0+1152+d0162c0a.x86_64                    4/4
+  Running scriptlet: postgresql-server-13.7-2.module_el8.6.0+1152+d0162c0a.x86_64                    4/4
+  Verifying        : libpq-13.5-1.el8.x86_64                                                         1/4
+  Verifying        : postgresql-13.7-2.module_el8.6.0+1152+d0162c0a.x86_64                           2/4
+  Verifying        : postgresql-server-13.7-2.module_el8.6.0+1152+d0162c0a.x86_64                    3/4
+  Verifying        : libicu-60.3-2.el8_1.x86_64                                                      4/4
+
+Installed:
+  libicu-60.3-2.el8_1.x86_64
+  libpq-13.5-1.el8.x86_64
+  postgresql-13.7-2.module_el8.6.0+1152+d0162c0a.x86_64
+  postgresql-server-13.7-2.module_el8.6.0+1152+d0162c0a.x86_64
+
+Complete!
+[root@bareos-server ~]# /usr/bin/postgresql-setup --initdb
+ * Initializing database in '/var/lib/pgsql/data'
+ * Initialized, logs are in /var/lib/pgsql/initdb_postgresql.log
+[root@bareos-server ~]# cd /var/lib/pgsql/data/
+[root@bareos-server data]# vim pg_hba.conf
+[root@bareos-server data]# cat pg_hba.conf
+# PostgreSQL Client Authentication Configuration File
+# ===================================================
+#
+# Refer to the "Client Authentication" section in the PostgreSQL
+# documentation for a complete description of this file.  A short
+# synopsis follows.
+#
+# This file controls: which hosts are allowed to connect, how clients
+# are authenticated, which PostgreSQL user names they can use, which
+# databases they can access.  Records take one of these forms:
+#
+# local         DATABASE  USER  METHOD  [OPTIONS]
+# host          DATABASE  USER  ADDRESS  METHOD  [OPTIONS]
+# hostssl       DATABASE  USER  ADDRESS  METHOD  [OPTIONS]
+# hostnossl     DATABASE  USER  ADDRESS  METHOD  [OPTIONS]
+# hostgssenc    DATABASE  USER  ADDRESS  METHOD  [OPTIONS]
+# hostnogssenc  DATABASE  USER  ADDRESS  METHOD  [OPTIONS]
+#
+# (The uppercase items must be replaced by actual values.)
+#
+# The first field is the connection type: "local" is a Unix-domain
+# socket, "host" is either a plain or SSL-encrypted TCP/IP socket,
+# "hostssl" is an SSL-encrypted TCP/IP socket, and "hostnossl" is a
+# non-SSL TCP/IP socket.  Similarly, "hostgssenc" uses a
+# GSSAPI-encrypted TCP/IP socket, while "hostnogssenc" uses a
+# non-GSSAPI socket.
+#
+# DATABASE can be "all", "sameuser", "samerole", "replication", a
+# database name, or a comma-separated list thereof. The "all"
+# keyword does not match "replication". Access to replication
+# must be enabled in a separate record (see example below).
+#
+# USER can be "all", a user name, a group name prefixed with "+", or a
+# comma-separated list thereof.  In both the DATABASE and USER fields
+# you can also write a file name prefixed with "@" to include names
+# from a separate file.
+#
+# ADDRESS specifies the set of hosts the record matches.  It can be a
+# host name, or it is made up of an IP address and a CIDR mask that is
+# an integer (between 0 and 32 (IPv4) or 128 (IPv6) inclusive) that
+# specifies the number of significant bits in the mask.  A host name
+# that starts with a dot (.) matches a suffix of the actual host name.
+# Alternatively, you can write an IP address and netmask in separate
+# columns to specify the set of hosts.  Instead of a CIDR-address, you
+# can write "samehost" to match any of the server's own IP addresses,
+# or "samenet" to match any address in any subnet that the server is
+# directly connected to.
+#
+# METHOD can be "trust", "reject", "md5", "password", "scram-sha-256",
+# "gss", "sspi", "ident", "peer", "pam", "ldap", "radius" or "cert".
+# Note that "password" sends passwords in clear text; "md5" or
+# "scram-sha-256" are preferred since they send encrypted passwords.
+#
+# OPTIONS are a set of options for the authentication in the format
+# NAME=VALUE.  The available options depend on the different
+# authentication methods -- refer to the "Client Authentication"
+# section in the documentation for a list of which options are
+# available for which authentication methods.
+#
+# Database and user names containing spaces, commas, quotes and other
+# special characters must be quoted.  Quoting one of the keywords
+# "all", "sameuser", "samerole" or "replication" makes the name lose
+# its special character, and just match a database or username with
+# that name.
+#
+# This file is read on server startup and when the server receives a
+# SIGHUP signal.  If you edit the file on a running system, you have to
+# SIGHUP the server for the changes to take effect, run "pg_ctl reload",
+# or execute "SELECT pg_reload_conf()".
+#
+# Put your actual configuration here
+# ----------------------------------
+#
+# If you want to allow non-local connections, you need to add more
+# "host" records.  In that case you will also need to make PostgreSQL
+# listen on a non-local interface via the listen_addresses
+# configuration parameter, or via the -i or -h command line switches.
+
+
+
+# TYPE  DATABASE        USER            ADDRESS                 METHOD
+
+# "local" is for Unix domain socket connections only
+local   all             all                                     peer
+# IPv4 local connections:
+host    all             all             127.0.0.1/32            ident
+# IPv6 local connections:
+host    all             all             ::1/128                 ident
+# Allow replication connections from localhost, by a user with the
+# replication privilege.
+local   replication     all                                     peer
+host    replication     all             127.0.0.1/32            ident
+host    replication     all             ::1/128                 ident
+local   all             all  trust
+host    all             all             127.0.0.1/32  trust
+[root@bareos-server data]# systemctl start postgresql
+[root@bareos-server data]# systemctl status postgresql
+? postgresql.service - PostgreSQL database server
+   Loaded: loaded (/usr/lib/systemd/system/postgresql.service; disabled; vendor preset: disabled)
+   Active: active (running) since Sun 2023-07-23 01:15:31 IST; 9s ago
+  Process: 11518 ExecStartPre=/usr/libexec/postgresql-check-db-dir postgresql (code=exited, status=0/SUC>
+ Main PID: 11521 (postmaster)
+    Tasks: 8 (limit: 10930)
+   Memory: 16.9M
+   CGroup: /system.slice/postgresql.service
+           +-11521 /usr/bin/postmaster -D /var/lib/pgsql/data
+           +-11522 postgres: logger
+           +-11525 postgres: checkpointer
+           +-11526 postgres: background writer
+           +-11527 postgres: walwriter
+           +-11528 postgres: autovacuum launcher
+           +-11529 postgres: stats collector
+           +-11530 postgres: logical replication launcher
+
+Jul 23 01:15:31 bareos-server systemd[1]: Starting PostgreSQL database server...
+Jul 23 01:15:31 bareos-server postmaster[11521]: 2023-07-23 01:15:31.053 IST [11521] LOG:  redirecting l>
+Jul 23 01:15:31 bareos-server postmaster[11521]: 2023-07-23 01:15:31.053 IST [11521] HINT:  Future log o>
+Jul 23 01:15:31 bareos-server systemd[1]: Started PostgreSQL database server.
+[root@bareos-server data]# systemctl enable postgresql
+Created symlink /etc/systemd/system/multi-user.target.wants/postgresql.service ? /usr/lib/systemd/system/postgresql.service.
+[root@bareos-server data]# yum install wget -y
+Last metadata expiration check: 0:03:43 ago on Sunday 23 July 2023 01:12:35 AM IST.
+Dependencies resolved.
+=========================================================================================================
+ Package                  Architecture        Version                       Repository              Size
+=========================================================================================================
+Installing:
+ wget                     x86_64              1.19.5-11.el8                 appstream              734 k
+Installing dependencies:
+ libmetalink              x86_64              0.1.3-7.el8                   baseos                  32 k
+
+Transaction Summary
+=========================================================================================================
+Install  2 Packages
+
+Total download size: 766 k
+Installed size: 2.8 M
+Downloading Packages:
+(1/2): libmetalink-0.1.3-7.el8.x86_64.rpm                                267 kB/s |  32 kB     00:00
+(2/2): wget-1.19.5-11.el8.x86_64.rpm                                     3.1 MB/s | 734 kB     00:00
+---------------------------------------------------------------------------------------------------------
+Total                                                                    847 kB/s | 766 kB     00:00
+Running transaction check
+Transaction check succeeded.
+Running transaction test
+Transaction test succeeded.
+Running transaction
+  Preparing        :                                                                                 1/1
+  Installing       : libmetalink-0.1.3-7.el8.x86_64                                                  1/2
+  Installing       : wget-1.19.5-11.el8.x86_64                                                       2/2
+  Running scriptlet: wget-1.19.5-11.el8.x86_64                                                       2/2
+  Verifying        : wget-1.19.5-11.el8.x86_64                                                       1/2
+  Verifying        : libmetalink-0.1.3-7.el8.x86_64                                                  2/2
+
+Installed:
+  libmetalink-0.1.3-7.el8.x86_64                        wget-1.19.5-11.el8.x86_64
+
+Complete!
+[root@bareos-server data]# wget https://download.bareos.org/current/EL_8/add_bareos_repositories.sh
+--2023-07-23 01:16:36--  https://download.bareos.org/current/EL_8/add_bareos_repositories.sh
+Resolving download.bareos.org (download.bareos.org)... 185.170.114.121, 2a03:4000:15:27f::1
+Connecting to download.bareos.org (download.bareos.org)|185.170.114.121|:443... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 3040 (3.0K) [text/plain]
+Saving to: ‘add_bareos_repositories.sh’
+
+add_bareos_repositories.sh 100%[=====================================>]   2.97K  --.-KB/s    in 0s
+
+2023-07-23 01:16:36 (44.3 MB/s) - ‘add_bareos_repositories.sh’ saved [3040/3040]
+
+[root@bareos-server data]# yum install bareos
+Last metadata expiration check: 0:04:12 ago on Sunday 23 July 2023 01:12:35 AM IST.
+No match for argument: bareos
+Error: Unable to find a match: bareos
+[root@bareos-server data]# ls
+add_bareos_repositories.sh  global        pg_dynshmem    pg_logical    pg_replslot   pg_stat      pg_tbls
+base                        log           pg_hba.conf    pg_multixact  pg_serial     pg_stat_tmp  pg_twop
+current_logfiles            pg_commit_ts  pg_ident.conf  pg_notify     pg_snapshots  pg_subtrans  PG_VERS
+[root@bareos-server data]# cd ~
+[root@bareos-server ~]# ls
+anaconda-ks.cfg
+[root@bareos-server ~]# ls
+anaconda-ks.cfg
+[root@bareos-server ~]# wget https://download.bareos.org/current/EL_8/add_bareos_repositories.sh
+--2023-07-23 01:18:02--  https://download.bareos.org/current/EL_8/add_bareos_repositories.sh
+Resolving download.bareos.org (download.bareos.org)... 185.170.114.121, 2a03:4000:15:27f::1
+Connecting to download.bareos.org (download.bareos.org)|185.170.114.121|:443... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 3040 (3.0K) [text/plain]
+Saving to: ‘add_bareos_repositories.sh’
+
+add_bareos_repositories.sh                          100%[================================================
+
+2023-07-23 01:18:03 (116 MB/s) - ‘add_bareos_repositories.sh’ saved [3040/3040]
+
+[root@bareos-server ~]# chmod 755 add_bareos_repositories.sh
+[root@bareos-server ~]# ./add_bareos_repositories.sh
+Repository https://download.bareos.org/current/EL_8 successfully added.
+[root@bareos-server ~]# yum install bareos
+Backup Archiving Recovery Open Sourced (EL_8)
+Backup Archiving Recovery Open Sourced (EL_8)
+Importing GPG key 0xDFEF9127:
+ Userid     : "Bareos experimental Signing Key <signing@bareos.com>"
+ Fingerprint: 8283 4CF0 02D8 9BA5 5C1E D0AA 42DA 24A6 DFEF 9127
+ From       : /etc/pki/rpm-gpg/RPM-GPG-KEY-bareos-experimental
+Is this ok [y/N]: y
+Backup Archiving Recovery Open Sourced (EL_8)
+Last metadata expiration check: 0:00:01 ago on Sunday 23 July 2023 01:18:21 AM IST.
+Dependencies resolved.
+=========================================================================================================
+ Package                          Architecture Version                                Repository    Size
+=========================================================================================================
+Installing:
+ bareos                           x86_64       22.1.1~pre26.eeec2501e-70.el8          bareos       7.5 k
+Installing dependencies:
+ bareos-bconsole                  x86_64       22.1.1~pre26.eeec2501e-70.el8          bareos       142 k
+ bareos-client                    x86_64       22.1.1~pre26.eeec2501e-70.el8          bareos       7.7 k
+ bareos-common                    x86_64       22.1.1~pre26.eeec2501e-70.el8          bareos       1.1 M
+ bareos-database-common           x86_64       22.1.1~pre26.eeec2501e-70.el8          bareos        92 k
+ bareos-database-postgresql       x86_64       22.1.1~pre26.eeec2501e-70.el8          bareos        42 k
+ bareos-database-tools            x86_64       22.1.1~pre26.eeec2501e-70.el8          bareos       243 k
+ bareos-director                  x86_64       22.1.1~pre26.eeec2501e-70.el8          bareos       535 k
+ bareos-filedaemon                x86_64       22.1.1~pre26.eeec2501e-70.el8          bareos       225 k
+ bareos-storage                   x86_64       22.1.1~pre26.eeec2501e-70.el8          bareos       215 k
+ bareos-tools                     x86_64       22.1.1~pre26.eeec2501e-70.el8          bareos       369 k
+
+Transaction Summary
+=========================================================================================================
+Install  11 Packages
+
+Total download size: 2.9 M
+Installed size: 11 M
+Is this ok [y/N]: y
+Downloading Packages:
+(1/11): bareos-client-22.1.1~pre26.eeec2501e-70.el8.x86_64.rpm            14 kB/s | 7.7 kB     00:00
+(2/11): bareos-22.1.1~pre26.eeec2501e-70.el8.x86_64.rpm                   13 kB/s | 7.5 kB     00:00
+(3/11): bareos-bconsole-22.1.1~pre26.eeec2501e-70.el8.x86_64.rpm         145 kB/s | 142 kB     00:00
+(4/11): bareos-database-common-22.1.1~pre26.eeec2501e-70.el8.x86_64.rpm  220 kB/s |  92 kB     00:00
+(5/11): bareos-database-postgresql-22.1.1~pre26.eeec2501e-70.el8.x86_64. 303 kB/s |  42 kB     00:00
+(6/11): bareos-database-tools-22.1.1~pre26.eeec2501e-70.el8.x86_64.rpm   582 kB/s | 243 kB     00:00
+(7/11): bareos-filedaemon-22.1.1~pre26.eeec2501e-70.el8.x86_64.rpm       537 kB/s | 225 kB     00:00
+(8/11): bareos-director-22.1.1~pre26.eeec2501e-70.el8.x86_64.rpm         644 kB/s | 535 kB     00:00
+(9/11): bareos-common-22.1.1~pre26.eeec2501e-70.el8.x86_64.rpm           652 kB/s | 1.1 MB     00:01
+(10/11): bareos-storage-22.1.1~pre26.eeec2501e-70.el8.x86_64.rpm         510 kB/s | 215 kB     00:00
+(11/11): bareos-tools-22.1.1~pre26.eeec2501e-70.el8.x86_64.rpm           664 kB/s | 369 kB     00:00
+---------------------------------------------------------------------------------------------------------
+Total                                                                    1.2 MB/s | 2.9 MB     00:02
+Backup Archiving Recovery Open Sourced (EL_8)                            1.6 MB/s | 1.6 kB     00:00
+Importing GPG key 0xDFEF9127:
+ Userid     : "Bareos experimental Signing Key <signing@bareos.com>"
+ Fingerprint: 8283 4CF0 02D8 9BA5 5C1E D0AA 42DA 24A6 DFEF 9127
+ From       : /etc/pki/rpm-gpg/RPM-GPG-KEY-bareos-experimental
+Is this ok [y/N]: y
+Key imported successfully
+Running transaction check
+Transaction check succeeded.
+Running transaction test
+Transaction test succeeded.
+Running transaction
+  Preparing        :                                                                                 1/1
+  Running scriptlet: bareos-common-22.1.1~pre26.eeec2501e-70.el8.x86_64                             1/11
+  Installing       : bareos-common-22.1.1~pre26.eeec2501e-70.el8.x86_64                             1/11
+  Running scriptlet: bareos-common-22.1.1~pre26.eeec2501e-70.el8.x86_64                             1/11
+  Installing       : bareos-database-common-22.1.1~pre26.eeec2501e-70.el8.x86_64                    2/11
+  Running scriptlet: bareos-database-common-22.1.1~pre26.eeec2501e-70.el8.x86_64                    2/11
+  Installing       : bareos-database-postgresql-22.1.1~pre26.eeec2501e-70.el8.x86_64                3/11
+  Running scriptlet: bareos-database-postgresql-22.1.1~pre26.eeec2501e-70.el8.x86_64                3/11
+  Installing       : bareos-database-tools-22.1.1~pre26.eeec2501e-70.el8.x86_64                     4/11
+  Running scriptlet: bareos-database-tools-22.1.1~pre26.eeec2501e-70.el8.x86_64                     4/11
+  Running scriptlet: bareos-director-22.1.1~pre26.eeec2501e-70.el8.x86_64                           5/11
+  Installing       : bareos-director-22.1.1~pre26.eeec2501e-70.el8.x86_64                           5/11
+  Running scriptlet: bareos-director-22.1.1~pre26.eeec2501e-70.el8.x86_64                           5/11
+  Address = XXX_REPLACE_WITH_LOCAL_HOSTNAME_XXX                # N.B. Use a fully qualified name here (do not use "localhost" here).
+grep: XXX_REPLACE_WITH_LOCAL_HOSTNAME_XXX: No such file or directory
+Info: replacing 'XXX_REPLACE_WITH_LOCAL_HOSTNAME_XXX' with 'bareos-server' in /etc/bareos/bareos-dir.d/storage/File.conf
+  Password = "XXX_REPLACE_WITH_DIRECTOR_PASSWORD_XXX"         # Console password
+grep: XXX_REPLACE_WITH_DIRECTOR_PASSWORD_XXX: No such file or directory
+Info: replacing 'XXX_REPLACE_WITH_DIRECTOR_PASSWORD_XXX' with 'GIej08zsmfy9eokRVtB3Qz3CZ1+mermheKQqftX3jCqY' in /etc/bareos/bareos-dir.d/director/bareos-dir.conf
+  Password = "XXX_REPLACE_WITH_CLIENT_PASSWORD_XXX"          # password for FileDaemon
+grep: XXX_REPLACE_WITH_CLIENT_PASSWORD_XXX: No such file or directory
+Info: replacing 'XXX_REPLACE_WITH_CLIENT_PASSWORD_XXX' with 'feHgI3P3XS6alek7o5hVp7aDSNtVcpmbqW9kGQ3Jbn7o' in /etc/bareos/bareos-dir.d/client/bareos-fd.conf
+  Password = "XXX_REPLACE_WITH_STORAGE_PASSWORD_XXX"
+grep: XXX_REPLACE_WITH_STORAGE_PASSWORD_XXX: No such file or directory
+Info: replacing 'XXX_REPLACE_WITH_STORAGE_PASSWORD_XXX' with 'rCHTGuH6eDn4lucpgjvMRHC62kUS6f4nZfTeQA11k5eg' in /etc/bareos/bareos-dir.d/storage/File.conf
+  Password = "XXX_REPLACE_WITH_DIRECTOR_MONITOR_PASSWORD_XXX"
+grep: XXX_REPLACE_WITH_DIRECTOR_MONITOR_PASSWORD_XXX: No such file or directory
+Info: replacing 'XXX_REPLACE_WITH_DIRECTOR_MONITOR_PASSWORD_XXX' with '7PnidD4nsdyaXMYSp8g7eqdzsj6LEbtcYrZ9AGUMQUVQ' in /etc/bareos/bareos-dir.d/console/bareos-mon.conf
+
+  Installing       : bareos-bconsole-22.1.1~pre26.eeec2501e-70.el8.x86_64                           6/11
+  Running scriptlet: bareos-bconsole-22.1.1~pre26.eeec2501e-70.el8.x86_64                           6/11
+  Password = "XXX_REPLACE_WITH_DIRECTOR_PASSWORD_XXX"
+grep: XXX_REPLACE_WITH_DIRECTOR_PASSWORD_XXX: No such file or directory
+Info: replacing 'XXX_REPLACE_WITH_DIRECTOR_PASSWORD_XXX' with 'GIej08zsmfy9eokRVtB3Qz3CZ1+mermheKQqftX3jCqY' in /etc/bareos/bconsole.conf
+
+  Running scriptlet: bareos-filedaemon-22.1.1~pre26.eeec2501e-70.el8.x86_64                         7/11
+  Installing       : bareos-filedaemon-22.1.1~pre26.eeec2501e-70.el8.x86_64                         7/11
+  Running scriptlet: bareos-filedaemon-22.1.1~pre26.eeec2501e-70.el8.x86_64                         7/11
+  Name = XXX_REPLACE_WITH_LOCAL_HOSTNAME_XXX-fd
+grep: XXX_REPLACE_WITH_LOCAL_HOSTNAME_XXX: No such file or directory
+Info: replacing 'XXX_REPLACE_WITH_LOCAL_HOSTNAME_XXX' with 'bareos-server' in /etc/bareos/bareos-fd.d/client/myself.conf
+  Password = "XXX_REPLACE_WITH_CLIENT_PASSWORD_XXX"
+grep: XXX_REPLACE_WITH_CLIENT_PASSWORD_XXX: No such file or directory
+Info: replacing 'XXX_REPLACE_WITH_CLIENT_PASSWORD_XXX' with 'feHgI3P3XS6alek7o5hVp7aDSNtVcpmbqW9kGQ3Jbn7o' in /etc/bareos/bareos-fd.d/director/bareos-dir.conf
+  Password = "XXX_REPLACE_WITH_CLIENT_MONITOR_PASSWORD_XXX"
+grep: XXX_REPLACE_WITH_CLIENT_MONITOR_PASSWORD_XXX: No such file or directory
+Info: replacing 'XXX_REPLACE_WITH_CLIENT_MONITOR_PASSWORD_XXX' with 'X8CHUAP/RPf554WVjy/EOKHrEma2teCPGkhi8R9Xm5aD' in /etc/bareos/bareos-fd.d/director/bareos-mon.conf
+  Password = "XXX_REPLACE_WITH_CLIENT_MONITOR_PASSWORD_XXX"          # password for FileDaemon
+grep: XXX_REPLACE_WITH_CLIENT_MONITOR_PASSWORD_XXX: No such file or directory
+Info: replacing 'XXX_REPLACE_WITH_CLIENT_MONITOR_PASSWORD_XXX' with 'X8CHUAP/RPf554WVjy/EOKHrEma2teCPGkhi8R9Xm5aD' in /etc/bareos/tray-monitor.d/client/FileDaemon-local.conf
+
+  Installing       : bareos-client-22.1.1~pre26.eeec2501e-70.el8.x86_64                             8/11
+  Installing       : bareos-tools-22.1.1~pre26.eeec2501e-70.el8.x86_64                              9/11
+  Running scriptlet: bareos-tools-22.1.1~pre26.eeec2501e-70.el8.x86_64                              9/11
+  Running scriptlet: bareos-storage-22.1.1~pre26.eeec2501e-70.el8.x86_64                           10/11
+  Installing       : bareos-storage-22.1.1~pre26.eeec2501e-70.el8.x86_64                           10/11
+  Running scriptlet: bareos-storage-22.1.1~pre26.eeec2501e-70.el8.x86_64                           10/11
+tape:x:33:
+disk:x:6:
+  Password = "XXX_REPLACE_WITH_STORAGE_PASSWORD_XXX"
+grep: XXX_REPLACE_WITH_STORAGE_PASSWORD_XXX: No such file or directory
+Info: replacing 'XXX_REPLACE_WITH_STORAGE_PASSWORD_XXX' with 'rCHTGuH6eDn4lucpgjvMRHC62kUS6f4nZfTeQA11k5eg' in /etc/bareos/bareos-sd.d/director/bareos-dir.conf
+  Password = "XXX_REPLACE_WITH_STORAGE_MONITOR_PASSWORD_XXX"
+grep: XXX_REPLACE_WITH_STORAGE_MONITOR_PASSWORD_XXX: No such file or directory
+Info: replacing 'XXX_REPLACE_WITH_STORAGE_MONITOR_PASSWORD_XXX' with 'YGW2sa5PADJl52Ym5LxLohH9rR/LA19r1nZUl2kDSsqX' in /etc/bareos/bareos-sd.d/director/bareos-mon.conf
+  Password = "XXX_REPLACE_WITH_STORAGE_MONITOR_PASSWORD_XXX"          # password for StorageDaemon
+grep: XXX_REPLACE_WITH_STORAGE_MONITOR_PASSWORD_XXX: No such file or directory
+Info: replacing 'XXX_REPLACE_WITH_STORAGE_MONITOR_PASSWORD_XXX' with 'YGW2sa5PADJl52Ym5LxLohH9rR/LA19r1nZUl2kDSsqX' in /etc/bareos/tray-monitor.d/storage/StorageDaemon-local.conf
+
+  Installing       : bareos-22.1.1~pre26.eeec2501e-70.el8.x86_64                                   11/11
+  Running scriptlet: bareos-director-22.1.1~pre26.eeec2501e-70.el8.x86_64                          11/11
+  Running scriptlet: bareos-filedaemon-22.1.1~pre26.eeec2501e-70.el8.x86_64                        11/11
+  Running scriptlet: bareos-storage-22.1.1~pre26.eeec2501e-70.el8.x86_64                           11/11
+  Running scriptlet: bareos-22.1.1~pre26.eeec2501e-70.el8.x86_64                                   11/11
+  Verifying        : bareos-22.1.1~pre26.eeec2501e-70.el8.x86_64                                    1/11
+  Verifying        : bareos-bconsole-22.1.1~pre26.eeec2501e-70.el8.x86_64                           2/11
+  Verifying        : bareos-client-22.1.1~pre26.eeec2501e-70.el8.x86_64                             3/11
+  Verifying        : bareos-common-22.1.1~pre26.eeec2501e-70.el8.x86_64                             4/11
+  Verifying        : bareos-database-common-22.1.1~pre26.eeec2501e-70.el8.x86_64                    5/11
+  Verifying        : bareos-database-postgresql-22.1.1~pre26.eeec2501e-70.el8.x86_64                6/11
+  Verifying        : bareos-database-tools-22.1.1~pre26.eeec2501e-70.el8.x86_64                     7/11
+  Verifying        : bareos-director-22.1.1~pre26.eeec2501e-70.el8.x86_64                           8/11
+  Verifying        : bareos-filedaemon-22.1.1~pre26.eeec2501e-70.el8.x86_64                         9/11
+  Verifying        : bareos-storage-22.1.1~pre26.eeec2501e-70.el8.x86_64                           10/11
+  Verifying        : bareos-tools-22.1.1~pre26.eeec2501e-70.el8.x86_64                             11/11
+
+Installed:
+  bareos-22.1.1~pre26.eeec2501e-70.el8.x86_64
+  bareos-bconsole-22.1.1~pre26.eeec2501e-70.el8.x86_64
+  bareos-client-22.1.1~pre26.eeec2501e-70.el8.x86_64
+  bareos-common-22.1.1~pre26.eeec2501e-70.el8.x86_64
+  bareos-database-common-22.1.1~pre26.eeec2501e-70.el8.x86_64
+  bareos-database-postgresql-22.1.1~pre26.eeec2501e-70.el8.x86_64
+  bareos-database-tools-22.1.1~pre26.eeec2501e-70.el8.x86_64
+  bareos-director-22.1.1~pre26.eeec2501e-70.el8.x86_64
+  bareos-filedaemon-22.1.1~pre26.eeec2501e-70.el8.x86_64
+  bareos-storage-22.1.1~pre26.eeec2501e-70.el8.x86_64
+  bareos-tools-22.1.1~pre26.eeec2501e-70.el8.x86_64
+
+Complete!
+[root@bareos-server ~]# su postgres -c /usr/lib/bareos/scripts/create_bareos_database
+Info: Creating database 'bareos'
+CREATE DATABASE
+ALTER DATABASE
+Info: Database encoding OK
+Info: Creation of database 'bareos' succeeded.
+[root@bareos-server ~]# su postgres -c /usr/lib/bareos/scripts/make_bareos_tables
+Info: Making bareos tables
+CREATE TABLE
+ALTER TABLE
+CREATE INDEX
+CREATE TABLE
+CREATE INDEX
+CREATE INDEX
+CREATE TABLE
+CREATE INDEX
+CREATE TABLE
+CREATE INDEX
+CREATE TABLE
+CREATE INDEX
+CREATE TABLE
+CREATE TABLE
+CREATE INDEX
+CREATE TABLE
+CREATE INDEX
+CREATE INDEX
+CREATE TABLE
+CREATE INDEX
+CREATE INDEX
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE INDEX
+CREATE TABLE
+CREATE INDEX
+CREATE TABLE
+CREATE INDEX
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE INDEX
+CREATE TABLE
+CREATE INDEX
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+DELETE 0
+INSERT 0 1
+DROP VIEW
+DROP VIEW
+CREATE VIEW
+CREATE VIEW
+Info: Creation bareos tables succeeded.
+[root@bareos-server ~]# su postgres -c /usr/lib/bareos/scripts/grant_bareos_privileges
+Info: Granting bareos tables
+CREATE ROLE
+GRANT
+GRANT
+GRANT
+Info: Privileges for user bareos granted ON database bareos.
+[root@bareos-server ~]# systemctl enable bareos-dir && systemctl start bareos-dir && systemctl status bareos-dir
+? bareos-dir.service - Bareos Director Daemon service
+   Loaded: loaded (/usr/lib/systemd/system/bareos-dir.service; enabled; vendor preset: disabled)
+   Active: active (running) since Sun 2023-07-23 01:22:29 IST; 21ms ago
+     Docs: man:bareos-dir(8)
+ Main PID: 12740 (bareos-dir)
+    Tasks: 2 (limit: 10930)
+   Memory: 1.7M
+   CGroup: /system.slice/bareos-dir.service
+           +-12740 /usr/sbin/bareos-dir -f
+
+Jul 23 01:22:29 bareos-server systemd[1]: Started Bareos Director Daemon service.
+[root@bareos-server ~]# systemctl enable bareos-sd && systemctl start bareos-sd && systemctl status bareos-sd
+? bareos-sd.service - Bareos Storage Daemon service
+   Loaded: loaded (/usr/lib/systemd/system/bareos-sd.service; enabled; vendor preset: disabled)
+   Active: active (running) since Sun 2023-07-23 01:22:39 IST; 6ms ago
+     Docs: man:bareos-sd(8)
+ Main PID: 12789 (bareos-sd)
+    Tasks: 0 (limit: 10930)
+   Memory: 0B
+   CGroup: /system.slice/bareos-sd.service
+           +-12789 /usr/sbin/bareos-sd -f
+
+Jul 23 01:22:39 bareos-server systemd[1]: Started Bareos Storage Daemon service.
+[root@bareos-server ~]# systemctl enable bareos-fd && systemctl start bareos-fd && systemctl status bareos-fd
+? bareos-fd.service - Bareos File Daemon service
+   Loaded: loaded (/usr/lib/systemd/system/bareos-fd.service; enabled; vendor preset: disabled)
+   Active: active (running) since Sun 2023-07-23 01:22:52 IST; 6ms ago
+     Docs: man:bareos-fd(8)
+ Main PID: 12824 (bareos-fd)
+    Tasks: 1 (limit: 10930)
+   Memory: 32.0K
+   CGroup: /system.slice/bareos-fd.service
+           +-12824 /usr/sbin/bareos-fd -f
+
+Jul 23 01:22:52 bareos-server systemd[1]: Started Bareos File Daemon service.
+[root@bareos-server ~]# dnf install bareos-webui
+Last metadata expiration check: 0:00:20 ago on Sunday 23 July 2023 01:22:41 AM IST.
+Dependencies resolved.
+=========================================================================================================
+ Package                     Arch       Version                                      Repository     Size
+=========================================================================================================
+Installing:
+ bareos-webui                x86_64     22.1.1~pre26.eeec2501e-70.el8                bareos        4.6 M
+Installing dependencies:
+ apr                         x86_64     1.6.3-12.el8                                 appstream     129 k
+ apr-util                    x86_64     1.6.1-9.el8                                  appstream     106 k
+ centos-logos-httpd          noarch     85.8-2.el8                                   appstream      75 k
+ dejavu-fonts-common         noarch     2.35-7.el8                                   baseos         74 k
+ dejavu-sans-fonts           noarch     2.35-7.el8                                   baseos        1.6 M
+ fontconfig                  x86_64     2.13.1-4.el8                                 baseos        274 k
+ fontpackages-filesystem     noarch     1.44-22.el8                                  baseos         16 k
+ gd                          x86_64     2.2.5-7.el8                                  appstream     144 k
+ httpd                       x86_64     2.4.37-54.module_el8.8.0+1256+e1598b50       appstream     1.4 M
+ httpd-filesystem            noarch     2.4.37-54.module_el8.8.0+1256+e1598b50       appstream      42 k
+ httpd-tools                 x86_64     2.4.37-54.module_el8.8.0+1256+e1598b50       appstream     110 k
+ jbigkit-libs                x86_64     2.1-14.el8                                   appstream      55 k
+ libX11                      x86_64     1.6.8-5.el8                                  appstream     611 k
+ libX11-common               noarch     1.6.8-5.el8                                  appstream     158 k
+ libXau                      x86_64     1.0.9-3.el8                                  appstream      37 k
+ libXpm                      x86_64     3.5.12-9.el8                                 appstream      58 k
+ libjpeg-turbo               x86_64     1.5.3-12.el8                                 appstream     157 k
+ libtiff                     x86_64     4.0.9-28.el8                                 appstream     189 k
+ libwebp                     x86_64     1.0.0-9.el8                                  appstream     274 k
+ libxcb                      x86_64     1.13.1-1.el8                                 appstream     229 k
+ libzip                      x86_64     1.5.1-2.module_el8.2.0+313+b04d0a66          appstream      62 k
+ mailcap                     noarch     2.1.48-3.el8                                 baseos         39 k
+ mod_http2                   x86_64     1.15.7-7.module_el8.8.0+1256+e1598b50        appstream     155 k
+ nginx-filesystem            noarch     1:1.14.1-9.module_el8.0.0+1060+3ab382d3      appstream      24 k
+ php                         x86_64     7.2.24-1.module_el8.2.0+313+b04d0a66         appstream     1.5 M
+ php-cli                     x86_64     7.2.24-1.module_el8.2.0+313+b04d0a66         appstream     3.1 M
+ php-common                  x86_64     7.2.24-1.module_el8.2.0+313+b04d0a66         appstream     661 k
+ php-fpm                     x86_64     7.2.24-1.module_el8.2.0+313+b04d0a66         appstream     1.6 M
+ php-gd                      x86_64     7.2.24-1.module_el8.2.0+313+b04d0a66         appstream      84 k
+ php-intl                    x86_64     7.2.24-1.module_el8.2.0+313+b04d0a66         appstream     192 k
+ php-json                    x86_64     7.2.24-1.module_el8.2.0+313+b04d0a66         appstream      73 k
+ php-mbstring                x86_64     7.2.24-1.module_el8.2.0+313+b04d0a66         appstream     580 k
+ php-pecl-zip                x86_64     1.15.3-1.module_el8.2.0+313+b04d0a66         appstream      51 k
+ php-xml                     x86_64     7.2.24-1.module_el8.2.0+313+b04d0a66         appstream     188 k
+Installing weak dependencies:
+ apr-util-bdb                x86_64     1.6.1-9.el8                                  appstream      25 k
+ apr-util-openssl            x86_64     1.6.1-9.el8                                  appstream      27 k
+Enabling module streams:
+ httpd                                  2.4
+ nginx                                  1.14
+ php                                    7.2
+
+Transaction Summary
+=========================================================================================================
+Install  37 Packages
+
+Total download size: 19 M
+Installed size: 67 M
+Is this ok [y/N]: y
+Downloading Packages:
+(1/37): apr-util-bdb-1.6.1-9.el8.x86_64.rpm                              634 kB/s |  25 kB     00:00
+(2/37): apr-util-openssl-1.6.1-9.el8.x86_64.rpm                          1.6 MB/s |  27 kB     00:00
+(3/37): apr-1.6.3-12.el8.x86_64.rpm                                      2.0 MB/s | 129 kB     00:00
+(4/37): apr-util-1.6.1-9.el8.x86_64.rpm                                  1.6 MB/s | 106 kB     00:00
+(5/37): centos-logos-httpd-85.8-2.el8.noarch.rpm                         951 kB/s |  75 kB     00:00
+(6/37): gd-2.2.5-7.el8.x86_64.rpm                                        1.9 MB/s | 144 kB     00:00
+(7/37): httpd-filesystem-2.4.37-54.module_el8.8.0+1256+e1598b50.noarch.r 1.4 MB/s |  42 kB     00:00
+(8/37): httpd-tools-2.4.37-54.module_el8.8.0+1256+e1598b50.x86_64.rpm    3.5 MB/s | 110 kB     00:00
+(9/37): libX11-1.6.8-5.el8.x86_64.rpm                                    5.5 MB/s | 611 kB     00:00
+(10/37): libX11-common-1.6.8-5.el8.noarch.rpm                            2.9 MB/s | 158 kB     00:00
+(11/37): libXau-1.0.9-3.el8.x86_64.rpm                                   2.0 MB/s |  37 kB     00:00
+(12/37): libXpm-3.5.12-9.el8.x86_64.rpm                                  3.1 MB/s |  58 kB     00:00
+(13/37): libjpeg-turbo-1.5.3-12.el8.x86_64.rpm                           5.1 MB/s | 157 kB     00:00
+(14/37): jbigkit-libs-2.1-14.el8.x86_64.rpm                              214 kB/s |  55 kB     00:00
+(15/37): libtiff-4.0.9-28.el8.x86_64.rpm                                 6.3 MB/s | 189 kB     00:00
+(16/37): httpd-2.4.37-54.module_el8.8.0+1256+e1598b50.x86_64.rpm         3.8 MB/s | 1.4 MB     00:00
+(17/37): libzip-1.5.1-2.module_el8.2.0+313+b04d0a66.x86_64.rpm           2.1 MB/s |  62 kB     00:00
+(18/37): libwebp-1.0.0-9.el8.x86_64.rpm                                  4.0 MB/s | 274 kB     00:00
+(19/37): mod_http2-1.15.7-7.module_el8.8.0+1256+e1598b50.x86_64.rpm      5.5 MB/s | 155 kB     00:00
+(20/37): libxcb-1.13.1-1.el8.x86_64.rpm                                  3.6 MB/s | 229 kB     00:00
+(21/37): nginx-filesystem-1.14.1-9.module_el8.0.0+1060+3ab382d3.noarch.r 652 kB/s |  24 kB     00:00
+(22/37): php-common-7.2.24-1.module_el8.2.0+313+b04d0a66.x86_64.rpm      3.7 MB/s | 661 kB     00:00
+(23/37): php-7.2.24-1.module_el8.2.0+313+b04d0a66.x86_64.rpm             5.0 MB/s | 1.5 MB     00:00
+(24/37): php-gd-7.2.24-1.module_el8.2.0+313+b04d0a66.x86_64.rpm          4.0 MB/s |  84 kB     00:00
+(25/37): php-intl-7.2.24-1.module_el8.2.0+313+b04d0a66.x86_64.rpm        3.9 MB/s | 192 kB     00:00
+(26/37): php-json-7.2.24-1.module_el8.2.0+313+b04d0a66.x86_64.rpm        3.6 MB/s |  73 kB     00:00
+(27/37): php-fpm-7.2.24-1.module_el8.2.0+313+b04d0a66.x86_64.rpm         5.9 MB/s | 1.6 MB     00:00
+(28/37): php-cli-7.2.24-1.module_el8.2.0+313+b04d0a66.x86_64.rpm         6.2 MB/s | 3.1 MB     00:00
+(29/37): php-pecl-zip-1.15.3-1.module_el8.2.0+313+b04d0a66.x86_64.rpm    2.6 MB/s |  51 kB     00:00
+(30/37): php-mbstring-7.2.24-1.module_el8.2.0+313+b04d0a66.x86_64.rpm    4.4 MB/s | 580 kB     00:00
+(31/37): php-xml-7.2.24-1.module_el8.2.0+313+b04d0a66.x86_64.rpm         2.5 MB/s | 188 kB     00:00
+(32/37): dejavu-fonts-common-2.35-7.el8.noarch.rpm                       484 kB/s |  74 kB     00:00
+(33/37): fontpackages-filesystem-1.44-22.el8.noarch.rpm                  394 kB/s |  16 kB     00:00
+(34/37): mailcap-2.1.48-3.el8.noarch.rpm                                 944 kB/s |  39 kB     00:00
+(35/37): fontconfig-2.13.1-4.el8.x86_64.rpm                              980 kB/s | 274 kB     00:00
+(36/37): dejavu-sans-fonts-2.35-7.el8.noarch.rpm                         3.4 MB/s | 1.6 MB     00:00
+(37/37): bareos-webui-22.1.1~pre26.eeec2501e-70.el8.x86_64.rpm           873 kB/s | 4.6 MB     00:05
+---------------------------------------------------------------------------------------------------------
+Total                                                                    2.5 MB/s |  19 MB     00:07
+Running transaction check
+Transaction check succeeded.
+Running transaction test
+Transaction test succeeded.
+Running transaction
+  Preparing        :                                                                                 1/1
+  Installing       : php-common-7.2.24-1.module_el8.2.0+313+b04d0a66.x86_64                         1/37
+  Installing       : libjpeg-turbo-1.5.3-12.el8.x86_64                                              2/37
+  Running scriptlet: httpd-filesystem-2.4.37-54.module_el8.8.0+1256+e1598b50.noarch                 3/37
+  Installing       : httpd-filesystem-2.4.37-54.module_el8.8.0+1256+e1598b50.noarch                 3/37
+  Installing       : apr-1.6.3-12.el8.x86_64                                                        4/37
+  Running scriptlet: apr-1.6.3-12.el8.x86_64                                                        4/37
+  Installing       : apr-util-bdb-1.6.1-9.el8.x86_64                                                5/37
+  Installing       : apr-util-openssl-1.6.1-9.el8.x86_64                                            6/37
+  Installing       : apr-util-1.6.1-9.el8.x86_64                                                    7/37
+  Running scriptlet: apr-util-1.6.1-9.el8.x86_64                                                    7/37
+  Installing       : fontpackages-filesystem-1.44-22.el8.noarch                                     8/37
+  Installing       : dejavu-fonts-common-2.35-7.el8.noarch                                          9/37
+  Installing       : dejavu-sans-fonts-2.35-7.el8.noarch                                           10/37
+  Installing       : fontconfig-2.13.1-4.el8.x86_64                                                11/37
+  Running scriptlet: fontconfig-2.13.1-4.el8.x86_64                                                11/37
+  Installing       : httpd-tools-2.4.37-54.module_el8.8.0+1256+e1598b50.x86_64                     12/37
+  Installing       : php-cli-7.2.24-1.module_el8.2.0+313+b04d0a66.x86_64                           13/37
+  Installing       : php-intl-7.2.24-1.module_el8.2.0+313+b04d0a66.x86_64                          14/37
+  Installing       : php-json-7.2.24-1.module_el8.2.0+313+b04d0a66.x86_64                          15/37
+  Installing       : php-mbstring-7.2.24-1.module_el8.2.0+313+b04d0a66.x86_64                      16/37
+  Installing       : php-xml-7.2.24-1.module_el8.2.0+313+b04d0a66.x86_64                           17/37
+  Installing       : mailcap-2.1.48-3.el8.noarch                                                   18/37
+  Running scriptlet: nginx-filesystem-1:1.14.1-9.module_el8.0.0+1060+3ab382d3.noarch               19/37
+  Installing       : nginx-filesystem-1:1.14.1-9.module_el8.0.0+1060+3ab382d3.noarch               19/37
+  Installing       : php-fpm-7.2.24-1.module_el8.2.0+313+b04d0a66.x86_64                           20/37
+  Running scriptlet: php-fpm-7.2.24-1.module_el8.2.0+313+b04d0a66.x86_64                           20/37
+  Installing       : libzip-1.5.1-2.module_el8.2.0+313+b04d0a66.x86_64                             21/37
+  Installing       : php-pecl-zip-1.15.3-1.module_el8.2.0+313+b04d0a66.x86_64                      22/37
+  Installing       : libwebp-1.0.0-9.el8.x86_64                                                    23/37
+  Installing       : libXau-1.0.9-3.el8.x86_64                                                     24/37
+  Installing       : libxcb-1.13.1-1.el8.x86_64                                                    25/37
+  Installing       : libX11-common-1.6.8-5.el8.noarch                                              26/37
+  Installing       : libX11-1.6.8-5.el8.x86_64                                                     27/37
+  Installing       : libXpm-3.5.12-9.el8.x86_64                                                    28/37
+  Installing       : jbigkit-libs-2.1-14.el8.x86_64                                                29/37
+  Running scriptlet: jbigkit-libs-2.1-14.el8.x86_64                                                29/37
+  Installing       : libtiff-4.0.9-28.el8.x86_64                                                   30/37
+  Installing       : gd-2.2.5-7.el8.x86_64                                                         31/37
+  Running scriptlet: gd-2.2.5-7.el8.x86_64                                                         31/37
+  Installing       : php-gd-7.2.24-1.module_el8.2.0+313+b04d0a66.x86_64                            32/37
+  Installing       : centos-logos-httpd-85.8-2.el8.noarch                                          33/37
+  Installing       : mod_http2-1.15.7-7.module_el8.8.0+1256+e1598b50.x86_64                        34/37
+  Installing       : httpd-2.4.37-54.module_el8.8.0+1256+e1598b50.x86_64                           35/37
+  Running scriptlet: httpd-2.4.37-54.module_el8.8.0+1256+e1598b50.x86_64                           35/37
+  Installing       : php-7.2.24-1.module_el8.2.0+313+b04d0a66.x86_64                               36/37
+  Installing       : bareos-webui-22.1.1~pre26.eeec2501e-70.el8.x86_64                             37/37
+  Running scriptlet: bareos-webui-22.1.1~pre26.eeec2501e-70.el8.x86_64                             37/37
+  Running scriptlet: httpd-2.4.37-54.module_el8.8.0+1256+e1598b50.x86_64                           37/37
+  Running scriptlet: bareos-webui-22.1.1~pre26.eeec2501e-70.el8.x86_64                             37/37
+  Running scriptlet: fontconfig-2.13.1-4.el8.x86_64                                                37/37
+  Running scriptlet: php-fpm-7.2.24-1.module_el8.2.0+313+b04d0a66.x86_64                           37/37
+  Verifying        : apr-1.6.3-12.el8.x86_64                                                        1/37
+  Verifying        : apr-util-1.6.1-9.el8.x86_64                                                    2/37
+  Verifying        : apr-util-bdb-1.6.1-9.el8.x86_64                                                3/37
+  Verifying        : apr-util-openssl-1.6.1-9.el8.x86_64                                            4/37
+  Verifying        : centos-logos-httpd-85.8-2.el8.noarch                                           5/37
+  Verifying        : gd-2.2.5-7.el8.x86_64                                                          6/37
+  Verifying        : httpd-2.4.37-54.module_el8.8.0+1256+e1598b50.x86_64                            7/37
+  Verifying        : httpd-filesystem-2.4.37-54.module_el8.8.0+1256+e1598b50.noarch                 8/37
+  Verifying        : httpd-tools-2.4.37-54.module_el8.8.0+1256+e1598b50.x86_64                      9/37
+  Verifying        : jbigkit-libs-2.1-14.el8.x86_64                                                10/37
+  Verifying        : libX11-1.6.8-5.el8.x86_64                                                     11/37
+  Verifying        : libX11-common-1.6.8-5.el8.noarch                                              12/37
+  Verifying        : libXau-1.0.9-3.el8.x86_64                                                     13/37
+  Verifying        : libXpm-3.5.12-9.el8.x86_64                                                    14/37
+  Verifying        : libjpeg-turbo-1.5.3-12.el8.x86_64                                             15/37
+  Verifying        : libtiff-4.0.9-28.el8.x86_64                                                   16/37
+  Verifying        : libwebp-1.0.0-9.el8.x86_64                                                    17/37
+  Verifying        : libxcb-1.13.1-1.el8.x86_64                                                    18/37
+  Verifying        : libzip-1.5.1-2.module_el8.2.0+313+b04d0a66.x86_64                             19/37
+  Verifying        : mod_http2-1.15.7-7.module_el8.8.0+1256+e1598b50.x86_64                        20/37
+  Verifying        : nginx-filesystem-1:1.14.1-9.module_el8.0.0+1060+3ab382d3.noarch               21/37
+  Verifying        : php-7.2.24-1.module_el8.2.0+313+b04d0a66.x86_64                               22/37
+  Verifying        : php-cli-7.2.24-1.module_el8.2.0+313+b04d0a66.x86_64                           23/37
+  Verifying        : php-common-7.2.24-1.module_el8.2.0+313+b04d0a66.x86_64                        24/37
+  Verifying        : php-fpm-7.2.24-1.module_el8.2.0+313+b04d0a66.x86_64                           25/37
+  Verifying        : php-gd-7.2.24-1.module_el8.2.0+313+b04d0a66.x86_64                            26/37
+  Verifying        : php-intl-7.2.24-1.module_el8.2.0+313+b04d0a66.x86_64                          27/37
+  Verifying        : php-json-7.2.24-1.module_el8.2.0+313+b04d0a66.x86_64                          28/37
+  Verifying        : php-mbstring-7.2.24-1.module_el8.2.0+313+b04d0a66.x86_64                      29/37
+  Verifying        : php-pecl-zip-1.15.3-1.module_el8.2.0+313+b04d0a66.x86_64                      30/37
+  Verifying        : php-xml-7.2.24-1.module_el8.2.0+313+b04d0a66.x86_64                           31/37
+  Verifying        : dejavu-fonts-common-2.35-7.el8.noarch                                         32/37
+  Verifying        : dejavu-sans-fonts-2.35-7.el8.noarch                                           33/37
+  Verifying        : fontconfig-2.13.1-4.el8.x86_64                                                34/37
+  Verifying        : fontpackages-filesystem-1.44-22.el8.noarch                                    35/37
+  Verifying        : mailcap-2.1.48-3.el8.noarch                                                   36/37
+  Verifying        : bareos-webui-22.1.1~pre26.eeec2501e-70.el8.x86_64                             37/37
+
+Installed:
+  apr-1.6.3-12.el8.x86_64
+  apr-util-1.6.1-9.el8.x86_64
+  apr-util-bdb-1.6.1-9.el8.x86_64
+  apr-util-openssl-1.6.1-9.el8.x86_64
+  bareos-webui-22.1.1~pre26.eeec2501e-70.el8.x86_64
+  centos-logos-httpd-85.8-2.el8.noarch
+  dejavu-fonts-common-2.35-7.el8.noarch
+  dejavu-sans-fonts-2.35-7.el8.noarch
+  fontconfig-2.13.1-4.el8.x86_64
+  fontpackages-filesystem-1.44-22.el8.noarch
+  gd-2.2.5-7.el8.x86_64
+  httpd-2.4.37-54.module_el8.8.0+1256+e1598b50.x86_64
+  httpd-filesystem-2.4.37-54.module_el8.8.0+1256+e1598b50.noarch
+  httpd-tools-2.4.37-54.module_el8.8.0+1256+e1598b50.x86_64
+  jbigkit-libs-2.1-14.el8.x86_64
+  libX11-1.6.8-5.el8.x86_64
+  libX11-common-1.6.8-5.el8.noarch
+  libXau-1.0.9-3.el8.x86_64
+  libXpm-3.5.12-9.el8.x86_64
+  libjpeg-turbo-1.5.3-12.el8.x86_64
+  libtiff-4.0.9-28.el8.x86_64
+  libwebp-1.0.0-9.el8.x86_64
+  libxcb-1.13.1-1.el8.x86_64
+  libzip-1.5.1-2.module_el8.2.0+313+b04d0a66.x86_64
+  mailcap-2.1.48-3.el8.noarch
+  mod_http2-1.15.7-7.module_el8.8.0+1256+e1598b50.x86_64
+  nginx-filesystem-1:1.14.1-9.module_el8.0.0+1060+3ab382d3.noarch
+  php-7.2.24-1.module_el8.2.0+313+b04d0a66.x86_64
+  php-cli-7.2.24-1.module_el8.2.0+313+b04d0a66.x86_64
+  php-common-7.2.24-1.module_el8.2.0+313+b04d0a66.x86_64
+  php-fpm-7.2.24-1.module_el8.2.0+313+b04d0a66.x86_64
+  php-gd-7.2.24-1.module_el8.2.0+313+b04d0a66.x86_64
+  php-intl-7.2.24-1.module_el8.2.0+313+b04d0a66.x86_64
+  php-json-7.2.24-1.module_el8.2.0+313+b04d0a66.x86_64
+  php-mbstring-7.2.24-1.module_el8.2.0+313+b04d0a66.x86_64
+  php-pecl-zip-1.15.3-1.module_el8.2.0+313+b04d0a66.x86_64
+  php-xml-7.2.24-1.module_el8.2.0+313+b04d0a66.x86_64
+
+Complete!
+[root@bareos-server ~]# cd /etc/bareos/bareos-dir.d/console/
+[root@bareos-server console]# mv admin.conf.example admin.conf
+[root@bareos-server console]# systemctl restart bareos-dir
+[root@bareos-server console]# systemctl start httpd
+[root@bareos-server console]#
+[root@bareos-server console]# history
+    1  hostnamectl set-hostname bareos-server
+    2  systemctl stop firewalld
+    3  systemctl disable firewalld
+    4  vi /etc/selinux/config
+    5  init 6
+    6  ip a
+    7  sestatus
+    8  dnf install @postgresql:13
+    9  /usr/bin/postgresql-setup --initdb
+   10  cd /var/lib/pgsql/data/
+   11  vim pg_hba.conf
+   12  cat pg_hba.conf
+   13  systemctl start postgresql
+   14  systemctl status postgresql
+   15  systemctl enable postgresql
+   16  yum install wget -y
+   17  wget https://download.bareos.org/current/EL_8/add_bareos_repositories.sh
+   18  yum install bareos
+   19  ls
+   20  cd ~
+   21  ls
+   22  wget https://download.bareos.org/current/EL_8/add_bareos_repositories.sh
+   23  chmod 755 add_bareos_repositories.sh
+   24  ./add_bareos_repositories.sh
+   25  yum install bareos
+   26  su postgres -c /usr/lib/bareos/scripts/create_bareos_database
+   27  su postgres -c /usr/lib/bareos/scripts/make_bareos_tables
+   28  su postgres -c /usr/lib/bareos/scripts/grant_bareos_privileges
+   29  systemctl enable bareos-dir && systemctl start bareos-dir && systemctl status bareos-dir
+   30  systemctl enable bareos-sd && systemctl start bareos-sd && systemctl status bareos-sd
+   31  systemctl enable bareos-fd && systemctl start bareos-fd && systemctl status bareos-fd
+   32  dnf install bareos-webui
+   33  cd /etc/bareos/bareos-dir.d/console/
+   34  mv admin.conf.example admin.conf
+   35  systemctl restart bareos-dir
+   36  systemctl start httpd
+   37  history
+

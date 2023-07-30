@@ -1,0 +1,1018 @@
+login as: root
+root@192.168.15.132's password:
+    +----------------------------------------------------------------------+
+    ¦                 • MobaXterm Personal Edition v23.0 •                 ¦
+    ¦               (SSH client, X server and network tools)               ¦
+    ¦                                                                      ¦
+    ¦ ? SSH session to root@192.168.15.132                                 ¦
+    ¦   • Direct SSH      :  ?                                             ¦
+    ¦   • SSH compression :  ?                                             ¦
+    ¦   • SSH-browser     :  ?                                             ¦
+    ¦   • X11-forwarding  :  ?  (disabled or not supported by server)      ¦
+    ¦                                                                      ¦
+    ¦ ? For more info, ctrl+click on help or visit our website.            ¦
+    +----------------------------------------------------------------------+
+
+Last login: Sat Jul 15 19:50:27 2023 from 192.168.15.1
+[root@node1 ~]# vi /etc/hosts
+[root@node1 ~]# ping client.hpcsa.in
+PING client.hpcsa.in (192.168.15.135) 56(84) bytes of data.
+64 bytes from client.hpcsa.in (192.168.15.135): icmp_seq=1 ttl=64 time=0.625 ms
+64 bytes from client.hpcsa.in (192.168.15.135): icmp_seq=2 ttl=64 time=0.409 ms
+64 bytes from client.hpcsa.in (192.168.15.135): icmp_seq=3 ttl=64 time=0.389 ms
+^C
+--- client.hpcsa.in ping statistics ---
+3 packets transmitted, 3 received, 0% packet loss, time 2008ms
+rtt min/avg/max/mdev = 0.389/0.474/0.625/0.108 ms
+[root@node1 ~]# systemctl stop firewalld
+[root@node1 ~]# lsblk
+NAME            MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT
+sda               8:0    0   20G  0 disk
++-sda1            8:1    0    1G  0 part /boot
++-sda2            8:2    0   19G  0 part
+  +-centos-root 253:0    0   17G  0 lvm  /
+  +-centos-swap 253:1    0    2G  0 lvm  [SWAP]
+sdb               8:16   0   20G  0 disk
+sr0              11:0    1  973M  0 rom
+[root@node1 ~]# fdisk /dev/sdb
+Welcome to fdisk (util-linux 2.23.2).
+
+Changes will remain in memory only, until you decide to write them.
+Be careful before using the write command.
+
+Device does not contain a recognized partition table
+Building a new DOS disklabel with disk identifier 0x616bd1a5.
+
+Command (m for help): n
+Partition type:
+   p   primary (0 primary, 0 extended, 4 free)
+   e   extended
+Select (default p): p
+Partition number (1-4, default 1): 1
+First sector (2048-41943039, default 2048):
+Using default value 2048
+Last sector, +sectors or +size{K,M,G} (2048-41943039, default 41943039):
+Using default value 41943039
+Partition 1 of type Linux and of size 20 GiB is set
+
+Command (m for help): w
+The partition table has been altered!
+
+Calling ioctl() to re-read partition table.
+Syncing disks.
+[root@node1 ~]# mkfs.xfs /dev/sdb1
+meta-data=/dev/sdb1              isize=512    agcount=4, agsize=1310656 blks
+         =                       sectsz=512   attr=2, projid32bit=1
+         =                       crc=1        finobt=0, sparse=0
+data     =                       bsize=4096   blocks=5242624, imaxpct=25
+         =                       sunit=0      swidth=0 blks
+naming   =version 2              bsize=4096   ascii-ci=0 ftype=1
+log      =internal log           bsize=4096   blocks=2560, version=2
+         =                       sectsz=512   sunit=0 blks, lazy-count=1
+realtime =none                   extsz=4096   blocks=0, rtextents=0
+[root@node1 ~]# mkdir /mnt/disk1
+[root@node1 ~]# mount /dev/sdb1 /mnt/disk1/
+[root@node1 ~]# lsblk
+NAME            MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT
+sda               8:0    0   20G  0 disk
++-sda1            8:1    0    1G  0 part /boot
++-sda2            8:2    0   19G  0 part
+  +-centos-root 253:0    0   17G  0 lvm  /
+  +-centos-swap 253:1    0    2G  0 lvm  [SWAP]
+sdb               8:16   0   20G  0 disk
++-sdb1            8:17   0   20G  0 part /mnt/disk1
+sr0              11:0    1  973M  0 rom
+[root@node1 ~]# yum install wget
+Loaded plugins: fastestmirror
+Determining fastest mirrors
+Could not retrieve mirrorlist http://mirrorlist.centos.org/?release=7&arch=x86_64&repo=os&infra=s
+14: curl#6 - "Could not resolve host: mirrorlist.centos.org; Unknown error"
+
+
+ One of the configured repositories failed (Unknown),
+ and yum doesn't have enough cached data to continue. At this point the only
+ safe thing yum can do is fail. There are a few ways to work "fix" this:
+
+     1. Contact the upstream for the repository and get them to fix the problem.
+
+     2. Reconfigure the baseurl/etc. for the repository, to point to a working
+        upstream. This is most often useful if you are using a newer
+        distribution release than is supported by the repository (and the
+        packages for the previous distribution release still work).
+
+     3. Run the command with the repository temporarily disabled
+            yum --disablerepo=<repoid> ...
+
+     4. Disable the repository permanently, so yum won't use it by default. Yum
+        will then just ignore the repository until you permanently enable it
+        again or use --enablerepo for temporary usage:
+
+            yum-config-manager --disable <repoid>
+        or
+            subscription-manager repos --disable=<repoid>
+
+     5. Configure the failing repository to be skipped, if it is unavailable.
+        Note that yum will try to contact the repo. when it runs most commands,
+        so will have to try and fail each time (and thus. yum will be be much
+        slower). If it is a very temporary problem though, this is often a nice
+        compromise:
+
+            yum-config-manager --save --setopt=<repoid>.skip_if_unavailable=true
+
+Cannot find a valid baseurl for repo: base/7/x86_64
+[root@node1 ~]# yum install wget centos-release-gluster
+Loaded plugins: fastestmirror
+Loading mirror speeds from cached hostfile
+Could not retrieve mirrorlist http://mirrorlist.centos.org/?release=7&arch=x86_64&repo=os&infra=s
+14: curl#6 - "Could not resolve host: mirrorlist.centos.org; Unknown error"
+
+
+ One of the configured repositories failed (Unknown),
+ and yum doesn't have enough cached data to continue. At this point the only
+ safe thing yum can do is fail. There are a few ways to work "fix" this:
+
+     1. Contact the upstream for the repository and get them to fix the problem.
+
+     2. Reconfigure the baseurl/etc. for the repository, to point to a working
+        upstream. This is most often useful if you are using a newer
+        distribution release than is supported by the repository (and the
+        packages for the previous distribution release still work).
+
+     3. Run the command with the repository temporarily disabled
+            yum --disablerepo=<repoid> ...
+
+     4. Disable the repository permanently, so yum won't use it by default. Yum
+        will then just ignore the repository until you permanently enable it
+        again or use --enablerepo for temporary usage:
+
+            yum-config-manager --disable <repoid>
+        or
+            subscription-manager repos --disable=<repoid>
+
+     5. Configure the failing repository to be skipped, if it is unavailable.
+        Note that yum will try to contact the repo. when it runs most commands,
+        so will have to try and fail each time (and thus. yum will be be much
+        slower). If it is a very temporary problem though, this is often a nice
+        compromise:
+
+            yum-config-manager --save --setopt=<repoid>.skip_if_unavailable=true
+
+Cannot find a valid baseurl for repo: base/7/x86_64
+[root@node1 ~]# yum install wget centos-release-gluster epel-release glusterfs-server -y
+Loaded plugins: fastestmirror
+Loading mirror speeds from cached hostfile
+Could not retrieve mirrorlist http://mirrorlist.centos.org/?release=7&arch=x86_64&repo=os&infra=stock error was
+14: curl#6 - "Could not resolve host: mirrorlist.centos.org; Unknown error"
+
+
+ One of the configured repositories failed (Unknown),
+ and yum doesn't have enough cached data to continue. At this point the only
+ safe thing yum can do is fail. There are a few ways to work "fix" this:
+
+     1. Contact the upstream for the repository and get them to fix the problem.
+
+     2. Reconfigure the baseurl/etc. for the repository, to point to a working
+        upstream. This is most often useful if you are using a newer
+        distribution release than is supported by the repository (and the
+        packages for the previous distribution release still work).
+
+     3. Run the command with the repository temporarily disabled
+            yum --disablerepo=<repoid> ...
+
+     4. Disable the repository permanently, so yum won't use it by default. Yum
+        will then just ignore the repository until you permanently enable it
+        again or use --enablerepo for temporary usage:
+
+            yum-config-manager --disable <repoid>
+        or
+            subscription-manager repos --disable=<repoid>
+
+     5. Configure the failing repository to be skipped, if it is unavailable.
+        Note that yum will try to contact the repo. when it runs most commands,
+        so will have to try and fail each time (and thus. yum will be be much
+        slower). If it is a very temporary problem though, this is often a nice
+        compromise:
+
+            yum-config-manager --save --setopt=<repoid>.skip_if_unavailable=true
+
+Cannot find a valid baseurl for repo: base/7/x86_64
+[root@node1 ~]# systemctl status firewalld
+? firewalld.service - firewalld - dynamic firewall daemon
+   Loaded: loaded (/usr/lib/systemd/system/firewalld.service; enabled; vendor preset: enabled)
+   Active: inactive (dead) since Sat 2023-07-15 20:00:45 IST; 17min ago
+     Docs: man:firewalld(1)
+  Process: 685 ExecStart=/usr/sbin/firewalld --nofork --nopid $FIREWALLD_ARGS (code=exited, status=0/SUCCESS)
+ Main PID: 685 (code=exited, status=0/SUCCESS)
+
+Jul 15 19:39:27 localhost.localdomain systemd[1]: Starting firewalld - dynamic firewall daemon...
+Jul 15 19:39:27 localhost.localdomain systemd[1]: Started firewalld - dynamic firewall daemon.
+Jul 15 19:39:28 localhost.localdomain firewalld[685]: WARNING: AllowZoneDrifting is enabled....w.
+Jul 15 20:00:44 node1.hpcsa.in systemd[1]: Stopping firewalld - dynamic firewall daemon...
+Jul 15 20:00:45 node1.hpcsa.in systemd[1]: Stopped firewalld - dynamic firewall daemon.
+Hint: Some lines were ellipsized, use -l to show in full.
+[root@node1 ~]# systemctl stop firewalld
+[root@node1 ~]# yum install wget centos-release-gluster epel-release glusterfs-server -y
+Loaded plugins: fastestmirror
+Loading mirror speeds from cached hostfile
+Could not retrieve mirrorlist http://mirrorlist.centos.org/?release=7&arch=x86_64&repo=os&infra=stock error was
+14: curl#6 - "Could not resolve host: mirrorlist.centos.org; Unknown error"
+
+
+ One of the configured repositories failed (Unknown),
+ and yum doesn't have enough cached data to continue. At this point the only
+ safe thing yum can do is fail. There are a few ways to work "fix" this:
+
+     1. Contact the upstream for the repository and get them to fix the problem.
+
+     2. Reconfigure the baseurl/etc. for the repository, to point to a working
+        upstream. This is most often useful if you are using a newer
+        distribution release than is supported by the repository (and the
+        packages for the previous distribution release still work).
+
+     3. Run the command with the repository temporarily disabled
+            yum --disablerepo=<repoid> ...
+
+     4. Disable the repository permanently, so yum won't use it by default. Yum
+        will then just ignore the repository until you permanently enable it
+        again or use --enablerepo for temporary usage:
+
+            yum-config-manager --disable <repoid>
+        or
+            subscription-manager repos --disable=<repoid>
+
+     5. Configure the failing repository to be skipped, if it is unavailable.
+        Note that yum will try to contact the repo. when it runs most commands,
+        so will have to try and fail each time (and thus. yum will be be much
+        slower). If it is a very temporary problem though, this is often a nice
+        compromise:
+
+            yum-config-manager --save --setopt=<repoid>.skip_if_unavailable=true
+
+Cannot find a valid baseurl for repo: base/7/x86_64
+[root@node1 ~]# systemctl status firewalld
+? firewalld.service - firewalld - dynamic firewall daemon
+   Loaded: loaded (/usr/lib/systemd/system/firewalld.service; enabled; vendor preset: enabled)
+   Active: inactive (dead) since Sat 2023-07-15 20:00:45 IST; 18min ago
+     Docs: man:firewalld(1)
+  Process: 685 ExecStart=/usr/sbin/firewalld --nofork --nopid $FIREWALLD_ARGS (code=exited, status=0/SUCCESS)
+ Main PID: 685 (code=exited, status=0/SUCCESS)
+
+Jul 15 19:39:27 localhost.localdomain systemd[1]: Starting firewalld - dynamic firewall daemon...
+Jul 15 19:39:27 localhost.localdomain systemd[1]: Started firewalld - dynamic firewall daemon.
+Jul 15 19:39:28 localhost.localdomain firewalld[685]: WARNING: AllowZoneDrifting is enabled....w.
+Jul 15 20:00:44 node1.hpcsa.in systemd[1]: Stopping firewalld - dynamic firewall daemon...
+Jul 15 20:00:45 node1.hpcsa.in systemd[1]: Stopped firewalld - dynamic firewall daemon.
+Hint: Some lines were ellipsized, use -l to show in full.
+[root@node1 ~]# systemctl enable firewalld
+[root@node1 ~]# yum install wget centos-release-gluster epel-release glusterfs-server -y
+Loaded plugins: fastestmirror
+Loading mirror speeds from cached hostfile
+Could not retrieve mirrorlist http://mirrorlist.centos.org/?release=7&arch=x86_64&repo=os&infra=stock error was
+14: curl#6 - "Could not resolve host: mirrorlist.centos.org; Unknown error"
+
+
+ One of the configured repositories failed (Unknown),
+ and yum doesn't have enough cached data to continue. At this point the only
+ safe thing yum can do is fail. There are a few ways to work "fix" this:
+
+     1. Contact the upstream for the repository and get them to fix the problem.
+
+     2. Reconfigure the baseurl/etc. for the repository, to point to a working
+        upstream. This is most often useful if you are using a newer
+        distribution release than is supported by the repository (and the
+        packages for the previous distribution release still work).
+
+     3. Run the command with the repository temporarily disabled
+            yum --disablerepo=<repoid> ...
+
+     4. Disable the repository permanently, so yum won't use it by default. Yum
+        will then just ignore the repository until you permanently enable it
+        again or use --enablerepo for temporary usage:
+
+            yum-config-manager --disable <repoid>
+        or
+            subscription-manager repos --disable=<repoid>
+
+     5. Configure the failing repository to be skipped, if it is unavailable.
+        Note that yum will try to contact the repo. when it runs most commands,
+        so will have to try and fail each time (and thus. yum will be be much
+        slower). If it is a very temporary problem though, this is often a nice
+        compromise:
+
+            yum-config-manager --save --setopt=<repoid>.skip_if_unavailable=true
+
+Cannot find a valid baseurl for repo: base/7/x86_64
+[root@node1 ~]# history
+    1  lsblk
+    2  vim /etc/hosts
+    3  vi /etc/hosts
+    4  ping client.hpcsa.in
+    5  systemctl stop firewalld
+    6  lsblk
+    7  fdisk /dev/sdb
+    8  mkfs.xfs /dev/sdb1
+    9  mkdir /mnt/disk1
+   10  mount /dev/sdb1 /mnt/disk1/
+   11  lsblk
+   12  yum install wget
+   13*
+   14  yum install wget centos-release-gluster epel-release glusterfs-server -y
+   15  systemctl status firewalld
+   16  systemctl stop firewalld
+   17  yum install wget centos-release-gluster epel-release glusterfs-server -y
+   18  systemctl status firewalld
+   19  systemctl enable firewalld
+   20  yum install wget centos-release-gluster epel-release glusterfs-server -y
+   21  history
+[root@node1 ~]# ping www.google.com
+ping: www.google.com: Name or service not known
+[root@node1 ~]# yum install wget centos-release-gluster epel-release glusterfs-server -y
+Loaded plugins: fastestmirror
+Loading mirror speeds from cached hostfile
+ * base: centos.mirror.net.in
+ * extras: centos.mirror.net.in
+ * updates: centos.mirror.net.in
+base                                                                      | 3.6 kB  00:00:00
+extras                                                                    | 2.9 kB  00:00:00
+updates                                                                   | 2.9 kB  00:00:00
+(1/4): base/7/x86_64/group_gz                                             | 153 kB  00:00:00
+(2/4): extras/7/x86_64/primary_db                                         | 250 kB  00:00:00
+(3/4): updates/7/x86_64/primary_db                                        |  22 MB  00:00:00
+(4/4): base/7/x86_64/primary_db                                           | 6.1 MB  00:00:01
+No package glusterfs-server available.
+Resolving Dependencies
+--> Running transaction check
+---> Package centos-release-gluster9.noarch 0:1.0-1.el7 will be installed
+--> Processing Dependency: centos-release-storage-common for package: centos-release-gluster9-1.0-1.el7.noarch
+---> Package epel-release.noarch 0:7-11 will be installed
+---> Package wget.x86_64 0:1.14-18.el7_6.1 will be installed
+--> Running transaction check
+---> Package centos-release-storage-common.noarch 0:2-2.el7.centos will be installed
+--> Finished Dependency Resolution
+
+Dependencies Resolved
+
+=================================================================================================
+ Package                              Arch          Version                  Repository     Size
+=================================================================================================
+Installing:
+ centos-release-gluster9              noarch        1.0-1.el7                extras        4.1 k
+ epel-release                         noarch        7-11                     extras         15 k
+ wget                                 x86_64        1.14-18.el7_6.1          base          547 k
+Installing for dependencies:
+ centos-release-storage-common        noarch        2-2.el7.centos           extras        5.1 k
+
+Transaction Summary
+=================================================================================================
+Install  3 Packages (+1 Dependent package)
+
+Total download size: 571 k
+Installed size: 2.0 M
+Downloading packages:
+warning: /var/cache/yum/x86_64/7/extras/packages/centos-release-gluster9-1.0-1.el7.noarch.rpm: Header V3 RSA/SHA256 Signature, key ID f4a80eb5: NOKEY
+Public key for centos-release-gluster9-1.0-1.el7.noarch.rpm is not installed
+(1/4): centos-release-gluster9-1.0-1.el7.noarch.rpm                       | 4.1 kB  00:00:00
+(2/4): centos-release-storage-common-2-2.el7.centos.noarch.rpm            | 5.1 kB  00:00:00
+(3/4): epel-release-7-11.noarch.rpm                                       |  15 kB  00:00:00
+Public key for wget-1.14-18.el7_6.1.x86_64.rpm is not installed
+(4/4): wget-1.14-18.el7_6.1.x86_64.rpm                                    | 547 kB  00:00:00
+-------------------------------------------------------------------------------------------------
+Total                                                            1.1 MB/s | 571 kB  00:00:00
+Retrieving key from file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7
+Importing GPG key 0xF4A80EB5:
+ Userid     : "CentOS-7 Key (CentOS 7 Official Signing Key) <security@centos.org>"
+ Fingerprint: 6341 ab27 53d7 8a78 a7c2 7bb1 24c6 a8a7 f4a8 0eb5
+ Package    : centos-release-7-9.2009.0.el7.centos.x86_64 (@anaconda)
+ From       : /etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7
+Running transaction check
+Running transaction test
+Transaction test succeeded
+Running transaction
+  Installing : centos-release-storage-common-2-2.el7.centos.noarch                           1/4
+  Installing : centos-release-gluster9-1.0-1.el7.noarch                                      2/4
+  Installing : wget-1.14-18.el7_6.1.x86_64                                                   3/4
+  Installing : epel-release-7-11.noarch                                                      4/4
+  Verifying  : centos-release-gluster9-1.0-1.el7.noarch                                      1/4
+  Verifying  : centos-release-storage-common-2-2.el7.centos.noarch                           2/4
+  Verifying  : epel-release-7-11.noarch                                                      3/4
+  Verifying  : wget-1.14-18.el7_6.1.x86_64                                                   4/4
+
+Installed:
+  centos-release-gluster9.noarch 0:1.0-1.el7              epel-release.noarch 0:7-11
+  wget.x86_64 0:1.14-18.el7_6.1
+
+Dependency Installed:
+  centos-release-storage-common.noarch 0:2-2.el7.centos
+
+Complete!
+[root@node1 ~]# systemctl start glusterd
+Failed to start glusterd.service: Unit not found.
+[root@node1 ~]# which glusterd
+/usr/bin/which: no glusterd in (/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/root/bin)
+[root@node1 ~]# systemctl start glusterd
+Failed to start glusterd.service: Unit not found.
+[root@node1 ~]# yum install wget centos-release-gluster epel-release glusterfs-server -y
+Loaded plugins: fastestmirror
+Loading mirror speeds from cached hostfile
+epel/x86_64/metalink                                                      | 5.8 kB  00:00:00
+ * base: centos.mirror.net.in
+ * centos-gluster9: centos.mirror.net.in
+ * epel: epel.excellmedia.net
+ * extras: centos.mirror.net.in
+ * updates: centos.mirror.net.in
+centos-gluster9                                                           | 3.0 kB  00:00:00
+epel                                                                      | 4.7 kB  00:00:00
+(1/4): centos-gluster9/7/x86_64/primary_db                                |  89 kB  00:00:00
+(2/4): epel/x86_64/group_gz                                               |  99 kB  00:00:00
+(3/4): epel/x86_64/updateinfo                                             | 1.0 MB  00:00:03
+(4/4): epel/x86_64/primary_db                                             | 7.0 MB  00:01:51
+Package wget-1.14-18.el7_6.1.x86_64 already installed and latest version
+Package centos-release-gluster9-1.0-1.el7.noarch already installed and latest version
+Resolving Dependencies
+--> Running transaction check
+---> Package epel-release.noarch 0:7-11 will be updated
+---> Package epel-release.noarch 0:7-14 will be an update
+---> Package glusterfs-server.x86_64 0:9.6-1.el7 will be installed
+--> Processing Dependency: glusterfs = 9.6-1.el7 for package: glusterfs-server-9.6-1.el7.x86_64
+--> Processing Dependency: glusterfs-cli = 9.6-1.el7 for package: glusterfs-server-9.6-1.el7.x86_64
+--> Processing Dependency: glusterfs-client-xlators = 9.6-1.el7 for package: glusterfs-server-9.6-1.el7.x86_64
+--> Processing Dependency: glusterfs-fuse = 9.6-1.el7 for package: glusterfs-server-9.6-1.el7.x86_64
+--> Processing Dependency: glusterfs-libs = 9.6-1.el7 for package: glusterfs-server-9.6-1.el7.x86_64
+--> Processing Dependency: libgfapi0 = 9.6-1.el7 for package: glusterfs-server-9.6-1.el7.x86_64
+--> Processing Dependency: libgfchangelog0 = 9.6-1.el7 for package: glusterfs-server-9.6-1.el7.x86_64
+--> Processing Dependency: libgfapi.so.0(GFAPI_3.4.0)(64bit) for package: glusterfs-server-9.6-1.el7.x86_64
+--> Processing Dependency: libgfapi.so.0(GFAPI_3.4.2)(64bit) for package: glusterfs-server-9.6-1.el7.x86_64
+--> Processing Dependency: libgfapi.so.0(GFAPI_3.5.1)(64bit) for package: glusterfs-server-9.6-1.el7.x86_64
+--> Processing Dependency: libgfapi.so.0(GFAPI_3.6.0)(64bit) for package: glusterfs-server-9.6-1.el7.x86_64
+--> Processing Dependency: libgfapi.so.0(GFAPI_3.7.0)(64bit) for package: glusterfs-server-9.6-1.el7.x86_64
+--> Processing Dependency: libgfapi.so.0(GFAPI_3.7.4)(64bit) for package: glusterfs-server-9.6-1.el7.x86_64
+--> Processing Dependency: libgfapi.so.0(GFAPI_6.0)(64bit) for package: glusterfs-server-9.6-1.el7.x86_64
+--> Processing Dependency: libgfapi.so.0(GFAPI_PRIVATE_3.4.0)(64bit) for package: glusterfs-server-9.6-1.el7.x86_64
+--> Processing Dependency: libgfapi.so.0(GFAPI_PRIVATE_3.7.0)(64bit) for package: glusterfs-server-9.6-1.el7.x86_64
+--> Processing Dependency: libgfapi.so.0(GFAPI_PRIVATE_6.0)(64bit) for package: glusterfs-server-9.6-1.el7.x86_64
+--> Processing Dependency: libgfapi.so.0(GFAPI_PRIVATE_6.1)(64bit) for package: glusterfs-server-9.6-1.el7.x86_64
+--> Processing Dependency: rpcbind for package: glusterfs-server-9.6-1.el7.x86_64
+--> Processing Dependency: libgfapi.so.0()(64bit) for package: glusterfs-server-9.6-1.el7.x86_64
+--> Processing Dependency: libgfchangelog.so.0()(64bit) for package: glusterfs-server-9.6-1.el7.x86_64
+--> Processing Dependency: libgfrpc.so.0()(64bit) for package: glusterfs-server-9.6-1.el7.x86_64
+--> Processing Dependency: libgfxdr.so.0()(64bit) for package: glusterfs-server-9.6-1.el7.x86_64
+--> Processing Dependency: libglusterd.so.0()(64bit) for package: glusterfs-server-9.6-1.el7.x86_64
+--> Processing Dependency: libglusterfs.so.0()(64bit) for package: glusterfs-server-9.6-1.el7.x86_64
+--> Processing Dependency: liburcu-bp.so.6()(64bit) for package: glusterfs-server-9.6-1.el7.x86_64
+--> Processing Dependency: liburcu-cds.so.6()(64bit) for package: glusterfs-server-9.6-1.el7.x86_64
+--> Running transaction check
+---> Package glusterfs.x86_64 0:9.6-1.el7 will be installed
+---> Package glusterfs-cli.x86_64 0:9.6-1.el7 will be installed
+---> Package glusterfs-client-xlators.x86_64 0:9.6-1.el7 will be installed
+---> Package glusterfs-fuse.x86_64 0:9.6-1.el7 will be installed
+--> Processing Dependency: attr for package: glusterfs-fuse-9.6-1.el7.x86_64
+--> Processing Dependency: psmisc for package: glusterfs-fuse-9.6-1.el7.x86_64
+---> Package libgfapi0.x86_64 0:9.6-1.el7 will be installed
+---> Package libgfchangelog0.x86_64 0:9.6-1.el7 will be installed
+---> Package libgfrpc0.x86_64 0:9.6-1.el7 will be installed
+---> Package libgfxdr0.x86_64 0:9.6-1.el7 will be installed
+---> Package libglusterd0.x86_64 0:9.6-1.el7 will be installed
+---> Package libglusterfs0.x86_64 0:9.6-1.el7 will be installed
+---> Package rpcbind.x86_64 0:0.2.0-49.el7 will be installed
+--> Processing Dependency: libtirpc >= 0.2.4-0.7 for package: rpcbind-0.2.0-49.el7.x86_64
+--> Processing Dependency: libtirpc.so.1()(64bit) for package: rpcbind-0.2.0-49.el7.x86_64
+---> Package userspace-rcu.x86_64 0:0.10.0-3.el7 will be installed
+--> Running transaction check
+---> Package attr.x86_64 0:2.4.46-13.el7 will be installed
+---> Package libtirpc.x86_64 0:0.2.4-0.16.el7 will be installed
+---> Package psmisc.x86_64 0:22.20-17.el7 will be installed
+--> Finished Dependency Resolution
+
+Dependencies Resolved
+
+=================================================================================================
+ Package                        Arch         Version                 Repository             Size
+=================================================================================================
+Installing:
+ glusterfs-server               x86_64       9.6-1.el7               centos-gluster9       1.3 M
+Updating:
+ epel-release                   noarch       7-14                    epel                   15 k
+Installing for dependencies:
+ attr                           x86_64       2.4.46-13.el7           base                   66 k
+ glusterfs                      x86_64       9.6-1.el7               centos-gluster9       647 k
+ glusterfs-cli                  x86_64       9.6-1.el7               centos-gluster9       200 k
+ glusterfs-client-xlators       x86_64       9.6-1.el7               centos-gluster9       854 k
+ glusterfs-fuse                 x86_64       9.6-1.el7               centos-gluster9       161 k
+ libgfapi0                      x86_64       9.6-1.el7               centos-gluster9       119 k
+ libgfchangelog0                x86_64       9.6-1.el7               centos-gluster9        62 k
+ libgfrpc0                      x86_64       9.6-1.el7               centos-gluster9        85 k
+ libgfxdr0                      x86_64       9.6-1.el7               centos-gluster9        57 k
+ libglusterd0                   x86_64       9.6-1.el7               centos-gluster9        41 k
+ libglusterfs0                  x86_64       9.6-1.el7               centos-gluster9       340 k
+ libtirpc                       x86_64       0.2.4-0.16.el7          base                   89 k
+ psmisc                         x86_64       22.20-17.el7            base                  141 k
+ rpcbind                        x86_64       0.2.0-49.el7            base                   60 k
+ userspace-rcu                  x86_64       0.10.0-3.el7            centos-gluster9        93 k
+
+Transaction Summary
+=================================================================================================
+Install  1 Package (+15 Dependent packages)
+Upgrade  1 Package
+
+Total download size: 4.3 M
+Downloading packages:
+Delta RPMs disabled because /usr/bin/applydeltarpm not installed.
+(1/17): attr-2.4.46-13.el7.x86_64.rpm                                     |  66 kB  00:00:00
+warning: /var/cache/yum/x86_64/7/centos-gluster9/packages/glusterfs-cli-9.6-1.el7.x86_64.rpm: Header V4 RSA/SHA256 Signature, key ID e451e5b5: NOKEY
+Public key for glusterfs-cli-9.6-1.el7.x86_64.rpm is not installed
+(2/17): glusterfs-cli-9.6-1.el7.x86_64.rpm                                | 200 kB  00:00:00
+(3/17): glusterfs-9.6-1.el7.x86_64.rpm                                    | 647 kB  00:00:00
+(4/17): glusterfs-fuse-9.6-1.el7.x86_64.rpm                               | 161 kB  00:00:00
+(5/17): glusterfs-client-xlators-9.6-1.el7.x86_64.rpm                     | 854 kB  00:00:00
+(6/17): libgfapi0-9.6-1.el7.x86_64.rpm                                    | 119 kB  00:00:00
+(7/17): libgfchangelog0-9.6-1.el7.x86_64.rpm                              |  62 kB  00:00:00
+(8/17): libgfrpc0-9.6-1.el7.x86_64.rpm                                    |  85 kB  00:00:00
+(9/17): libgfxdr0-9.6-1.el7.x86_64.rpm                                    |  57 kB  00:00:00
+(10/17): libglusterd0-9.6-1.el7.x86_64.rpm                                |  41 kB  00:00:00
+warning: /var/cache/yum/x86_64/7/epel/packages/epel-release-7-14.noarch.rpm: Header V4 RSA/SHA256 Signature, key ID 352c64e5: NOKEY
+Public key for epel-release-7-14.noarch.rpm is not installed
+(11/17): epel-release-7-14.noarch.rpm                                     |  15 kB  00:00:00
+(12/17): libglusterfs0-9.6-1.el7.x86_64.rpm                               | 340 kB  00:00:00
+(13/17): glusterfs-server-9.6-1.el7.x86_64.rpm                            | 1.3 MB  00:00:00
+(14/17): libtirpc-0.2.4-0.16.el7.x86_64.rpm                               |  89 kB  00:00:00
+(15/17): rpcbind-0.2.0-49.el7.x86_64.rpm                                  |  60 kB  00:00:00
+(16/17): psmisc-22.20-17.el7.x86_64.rpm                                   | 141 kB  00:00:00
+(17/17): userspace-rcu-0.10.0-3.el7.x86_64.rpm                            |  93 kB  00:00:00
+-------------------------------------------------------------------------------------------------
+Total                                                            5.4 MB/s | 4.3 MB  00:00:00
+Retrieving key from file:///etc/pki/rpm-gpg/RPM-GPG-KEY-EPEL-7
+Importing GPG key 0x352C64E5:
+ Userid     : "Fedora EPEL (7) <epel@fedoraproject.org>"
+ Fingerprint: 91e9 7d7c 4a5e 96f1 7f3e 888f 6a2f aea2 352c 64e5
+ Package    : epel-release-7-11.noarch (@extras)
+ From       : /etc/pki/rpm-gpg/RPM-GPG-KEY-EPEL-7
+Retrieving key from file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-SIG-Storage
+Importing GPG key 0xE451E5B5:
+ Userid     : "CentOS Storage SIG (http://wiki.centos.org/SpecialInterestGroup/Storage) <security@centos.org>"
+ Fingerprint: 7412 9c0b 173b 071a 3775 951a d4a2 e50b e451 e5b5
+ Package    : centos-release-storage-common-2-2.el7.centos.noarch (@extras)
+ From       : /etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-SIG-Storage
+Running transaction check
+Running transaction test
+Transaction test succeeded
+Running transaction
+  Installing : userspace-rcu-0.10.0-3.el7.x86_64                                            1/18
+  Installing : libgfrpc0-9.6-1.el7.x86_64                                                   2/18
+  Installing : libgfxdr0-9.6-1.el7.x86_64                                                   3/18
+  Installing : libglusterfs0-9.6-1.el7.x86_64                                               4/18
+  Installing : glusterfs-client-xlators-9.6-1.el7.x86_64                                    5/18
+  Installing : glusterfs-9.6-1.el7.x86_64                                                   6/18
+  Installing : libglusterd0-9.6-1.el7.x86_64                                                7/18
+  Installing : glusterfs-cli-9.6-1.el7.x86_64                                               8/18
+  Installing : libgfapi0-9.6-1.el7.x86_64                                                   9/18
+  Installing : libgfchangelog0-9.6-1.el7.x86_64                                            10/18
+  Installing : psmisc-22.20-17.el7.x86_64                                                  11/18
+  Installing : attr-2.4.46-13.el7.x86_64                                                   12/18
+  Installing : glusterfs-fuse-9.6-1.el7.x86_64                                             13/18
+  Installing : libtirpc-0.2.4-0.16.el7.x86_64                                              14/18
+  Installing : rpcbind-0.2.0-49.el7.x86_64                                                 15/18
+  Installing : glusterfs-server-9.6-1.el7.x86_64                                           16/18
+  Updating   : epel-release-7-14.noarch                                                    17/18
+  Cleanup    : epel-release-7-11.noarch                                                    18/18
+  Verifying  : epel-release-7-14.noarch                                                     1/18
+  Verifying  : libtirpc-0.2.4-0.16.el7.x86_64                                               2/18
+  Verifying  : libgfapi0-9.6-1.el7.x86_64                                                   3/18
+  Verifying  : libgfchangelog0-9.6-1.el7.x86_64                                             4/18
+  Verifying  : glusterfs-9.6-1.el7.x86_64                                                   5/18
+  Verifying  : libglusterfs0-9.6-1.el7.x86_64                                               6/18
+  Verifying  : userspace-rcu-0.10.0-3.el7.x86_64                                            7/18
+  Verifying  : glusterfs-server-9.6-1.el7.x86_64                                            8/18
+  Verifying  : libglusterd0-9.6-1.el7.x86_64                                                9/18
+  Verifying  : glusterfs-client-xlators-9.6-1.el7.x86_64                                   10/18
+  Verifying  : libgfrpc0-9.6-1.el7.x86_64                                                  11/18
+  Verifying  : attr-2.4.46-13.el7.x86_64                                                   12/18
+  Verifying  : glusterfs-fuse-9.6-1.el7.x86_64                                             13/18
+  Verifying  : psmisc-22.20-17.el7.x86_64                                                  14/18
+  Verifying  : glusterfs-cli-9.6-1.el7.x86_64                                              15/18
+  Verifying  : libgfxdr0-9.6-1.el7.x86_64                                                  16/18
+  Verifying  : rpcbind-0.2.0-49.el7.x86_64                                                 17/18
+  Verifying  : epel-release-7-11.noarch                                                    18/18
+
+Installed:
+  glusterfs-server.x86_64 0:9.6-1.el7
+
+Dependency Installed:
+  attr.x86_64 0:2.4.46-13.el7                 glusterfs.x86_64 0:9.6-1.el7
+  glusterfs-cli.x86_64 0:9.6-1.el7            glusterfs-client-xlators.x86_64 0:9.6-1.el7
+  glusterfs-fuse.x86_64 0:9.6-1.el7           libgfapi0.x86_64 0:9.6-1.el7
+  libgfchangelog0.x86_64 0:9.6-1.el7          libgfrpc0.x86_64 0:9.6-1.el7
+  libgfxdr0.x86_64 0:9.6-1.el7                libglusterd0.x86_64 0:9.6-1.el7
+  libglusterfs0.x86_64 0:9.6-1.el7            libtirpc.x86_64 0:0.2.4-0.16.el7
+  psmisc.x86_64 0:22.20-17.el7                rpcbind.x86_64 0:0.2.0-49.el7
+  userspace-rcu.x86_64 0:0.10.0-3.el7
+
+Updated:
+  epel-release.noarch 0:7-14
+
+Complete!
+[root@node1 ~]# systemctl start glusterd
+[root@node1 ~]# systemctl status glusterd
+? glusterd.service - GlusterFS, a clustered file-system server
+   Loaded: loaded (/usr/lib/systemd/system/glusterd.service; disabled; vendor preset: disabled)
+   Active: active (running) since Sat 2023-07-15 20:31:48 IST; 10s ago
+     Docs: man:glusterd(8)
+  Process: 2004 ExecStart=/usr/sbin/glusterd -p /var/run/glusterd.pid --log-level $LOG_LEVEL $GLUSTERD_OPTIONS (code=exited, status=0/SUCCESS)
+ Main PID: 2005 (glusterd)
+   CGroup: /system.slice/glusterd.service
+           +-2005 /usr/sbin/glusterd -p /var/run/glusterd.pid --log-level INFO
+
+Jul 15 20:31:48 node1.hpcsa.in systemd[1]: [/usr/lib/systemd/system/glusterd.service:4] Unk...it'
+Jul 15 20:31:48 node1.hpcsa.in systemd[1]: [/usr/lib/systemd/system/glusterd.service:5] Unk...it'
+Jul 15 20:31:48 node1.hpcsa.in systemd[1]: Starting GlusterFS, a clustered file-system server...
+Jul 15 20:31:48 node1.hpcsa.in systemd[1]: Started GlusterFS, a clustered file-system server.
+Hint: Some lines were ellipsized, use -l to show in full.
+[root@node1 ~]# gluster peer probe node2.hpcsa.in
+peer probe: success
+[root@node1 ~]# gluster peer probe node3.hpcsa.in
+peer probe: success
+[root@node1 ~]# gluster peer status
+Number of Peers: 2
+
+Hostname: node2.hpcsa.in
+Uuid: 7607faf9-d14b-4060-8851-0d37c22ae811
+State: Peer in Cluster (Connected)
+
+Hostname: node3.hpcsa.in
+Uuid: 5ac7eccc-609f-4cf0-878b-6498651fdb59
+State: Peer in Cluster (Connected)
+[root@node1 ~]# gluster pool list
+UUID                                    Hostname        State
+7607faf9-d14b-4060-8851-0d37c22ae811    node2.hpcsa.in  Connected
+5ac7eccc-609f-4cf0-878b-6498651fdb59    node3.hpcsa.in  Connected
+fb8bf5ad-5b76-41f2-b6d7-8d6050fda500    localhost       Connected
+[root@node1 ~]# mkdir /mnt/disk1/diskvol
+[root@node1 ~]# gluster volume create gdisk1 replica 3 node1.hpcsa.in:/mnt/disk1/diskvol/gdisk1  node2.hpcsa.in:/mnt/disk1/distvol/gdisk1  node3.hpcsa.in:/mnt/disk1/distvol/gdisk1
+volume create: gdisk1: failed: Staging failed on node3.hpcsa.in. Error: Host node1.hpcsa.in is not in 'Peer in Cluster' state
+Staging failed on node2.hpcsa.in. Error: Host node1.hpcsa.in is not in 'Peer in Cluster' state
+[root@node1 ~]# gluster volume create gdisk1 replica 3 node1.hpcsa.in:/mnt/disk1/diskvol/gdisk1  node2.hpcsa.in:/mnt/disk1/distvol/gdisk1  node3.hpcsa.in:/mnt/disk1/distvol/gdisk1
+volume create: gdisk1: failed: /mnt/disk1/diskvol/gdisk1 is already part of a volume
+[root@node1 ~]# gluster volume create gdisk2 replica 3 node1.hpcsa.in:/mnt/disk1/diskvol/gdisk2
+volume create: gdisk2: failed: Staging failed on node3.hpcsa.in. Error: Host node1.hpcsa.in is no
+Staging failed on node2.hpcsa.in. Error: Host node1.hpcsa.in is not in 'Peer in Cluster' state
+[root@node1 ~]# gluster pool list
+UUID                                    Hostname        State
+7607faf9-d14b-4060-8851-0d37c22ae811    node2.hpcsa.in  Connected
+5ac7eccc-609f-4cf0-878b-6498651fdb59    node3.hpcsa.in  Connected
+fb8bf5ad-5b76-41f2-b6d7-8d6050fda500    localhost       Connected
+[root@node1 ~]# gluster pool list
+UUID                                    Hostname        State
+7607faf9-d14b-4060-8851-0d37c22ae811    node2.hpcsa.in  Connected
+5ac7eccc-609f-4cf0-878b-6498651fdb59    node3.hpcsa.in  Connected
+fb8bf5ad-5b76-41f2-b6d7-8d6050fda500    localhost       Connected
+[root@node1 ~]# cat /etc/hosts
+127.0.0.1   localhost localhost.localdomain localhost4 localhost4.localdomain4
+::1         localhost localhost.localdomain localhost6 localhost6.localdomain6
+192.168.15.132 node1.hpcsa.in
+192.168.15.133 node2.hpcsa.in
+192.168.15.134 node3.hpcsa.in
+192.168.15.135 client.hpcsa.in
+[root@node1 ~]# rsync /etc/hosts root@node2.hpcsa.in:/etc/hosts
+-bash: rsync: command not found
+[root@node1 ~]# rsync /etc/hosts root@node2.hpcsa.in:/etc/hosts
+The authenticity of host 'node2.hpcsa.in (192.168.15.133)' can't be established.
+ECDSA key fingerprint is SHA256:JbQFp/4SaYFpszIjBlpttyXEMGiNiL5rz5A+HcTkXQo.
+ECDSA key fingerprint is MD5:9c:7c:9f:fd:38:b0:70:5c:20:ab:69:3b:07:05:3f:1c.
+Are you sure you want to continue connecting (yes/no)? yes
+Warning: Permanently added 'node2.hpcsa.in,192.168.15.133' (ECDSA) to the list of known hosts.
+root@node2.hpcsa.in's password:
+bash: rsync: command not found
+rsync: connection unexpectedly closed (0 bytes received so far) [sender]
+rsync error: remote command not found (code 127) at io.c(226) [sender=3.1.2]
+[root@node1 ~]# rsync /etc/hosts root@node2.hpcsa.in:/etc/hosts
+root@node2.hpcsa.in's password:
+[root@node1 ~]# rsync /etc/hosts root@node3.hpcsa.in:/etc/hosts
+The authenticity of host 'node3.hpcsa.in (192.168.15.134)' can't be established.
+ECDSA key fingerprint is SHA256:JbQFp/4SaYFpszIjBlpttyXEMGiNiL5rz5A+HcTkXQo.
+ECDSA key fingerprint is MD5:9c:7c:9f:fd:38:b0:70:5c:20:ab:69:3b:07:05:3f:1c.
+Are you sure you want to continue connecting (yes/no)? yes
+Warning: Permanently added 'node3.hpcsa.in,192.168.15.134' (ECDSA) to the list of known hosts.
+root@node3.hpcsa.in's password:
+[root@node1 ~]# gluster peer status
+Number of Peers: 2
+
+Hostname: node2.hpcsa.in
+Uuid: 7607faf9-d14b-4060-8851-0d37c22ae811
+State: Peer in Cluster (Connected)
+
+Hostname: node3.hpcsa.in
+Uuid: 5ac7eccc-609f-4cf0-878b-6498651fdb59
+State: Peer in Cluster (Connected)
+[root@node1 ~]# gluster peer probe server2.hpcsa.com
+peer probe: failed: Probe returned with Transport endpoint is not connected
+[root@node1 ~]#
+[root@node1 ~]# gluster peer probe node2.hpcsa.in
+peer probe: Host node2.hpcsa.in port 24007 already in peer list
+[root@node1 ~]# gluster peer probe node3.hpcsa.in
+peer probe: Host node3.hpcsa.in port 24007 already in peer list
+[root@node1 ~]# gluster volume create gdisk3 replica 3 node1.hpcsa.in:/mnt/disk1/diskvol/gdisk3  node2.hpcsa.in:/mnt/disk1/diskvol/gdisk3  node3.hpcsa.in:/mnt/disk1/diskvol/gdisk3
+volume create: gdisk3: success: please start the volume to access data
+[root@node1 ~]# gluster volume start gdisk3
+volume start: gdisk3: success
+[root@node1 ~]# gluster volume info gdisk3
+
+Volume Name: gdisk3
+Type: Replicate
+Volume ID: 2ec6227b-c4fd-4ce9-8bac-cb117b795ac3
+Status: Started
+Snapshot Count: 0
+Number of Bricks: 1 x 3 = 3
+Transport-type: tcp
+Bricks:
+Brick1: node1.hpcsa.in:/mnt/disk1/diskvol/gdisk3
+Brick2: node2.hpcsa.in:/mnt/disk1/diskvol/gdisk3
+Brick3: node3.hpcsa.in:/mnt/disk1/diskvol/gdisk3
+Options Reconfigured:
+cluster.granular-entry-heal: on
+storage.fips-mode-rchecksum: on
+transport.address-family: inet
+nfs.disable: on
+performance.client-io-threads: off
+[root@node1 ~]# df -h
+Filesystem               Size  Used Avail Use% Mounted on
+devtmpfs                 475M     0  475M   0% /dev
+tmpfs                    487M     0  487M   0% /dev/shm
+tmpfs                    487M  7.7M  479M   2% /run
+tmpfs                    487M     0  487M   0% /sys/fs/cgroup
+/dev/mapper/centos-root   17G  1.5G   16G   9% /
+/dev/sda1               1014M  138M  877M  14% /boot
+tmpfs                     98M     0   98M   0% /run/user/0
+/dev/sdb1                 20G   33M   20G   1% /mnt/disk1
+[root@node1 ~]# cd /mnt/disk1/
+[root@node1 disk1]# ls
+diskvol
+[root@node1 disk1]# du -sh gdisk3/
+du: cannot access ‘gdisk3/’: No such file or directory
+[root@node1 disk1]# cd diskvol/
+[root@node1 diskvol]# ls
+gdisk1  gdisk2  gdisk3
+[root@node1 diskvol]# du -sh gdisk3/
+16K     gdisk3/
+[root@node1 diskvol]# cd gdisk3/
+[root@node1 gdisk3]# ls
+[root@node1 gdisk3]# cd
+[root@node1 ~]# rsync /etc/hosts root@client.hpcsa.in:/etc/hosts
+The authenticity of host 'client.hpcsa.in (192.168.15.135)' can't be established.
+ECDSA key fingerprint is SHA256:JbQFp/4SaYFpszIjBlpttyXEMGiNiL5rz5A+HcTkXQo.
+ECDSA key fingerprint is MD5:9c:7c:9f:fd:38:b0:70:5c:20:ab:69:3b:07:05:3f:1c.
+Are you sure you want to continue connecting (yes/no)? yes
+Warning: Permanently added 'client.hpcsa.in,192.168.15.135' (ECDSA) to the list of known hosts.
+root@client.hpcsa.in's password:
+[root@node1 ~]# cd /mnt/disk1/diskvol/gdisk3/
+[root@node1 gdisk3]# ll -h
+total 508M
+-rw-r--r--. 2 root root 508M Jul 15 21:06 file.txt
+[root@node1 gdisk3]# cd
+[root@node1 ~]#
+[root@node1 ~]#
+[root@node1 ~]#
+[root@node1 ~]#
+[root@node1 ~]#
+[root@node1 ~]#
+[root@node1 ~]#
+[root@node1 ~]#
+[root@node1 ~]#
+[root@node1 ~]#
+[root@node1 ~]#
+[root@node1 ~]#
+[root@node1 ~]#
+[root@node1 ~]# #---------------------------------------------------------------------------------
+[root@node1 ~]# history
+    1  lsblk
+    2  vim /etc/hosts
+    3  vi /etc/hosts
+    4  ping client.hpcsa.in
+    5  systemctl stop firewalld
+    6  lsblk
+    7  fdisk /dev/sdb
+    8  mkfs.xfs /dev/sdb1
+    9  mkdir /mnt/disk1
+   10  mount /dev/sdb1 /mnt/disk1/
+   11  lsblk
+   12  yum install wget
+   13*
+   14  yum install wget centos-release-gluster epel-release glusterfs-server -y
+   15  systemctl status firewalld
+   16  systemctl stop firewalld
+   17  yum install wget centos-release-gluster epel-release glusterfs-server -y
+   18  systemctl status firewalld
+   19  systemctl enable firewalld
+   20  yum install wget centos-release-gluster epel-release glusterfs-server -y
+   21  history
+   22  ping www.google.com
+   23  yum install wget centos-release-gluster epel-release glusterfs-server -y
+   24  systemctl start glusterd
+   25  which glusterd
+   26  systemctl start glusterd
+   27  yum install wget centos-release-gluster epel-release glusterfs-server -y
+   28  systemctl start glusterd
+   29  systemctl status glusterd
+   30  gluster peer probe node2.hpcsa.in
+   31  gluster peer probe node3.hpcsa.in
+   32  gluster peer status
+   33  gluster pool list
+   34  mkdir /mnt/disk1/diskvol
+   35  gluster volume create gdisk1 replica 3 node1.hpcsa.in:/mnt/disk1/diskvol/gdisk1  node2.hpcsa.in:/mnt/disk1/distvol/gdisk1  node3.hpcsa.in:/mnt/disk1/distvol/gdisk1
+   36  gluster volume create gdisk2 replica 3 node1.hpcsa.in:/mnt/disk1/diskvol/gdisk2  node2.hpcsa.in:/mnt/disk1/diskvol/gdisk2  node3.hpcsa.in:/mnt/disk1/diskvol/gdisk2
+   37  gluster pool list
+   38  cat /etc/hosts
+   39  rsync /etc/hosts root@node2.hpcsa.in:/etc/hosts
+   40  rsync /etc/hosts root@node3.hpcsa.in:/etc/hosts
+   41  gluster peer status
+   42  gluster peer probe server2.hpcsa.com
+   43  gluster peer probe node2.hpcsa.in
+   44  gluster peer probe node3.hpcsa.in
+   45  gluster volume create gdisk3 replica 3 node1.hpcsa.in:/mnt/disk1/diskvol/gdisk3  node2.hpcsa.in:/mnt/disk1/diskvol/gdisk3  node3.hpcsa.in:/mnt/disk1/diskvol/gdisk3
+   46  gluster volume start gdisk3
+   47  gluster volume info gdisk3
+   48  df -h
+   49  cd /mnt/disk1/
+   50  ls
+   51  du -sh gdisk3/
+   52  cd diskvol/
+   53  ls
+   54  du -sh gdisk3/
+   55  cd gdisk3/
+   56  ls
+   57  cd
+   58  rsync /etc/hosts root@client.hpcsa.in:/etc/hosts
+   59  cd /mnt/disk1/diskvol/gdisk3/
+   60  ll -h
+   61  cd
+   62  #---------------------------------------------------------------------------------
+   63  history
+[root@node1 ~]#
+[root@node1 ~]#
+[root@node1 ~]#
+[root@node1 ~]#
+[root@node1 ~]#
+[root@node1 ~]# gluster volume create gdisk4 disperse 3 redundancy 1 node1.hpcsa.in:/mnt/disk1/diskvol/gdisk4  node2.hpcsa.in:/mnt/disk1/diskvol/gdisk4  node3.hpcsa.in:/mnt/disk1/diskvol/gdisk4
+volume create: gdisk4: success: please start the volume to access data
+[root@node1 ~]# gluster volume info gdisk4
+
+Volume Name: gdisk4
+Type: Disperse
+Volume ID: 75bbf9fe-770d-40a6-a6cb-bf97d75c6d3e
+Status: Created
+Snapshot Count: 0
+Number of Bricks: 1 x (2 + 1) = 3
+Transport-type: tcp
+Bricks:
+Brick1: node1.hpcsa.in:/mnt/disk1/diskvol/gdisk4
+Brick2: node2.hpcsa.in:/mnt/disk1/diskvol/gdisk4
+Brick3: node3.hpcsa.in:/mnt/disk1/diskvol/gdisk4
+Options Reconfigured:
+storage.fips-mode-rchecksum: on
+transport.address-family: inet
+nfs.disable: on
+[root@node1 ~]# gluster volume restart gdisk4
+unrecognized word: restart (position 1)
+
+ Usage: gluster [options] <help> <peer> <pool> <volume>
+ Options:
+ --help  Shows the help information
+ --version  Shows the version
+ --print-logdir  Shows the log directory
+ --print-statedumpdir Shows the state dump directory
+
+[root@node1 ~]# gluster volume start gdisk4
+volume start: gdisk4: success
+[root@node1 ~]# gluster volume info gdisk4
+
+Volume Name: gdisk4
+Type: Disperse
+Volume ID: 75bbf9fe-770d-40a6-a6cb-bf97d75c6d3e
+Status: Started
+Snapshot Count: 0
+Number of Bricks: 1 x (2 + 1) = 3
+Transport-type: tcp
+Bricks:
+Brick1: node1.hpcsa.in:/mnt/disk1/diskvol/gdisk4
+Brick2: node2.hpcsa.in:/mnt/disk1/diskvol/gdisk4
+Brick3: node3.hpcsa.in:/mnt/disk1/diskvol/gdisk4
+Options Reconfigured:
+storage.fips-mode-rchecksum: on
+transport.address-family: inet
+nfs.disable: on
+[root@node1 ~]# cd /mnt/disk1/diskvol/gdisk4/
+[root@node1 gdisk4]# ll
+total 410024
+-rw-r--r--. 2 root root 419860480 Jul 15 21:50 lab.txt
+[root@node1 gdisk4]# df -h
+Filesystem               Size  Used Avail Use% Mounted on
+devtmpfs                 475M     0  475M   0% /dev
+tmpfs                    487M     0  487M   0% /dev/shm
+tmpfs                    487M  7.7M  479M   2% /run
+tmpfs                    487M     0  487M   0% /sys/fs/cgroup
+/dev/mapper/centos-root   17G  1.5G   16G   9% /
+/dev/sda1               1014M  138M  877M  14% /boot
+tmpfs                     98M     0   98M   0% /run/user/0
+/dev/sdb1                 20G  941M   20G   5% /mnt/disk1
+[root@node1 gdisk4]# cd
+[root@node1 ~]# cd /mnt/gdrive1/
+-bash: cd: /mnt/gdrive1/: No such file or directory
+[root@node1 ~]# cd /mnt/disk1/diskvol/gdisk4/
+[root@node1 gdisk4]# ll -h
+total 401M
+-rw-r--r--. 2 root root 401M Jul 15 21:50 lab.txt
+[root@node1 gdisk4]# ll -h
+total 801M
+-rw-r--r--. 2 root root 401M Jul 15 22:40 lab1.txt
+-rw-r--r--. 2 root root 401M Jul 15 21:50 lab.txt
+[root@node1 gdisk4]# ll -h
+total 967M
+-rw-r--r--. 2 root root 401M Jul 15 22:40 lab1.txt
+-rw-r--r--. 2 root root 108M Jul 15 22:42 lab2.txt
+-rw-r--r--. 2 root root  59M Jul 15 22:42 lab3.txt
+-rw-r--r--. 2 root root 401M Jul 15 21:50 lab.txt
+[root@node1 gdisk4]# ll -h
+total 1.1G
+-rw-r--r--. 2 root root 401M Jul 15 22:40 lab1.txt
+-rw-r--r--. 2 root root 108M Jul 15 22:42 lab2.txt
+-rw-r--r--. 2 root root  59M Jul 15 22:42 lab3.txt
+-rw-r--r--. 2 root root 157M Jul 15 22:52 lab4.txt
+-rw-r--r--. 2 root root 401M Jul 15 21:50 lab.txt
+[root@node1 gdisk4]# cd
+[root@node1 ~]# history
+    1  lsblk
+    2  vim /etc/hosts
+    3  vi /etc/hosts
+    4  ping client.hpcsa.in
+    5  systemctl stop firewalld
+    6  lsblk
+    7  fdisk /dev/sdb
+    8  mkfs.xfs /dev/sdb1
+    9  mkdir /mnt/disk1
+   10  mount /dev/sdb1 /mnt/disk1/
+   11  lsblk
+   12  yum install wget
+   13*
+   14  yum install wget centos-release-gluster epel-release glusterfs-server -y
+   15  systemctl status firewalld
+   16  systemctl stop firewalld
+   17  yum install wget centos-release-gluster epel-release glusterfs-server -y
+   18  systemctl status firewalld
+   19  systemctl enable firewalld
+   20  yum install wget centos-release-gluster epel-release glusterfs-server -y
+   21  history
+   22  ping www.google.com
+   23  yum install wget centos-release-gluster epel-release glusterfs-server -y
+   24  systemctl start glusterd
+   25  which glusterd
+   26  systemctl start glusterd
+   27  yum install wget centos-release-gluster epel-release glusterfs-server -y
+   28  systemctl start glusterd
+   29  systemctl status glusterd
+   30  gluster peer probe node2.hpcsa.in
+   31  gluster peer probe node3.hpcsa.in
+   32  gluster peer status
+   33  gluster pool list
+   34  mkdir /mnt/disk1/diskvol
+   35  gluster volume create gdisk1 replica 3 node1.hpcsa.in:/mnt/disk1/diskvol/gdisk1  node2.hpcsa.in:/mnt/disk1/distvol/gdisk1  node3.hpcsa.in:/mnt/disk1/distvol/gdisk1
+   36  gluster volume create gdisk2 replica 3 node1.hpcsa.in:/mnt/disk1/diskvol/gdisk2  node2.hpcsa.in:/mnt/disk1/diskvol/gdisk2  node3.hpcsa.in:/mnt/disk1/diskvol/gdisk2
+   37  gluster pool list
+   38  cat /etc/hosts
+   39  rsync /etc/hosts root@node2.hpcsa.in:/etc/hosts
+   40  rsync /etc/hosts root@node3.hpcsa.in:/etc/hosts
+   41  gluster peer status
+   42  gluster peer probe server2.hpcsa.com
+   43  gluster peer probe node2.hpcsa.in
+   44  gluster peer probe node3.hpcsa.in
+   45  gluster volume create gdisk3 replica 3 node1.hpcsa.in:/mnt/disk1/diskvol/gdisk3  node2.hpcsa.in:/mnt/disk1/diskvol/gdisk3  node3.hpcsa.in:/mnt/disk1/diskvol/gdisk3
+   46  gluster volume start gdisk3
+   47  gluster volume info gdisk3
+   48  df -h
+   49  cd /mnt/disk1/
+   50  ls
+   51  du -sh gdisk3/
+   52  cd diskvol/
+   53  ls
+   54  du -sh gdisk3/
+   55  cd gdisk3/
+   56  ls
+   57  cd
+   58  rsync /etc/hosts root@client.hpcsa.in:/etc/hosts
+   59  cd /mnt/disk1/diskvol/gdisk3/
+   60  ll -h
+   61  cd
+   62  #---------------------------------------------------------------------------------
+   63  history
+   64  gluster volume create gdisk4 disperse 3 redundancy 1 node1.hpcsa.in:/mnt/disk1/diskvol/gdisk4  node2.hpcsa.in:/mnt/disk1/diskvol/gdisk4  node3.hpcsa.in:/mnt/disk1/diskvol/gdisk4
+   65  gluster volume info gdisk4
+   66  gluster volume restart gdisk4
+   67  gluster volume start gdisk4
+   68  gluster volume info gdisk4
+   69  cd /mnt/disk1/diskvol/gdisk4/
+   70  ll
+   71  df -h
+   72  cd
+   73  cd /mnt/gdrive1/
+   74  cd /mnt/disk1/diskvol/gdisk4/
+   75  ll -h
+   76  cd
+   77  history
+[root@node1 ~]#

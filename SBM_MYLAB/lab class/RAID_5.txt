@@ -1,0 +1,572 @@
+login as: root
+root@192.168.15.169's password:
+    ┌──────────────────────────────────────────────────────────────────────┐
+    │                 • MobaXterm Personal Edition v23.0 •                 │
+    │               (SSH client, X server and network tools)               │
+    │                                                                      │
+    │ ⮞ SSH session to root@192.168.15.169                                 │
+    │   • Direct SSH      :  ✓                                             │
+    │   • SSH compression :  ✓                                             │
+    │   • SSH-browser     :  ✓                                             │
+    │   • X11-forwarding  :  ✗  (disabled or not supported by server)      │
+    │                                                                      │
+    │ ⮞ For more info, ctrl+click on help or visit our website.            │
+    └──────────────────────────────────────────────────────────────────────┘
+
+Last login: Sat Jul  8 22:46:15 2023
+[root@localhost ~]# yum install mdadm -y
+Loaded plugins: fastestmirror
+Determining fastest mirrors
+ * base: centos.mirror.net.in
+ * extras: centos.mirror.net.in
+ * updates: centos.mirror.net.in
+base                                                                            | 3.6 kB  00:00:00
+extras                                                                          | 2.9 kB  00:00:00
+updates                                                                         | 2.9 kB  00:00:00
+(1/4): base/7/x86_64/group_gz                                                   | 153 kB  00:00:00
+(2/4): extras/7/x86_64/primary_db                                               | 250 kB  00:00:00
+(3/4): base/7/x86_64/primary_db                                                 | 6.1 MB  00:00:01
+(4/4): updates/7/x86_64/primary_db                                              |  22 MB  00:00:03
+Resolving Dependencies
+--> Running transaction check
+---> Package mdadm.x86_64 0:4.1-9.el7_9 will be installed
+--> Processing Dependency: libreport-filesystem for package: mdadm-4.1-9.el7_9.x86_64
+--> Running transaction check
+---> Package libreport-filesystem.x86_64 0:2.1.11-53.el7.centos will be installed
+--> Finished Dependency Resolution
+
+Dependencies Resolved
+
+=======================================================================================================
+ Package                       Arch            Version                          Repository        Size
+=======================================================================================================
+Installing:
+ mdadm                         x86_64          4.1-9.el7_9                      updates          439 k
+Installing for dependencies:
+ libreport-filesystem          x86_64          2.1.11-53.el7.centos             base              41 k
+
+Transaction Summary
+=======================================================================================================
+Install  1 Package (+1 Dependent package)
+
+Total download size: 480 k
+Installed size: 1.0 M
+Downloading packages:
+warning: /var/cache/yum/x86_64/7/base/packages/libreport-filesystem-2.1.11-53.el7.centos.x86_64.rpm: Header V3 RSA/SHA256 Signature, key ID f4a80eb5: NOKEY
+Public key for libreport-filesystem-2.1.11-53.el7.centos.x86_64.rpm is not installed
+(1/2): libreport-filesystem-2.1.11-53.el7.centos.x86_64.rpm                     |  41 kB  00:00:00
+Public key for mdadm-4.1-9.el7_9.x86_64.rpm is not installed
+(2/2): mdadm-4.1-9.el7_9.x86_64.rpm                                             | 439 kB  00:00:00
+-------------------------------------------------------------------------------------------------------
+Total                                                                  2.9 MB/s | 480 kB  00:00:00
+Retrieving key from file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7
+Importing GPG key 0xF4A80EB5:
+ Userid     : "CentOS-7 Key (CentOS 7 Official Signing Key) <security@centos.org>"
+ Fingerprint: 6341 ab27 53d7 8a78 a7c2 7bb1 24c6 a8a7 f4a8 0eb5
+ Package    : centos-release-7-9.2009.0.el7.centos.x86_64 (@anaconda)
+ From       : /etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7
+Running transaction check
+Running transaction test
+Transaction test succeeded
+Running transaction
+  Installing : libreport-filesystem-2.1.11-53.el7.centos.x86_64                                    1/2
+  Installing : mdadm-4.1-9.el7_9.x86_64                                                            2/2
+  Verifying  : mdadm-4.1-9.el7_9.x86_64                                                            1/2
+  Verifying  : libreport-filesystem-2.1.11-53.el7.centos.x86_64                                    2/2
+
+Installed:
+  mdadm.x86_64 0:4.1-9.el7_9
+
+Dependency Installed:
+  libreport-filesystem.x86_64 0:2.1.11-53.el7.centos
+
+Complete!
+[root@localhost ~]# lsblk
+NAME            MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT
+sda               8:0    0   20G  0 disk
+├─sda1            8:1    0    1G  0 part /boot
+└─sda2            8:2    0   19G  0 part
+  ├─centos-root 253:0    0   17G  0 lvm  /
+  └─centos-swap 253:1    0    2G  0 lvm  [SWAP]
+sdb               8:16   0   10G  0 disk
+sdc               8:32   0   10G  0 disk
+sdd               8:48   0   10G  0 disk
+sde               8:64   0   10G  0 disk
+sr0              11:0    1  973M  0 rom
+[root@localhost ~]#
+[root@localhost ~]# mdadm --create --verbose /dev/md0 --level=5 --raid-devices=3 /dev/sdb /dev/sdc /dev/sdd --spare-devices=1 /dev/sde
+mdadm: layout defaults to left-symmetric
+mdadm: layout defaults to left-symmetric
+mdadm: chunk size defaults to 512K
+mdadm: size set to 10476544K
+mdadm: Defaulting to version 1.2 metadata
+mdadm: array /dev/md0 started.
+[root@localhost ~]# fdisk /dev/md0
+Welcome to fdisk (util-linux 2.23.2).
+
+Changes will remain in memory only, until you decide to write them.
+Be careful before using the write command.
+
+Device does not contain a recognized partition table
+Building a new DOS disklabel with disk identifier 0x541736c8.
+
+Command (m for help): n
+Partition type:
+   p   primary (0 primary, 0 extended, 4 free)
+   e   extended
+Select (default p): p
+Partition number (1-4, default 1):
+First sector (2048-41906175, default 2048):
+Using default value 2048
+Last sector, +sectors or +size{K,M,G} (2048-41906175, default 41906175):
+Using default value 41906175
+Partition 1 of type Linux and of size 20 GiB is set
+
+Command (m for help): w
+The partition table has been altered!
+
+Calling ioctl() to re-read partition table.
+Syncing disks.
+[root@localhost ~]# mdadm --detail /dev/md0
+/dev/md0:
+           Version : 1.2
+     Creation Time : Sat Jul  8 22:52:48 2023
+        Raid Level : raid5
+        Array Size : 20953088 (19.98 GiB 21.46 GB)
+     Used Dev Size : 10476544 (9.99 GiB 10.73 GB)
+      Raid Devices : 3
+     Total Devices : 4
+       Persistence : Superblock is persistent
+
+       Update Time : Sat Jul  8 22:53:41 2023
+             State : clean
+    Active Devices : 3
+   Working Devices : 4
+    Failed Devices : 0
+     Spare Devices : 1
+
+            Layout : left-symmetric
+        Chunk Size : 512K
+
+Consistency Policy : resync
+
+              Name : localhost.localdomain:0  (local to host localhost.localdomain)
+              UUID : e13f8eee:28ea1c01:66c26a81:c46be6a5
+            Events : 20
+
+    Number   Major   Minor   RaidDevice State
+       0       8       16        0      active sync   /dev/sdb
+       1       8       32        1      active sync   /dev/sdc
+       4       8       48        2      active sync   /dev/sdd
+
+       3       8       64        -      spare   /dev/sde
+[root@localhost ~]# mkfs.ext4 /dev/md0
+mke2fs 1.42.9 (28-Dec-2013)
+Filesystem label=
+OS type: Linux
+Block size=4096 (log=2)
+Fragment size=4096 (log=2)
+Stride=128 blocks, Stripe width=256 blocks
+1310720 inodes, 5238272 blocks
+261913 blocks (5.00%) reserved for the super user
+First data block=0
+Maximum filesystem blocks=2153775104
+160 block groups
+32768 blocks per group, 32768 fragments per group
+8192 inodes per group
+Superblock backups stored on blocks:
+        32768, 98304, 163840, 229376, 294912, 819200, 884736, 1605632, 2654208,
+        4096000
+
+Allocating group tables: done
+Writing inode tables: done
+Creating journal (32768 blocks): done
+Writing superblocks and filesystem accounting information: done
+
+[root@localhost ~]# mkdir /mnt/raid5
+[root@localhost ~]# mount /dev/md0
+mount: can't find /dev/md0 in /etc/fstab
+[root@localhost ~]# mount /dev/md0 /mnt/raid5/
+[root@localhost ~]# dh -h
+-bash: dh: command not found
+[root@localhost ~]# df -h
+Filesystem               Size  Used Avail Use% Mounted on
+devtmpfs                 475M     0  475M   0% /dev
+tmpfs                    487M     0  487M   0% /dev/shm
+tmpfs                    487M  7.7M  479M   2% /run
+tmpfs                    487M     0  487M   0% /sys/fs/cgroup
+/dev/mapper/centos-root   17G  1.5G   16G   9% /
+/dev/sda1               1014M  138M  877M  14% /boot
+tmpfs                     98M     0   98M   0% /run/user/0
+/dev/md0                  20G   45M   19G   1% /mnt/raid5
+[root@localhost ~]# cd /mnt/raid5/
+[root@localhost raid5]# dd if=/dev/zero of=1000mb.file bs=1024 count=1800033
+1800033+0 records in
+1800033+0 records out
+1843233792 bytes (1.8 GB) copied, 5.40672 s, 341 MB/s
+[root@localhost raid5]# df -h
+Filesystem               Size  Used Avail Use% Mounted on
+devtmpfs                 475M     0  475M   0% /dev
+tmpfs                    487M     0  487M   0% /dev/shm
+tmpfs                    487M  7.7M  479M   2% /run
+tmpfs                    487M     0  487M   0% /sys/fs/cgroup
+/dev/mapper/centos-root   17G  1.5G   16G   9% /
+/dev/sda1               1014M  138M  877M  14% /boot
+tmpfs                     98M     0   98M   0% /run/user/0
+/dev/md0                  20G  1.8G   17G  10% /mnt/raid5
+[root@localhost raid5]# mdadm --detail /dev/md0
+/dev/md0:
+           Version : 1.2
+     Creation Time : Sat Jul  8 22:52:48 2023
+        Raid Level : raid5
+        Array Size : 20953088 (19.98 GiB 21.46 GB)
+     Used Dev Size : 10476544 (9.99 GiB 10.73 GB)
+      Raid Devices : 3
+     Total Devices : 4
+       Persistence : Superblock is persistent
+
+       Update Time : Sat Jul  8 23:03:41 2023
+             State : clean
+    Active Devices : 3
+   Working Devices : 4
+    Failed Devices : 0
+     Spare Devices : 1
+
+            Layout : left-symmetric
+        Chunk Size : 512K
+
+Consistency Policy : resync
+
+              Name : localhost.localdomain:0  (local to host localhost.localdomain)
+              UUID : e13f8eee:28ea1c01:66c26a81:c46be6a5
+            Events : 20
+
+    Number   Major   Minor   RaidDevice State
+       0       8       16        0      active sync   /dev/sdb
+       1       8       32        1      active sync   /dev/sdc
+       4       8       48        2      active sync   /dev/sdd
+
+       3       8       64        -      spare   /dev/sde
+[root@localhost raid5]# mdadm --fail /dev/md0 /dev/sde
+mdadm: set /dev/sde faulty in /dev/md0
+[root@localhost raid5]# mdadm --detail /dev/md0
+/dev/md0:
+           Version : 1.2
+     Creation Time : Sat Jul  8 22:52:48 2023
+        Raid Level : raid5
+        Array Size : 20953088 (19.98 GiB 21.46 GB)
+     Used Dev Size : 10476544 (9.99 GiB 10.73 GB)
+      Raid Devices : 3
+     Total Devices : 4
+       Persistence : Superblock is persistent
+
+       Update Time : Sat Jul  8 23:13:12 2023
+             State : clean
+    Active Devices : 3
+   Working Devices : 3
+    Failed Devices : 1
+     Spare Devices : 0
+
+            Layout : left-symmetric
+        Chunk Size : 512K
+
+Consistency Policy : resync
+
+              Name : localhost.localdomain:0  (local to host localhost.localdomain)
+              UUID : e13f8eee:28ea1c01:66c26a81:c46be6a5
+            Events : 21
+
+    Number   Major   Minor   RaidDevice State
+       0       8       16        0      active sync   /dev/sdb
+       1       8       32        1      active sync   /dev/sdc
+       4       8       48        2      active sync   /dev/sdd
+
+       3       8       64        -      faulty   /dev/sde
+[root@localhost raid5]# mdadm -r  /dev/md0 /dev/sde
+mdadm: hot removed /dev/sde from /dev/md0
+[root@localhost raid5]# mdadm --detail /dev/md0
+/dev/md0:
+           Version : 1.2
+     Creation Time : Sat Jul  8 22:52:48 2023
+        Raid Level : raid5
+        Array Size : 20953088 (19.98 GiB 21.46 GB)
+     Used Dev Size : 10476544 (9.99 GiB 10.73 GB)
+      Raid Devices : 3
+     Total Devices : 3
+       Persistence : Superblock is persistent
+
+       Update Time : Sat Jul  8 23:14:16 2023
+             State : clean
+    Active Devices : 3
+   Working Devices : 3
+    Failed Devices : 0
+     Spare Devices : 0
+
+            Layout : left-symmetric
+        Chunk Size : 512K
+
+Consistency Policy : resync
+
+              Name : localhost.localdomain:0  (local to host localhost.localdomain)
+              UUID : e13f8eee:28ea1c01:66c26a81:c46be6a5
+            Events : 22
+
+    Number   Major   Minor   RaidDevice State
+       0       8       16        0      active sync   /dev/sdb
+       1       8       32        1      active sync   /dev/sdc
+       4       8       48        2      active sync   /dev/sdd
+[root@localhost raid5]# mdadm --add  /dev/md0 /dev/sde
+mdadm: added /dev/sde
+[root@localhost raid5]# mdadm --detail /dev/md0
+/dev/md0:
+           Version : 1.2
+     Creation Time : Sat Jul  8 22:52:48 2023
+        Raid Level : raid5
+        Array Size : 20953088 (19.98 GiB 21.46 GB)
+     Used Dev Size : 10476544 (9.99 GiB 10.73 GB)
+      Raid Devices : 3
+     Total Devices : 4
+       Persistence : Superblock is persistent
+
+       Update Time : Sat Jul  8 23:14:37 2023
+             State : clean
+    Active Devices : 3
+   Working Devices : 4
+    Failed Devices : 0
+     Spare Devices : 1
+
+            Layout : left-symmetric
+        Chunk Size : 512K
+
+Consistency Policy : resync
+
+              Name : localhost.localdomain:0  (local to host localhost.localdomain)
+              UUID : e13f8eee:28ea1c01:66c26a81:c46be6a5
+            Events : 23
+
+    Number   Major   Minor   RaidDevice State
+       0       8       16        0      active sync   /dev/sdb
+       1       8       32        1      active sync   /dev/sdc
+       4       8       48        2      active sync   /dev/sdd
+
+       3       8       64        -      spare   /dev/sde
+[root@localhost raid5]# mdadm --fail /dev/md0 /dev/sdb
+mdadm: set /dev/sdb faulty in /dev/md0
+[root@localhost raid5]# mdadm --detail /dev/md0
+/dev/md0:
+           Version : 1.2
+     Creation Time : Sat Jul  8 22:52:48 2023
+        Raid Level : raid5
+        Array Size : 20953088 (19.98 GiB 21.46 GB)
+     Used Dev Size : 10476544 (9.99 GiB 10.73 GB)
+      Raid Devices : 3
+     Total Devices : 4
+       Persistence : Superblock is persistent
+
+       Update Time : Sat Jul  8 23:16:18 2023
+             State : clean, degraded, recovering
+    Active Devices : 2
+   Working Devices : 3
+    Failed Devices : 1
+     Spare Devices : 1
+
+            Layout : left-symmetric
+        Chunk Size : 512K
+
+Consistency Policy : resync
+
+    Rebuild Status : 5% complete
+
+              Name : localhost.localdomain:0  (local to host localhost.localdomain)
+              UUID : e13f8eee:28ea1c01:66c26a81:c46be6a5
+            Events : 25
+
+    Number   Major   Minor   RaidDevice State
+       3       8       64        0      spare rebuilding   /dev/sde
+       1       8       32        1      active sync   /dev/sdc
+       4       8       48        2      active sync   /dev/sdd
+
+       0       8       16        -      faulty   /dev/sdb
+[root@localhost raid5]# mdadm --detail /dev/md0
+/dev/md0:
+           Version : 1.2
+     Creation Time : Sat Jul  8 22:52:48 2023
+        Raid Level : raid5
+        Array Size : 20953088 (19.98 GiB 21.46 GB)
+     Used Dev Size : 10476544 (9.99 GiB 10.73 GB)
+      Raid Devices : 3
+     Total Devices : 4
+       Persistence : Superblock is persistent
+
+       Update Time : Sat Jul  8 23:16:40 2023
+             State : clean, degraded, recovering
+    Active Devices : 2
+   Working Devices : 3
+    Failed Devices : 1
+     Spare Devices : 1
+
+            Layout : left-symmetric
+        Chunk Size : 512K
+
+Consistency Policy : resync
+
+    Rebuild Status : 49% complete
+
+              Name : localhost.localdomain:0  (local to host localhost.localdomain)
+              UUID : e13f8eee:28ea1c01:66c26a81:c46be6a5
+            Events : 32
+
+    Number   Major   Minor   RaidDevice State
+       3       8       64        0      spare rebuilding   /dev/sde
+       1       8       32        1      active sync   /dev/sdc
+       4       8       48        2      active sync   /dev/sdd
+
+       0       8       16        -      faulty   /dev/sdb
+[root@localhost raid5]# mdadm --detail /dev/md0
+/dev/md0:
+           Version : 1.2
+     Creation Time : Sat Jul  8 22:52:48 2023
+        Raid Level : raid5
+        Array Size : 20953088 (19.98 GiB 21.46 GB)
+     Used Dev Size : 10476544 (9.99 GiB 10.73 GB)
+      Raid Devices : 3
+     Total Devices : 4
+       Persistence : Superblock is persistent
+
+       Update Time : Sat Jul  8 23:17:11 2023
+             State : clean
+    Active Devices : 3
+   Working Devices : 3
+    Failed Devices : 1
+     Spare Devices : 0
+
+            Layout : left-symmetric
+        Chunk Size : 512K
+
+Consistency Policy : resync
+
+              Name : localhost.localdomain:0  (local to host localhost.localdomain)
+              UUID : e13f8eee:28ea1c01:66c26a81:c46be6a5
+            Events : 42
+
+    Number   Major   Minor   RaidDevice State
+       3       8       64        0      active sync   /dev/sde
+       1       8       32        1      active sync   /dev/sdc
+       4       8       48        2      active sync   /dev/sdd
+
+       0       8       16        -      faulty   /dev/sdb
+[root@localhost raid5]# mdadm -r  /dev/md0 /dev/sdb
+mdadm: hot removed /dev/sdb from /dev/md0
+[root@localhost raid5]# mdadm --detail /dev/md0
+/dev/md0:
+           Version : 1.2
+     Creation Time : Sat Jul  8 22:52:48 2023
+        Raid Level : raid5
+        Array Size : 20953088 (19.98 GiB 21.46 GB)
+     Used Dev Size : 10476544 (9.99 GiB 10.73 GB)
+      Raid Devices : 3
+     Total Devices : 3
+       Persistence : Superblock is persistent
+
+       Update Time : Sat Jul  8 23:18:42 2023
+             State : clean
+    Active Devices : 3
+   Working Devices : 3
+    Failed Devices : 0
+     Spare Devices : 0
+
+            Layout : left-symmetric
+        Chunk Size : 512K
+
+Consistency Policy : resync
+
+              Name : localhost.localdomain:0  (local to host localhost.localdomain)
+              UUID : e13f8eee:28ea1c01:66c26a81:c46be6a5
+            Events : 43
+
+    Number   Major   Minor   RaidDevice State
+       3       8       64        0      active sync   /dev/sde
+       1       8       32        1      active sync   /dev/sdc
+       4       8       48        2      active sync   /dev/sdd
+[root@localhost raid5]# mdadm --add  /dev/md0 /dev/sdb
+mdadm: added /dev/sdb
+[root@localhost raid5]# mdadm --detail /dev/md0
+/dev/md0:
+           Version : 1.2
+     Creation Time : Sat Jul  8 22:52:48 2023
+        Raid Level : raid5
+        Array Size : 20953088 (19.98 GiB 21.46 GB)
+     Used Dev Size : 10476544 (9.99 GiB 10.73 GB)
+      Raid Devices : 3
+     Total Devices : 4
+       Persistence : Superblock is persistent
+
+       Update Time : Sat Jul  8 23:19:03 2023
+             State : clean
+    Active Devices : 3
+   Working Devices : 4
+    Failed Devices : 0
+     Spare Devices : 1
+
+            Layout : left-symmetric
+        Chunk Size : 512K
+
+Consistency Policy : resync
+
+              Name : localhost.localdomain:0  (local to host localhost.localdomain)
+              UUID : e13f8eee:28ea1c01:66c26a81:c46be6a5
+            Events : 44
+
+    Number   Major   Minor   RaidDevice State
+       3       8       64        0      active sync   /dev/sde
+       1       8       32        1      active sync   /dev/sdc
+       4       8       48        2      active sync   /dev/sdd
+
+       5       8       16        -      spare   /dev/sdb
+[root@localhost raid5]# blkid
+/dev/sda1: UUID="fbf76286-7b82-442d-abd8-5369f4f56909" TYPE="xfs"
+/dev/sda2: UUID="tE23TB-FBVR-FRUb-0hLP-hF7k-IPsp-dpyXwJ" TYPE="LVM2_member"
+/dev/sdb: UUID="e13f8eee-28ea-1c01-66c2-6a81c46be6a5" UUID_SUB="bcd369e9-4640-cb59-9c51-7bc3b1bdbb26" LABEL="localhost.localdomain:0" TYPE="linux_raid_member"
+/dev/sdc: UUID="e13f8eee-28ea-1c01-66c2-6a81c46be6a5" UUID_SUB="855282d5-a050-398a-801f-278dbddf894b" LABEL="localhost.localdomain:0" TYPE="linux_raid_member"
+/dev/sdd: UUID="e13f8eee-28ea-1c01-66c2-6a81c46be6a5" UUID_SUB="1c8cf9be-e455-ab7f-52de-d2417045fb40" LABEL="localhost.localdomain:0" TYPE="linux_raid_member"
+/dev/sr0: UUID="2020-11-03-14-55-29-00" LABEL="CentOS 7 x86_64" TYPE="iso9660" PTTYPE="dos"
+/dev/sde: UUID="e13f8eee-28ea-1c01-66c2-6a81c46be6a5" UUID_SUB="70b17887-8d22-c44b-b80d-8d5bfdfa3dcb" LABEL="localhost.localdomain:0" TYPE="linux_raid_member"
+/dev/mapper/centos-root: UUID="9e58362b-78f2-4dc3-9d18-bd252ec4ff99" TYPE="xfs"
+/dev/mapper/centos-swap: UUID="145a7cb0-32d7-4ee8-a3bc-eaeac375dfd7" TYPE="swap"
+/dev/md0: UUID="341f50af-2ef8-4540-a997-7b8b562f7ed8" TYPE="ext4"
+[root@localhost raid5]#
+
+-------------------------------------------------------------------------------
+
+   1  yum install mdadm -y
+    2  lsblk
+    3  mdadm --create --verbose /dev/md0 --level=5 --raid-devices=3 /dev/sdb /dev/sdc /dev/sdd --spare-devices=1 /dev/sde
+    4  fdisk /dev/md0
+    5  mdadm --detail /dev/md0
+    6  mkfs.ext4 /dev/md0
+    7  mkdir /mnt/raid5
+    8  mount /dev/md0
+    9  mount /dev/md0 /mnt/raid5/
+   10  dh -h
+   11  df -h
+   12  cd /mnt/raid5/
+   13  dd if=/dev/zero of=1000mb.file bs=1024 count=1800033
+   14  df -h
+   15  mdadm --detail /dev/md0
+   16  mdadm --fail /dev/md0 /dev/sde
+   17  mdadm --detail /dev/md0
+   18  mdadm -r  /dev/md0 /dev/sde
+   19  mdadm --detail /dev/md0
+   20  mdadm --add  /dev/md0 /dev/sdb
+   21  mdadm --detail /dev/md0
+   22  mdadm --fail /dev/md0 /dev/sdb
+   23  mdadm --detail /dev/md0
+   24  mdadm -r  /dev/md0 /dev/sdb
+   25  mdadm --detail /dev/md0
+   26  mdadm --add  /dev/md0 /dev/sdb
+   27  mdadm --detail /dev/md0
+   28  blkid
+   29  halt
+   30  dhclient
+   31  ip a
+   32  history

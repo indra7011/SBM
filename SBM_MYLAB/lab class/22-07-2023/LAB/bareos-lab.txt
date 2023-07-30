@@ -1,0 +1,20 @@
+dnf install @postgresql:13
+/usr/bin/postgresql-setup --initdb
+systemctl start postgresql
+https://docs.bareos.org/master/IntroductionAndTutorial/InstallingBareos.html#install-on-redhat-based-linux-distributions
+systemctl stop firewalld
+setenforce 0
+systemctl enable bareos-dir && systemctl start bareos-dir && systemctl status bareos-dir
+systemctl enable bareos-sd && systemctl start bareos-sd && systemctl status bareos-sd
+systemctl enable bareos-fd && systemctl start bareos-fd && systemctl status bareos-fd
+dnf install bareos-webui
+cd /etc/bareos/bareos-dir.d/console/
+mv admin.conf.example admin.conf
+systemctl restart bareos-dir
+systemctl start httpd
+
+http://192.168.154.158/bareos-webui/
+
+/etc/bareos/bareos-dir.d/fileset
+change backup parameter
+systemctl restart bareos-dir

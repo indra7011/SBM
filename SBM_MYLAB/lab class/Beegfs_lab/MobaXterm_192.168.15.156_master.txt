@@ -1,0 +1,1458 @@
+login as: root
+root@192.168.15.156's password:
+    +----------------------------------------------------------------------+
+    ¦                 • MobaXterm Personal Edition v23.0 •                 ¦
+    ¦               (SSH client, X server and network tools)               ¦
+    ¦                                                                      ¦
+    ¦ ? SSH session to root@192.168.15.156                                 ¦
+    ¦   • Direct SSH      :  ?                                             ¦
+    ¦   • SSH compression :  ?                                             ¦
+    ¦   • SSH-browser     :  ?                                             ¦
+    ¦   • X11-forwarding  :  ?  (disabled or not supported by server)      ¦
+    ¦                                                                      ¦
+    ¦ ? For more info, ctrl+click on help or visit our website.            ¦
+    +----------------------------------------------------------------------+
+
+Last login: Sat Jul 22 16:23:42 2023
+[root@beegfs-server ~]# ip a
+1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+    inet 127.0.0.1/8 scope host lo
+       valid_lft forever preferred_lft forever
+    inet6 ::1/128 scope host
+       valid_lft forever preferred_lft forever
+2: ens33: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc pfifo_fast state UP group default qlen 1000
+    link/ether 00:0c:29:be:9a:d1 brd ff:ff:ff:ff:ff:ff
+    inet 192.168.15.156/24 brd 192.168.15.255 scope global dynamic ens33
+       valid_lft 1428sec preferred_lft 1428sec
+[root@beegfs-server ~]# vi /etc/hosts
+[root@beegfs-server ~]# vim /etc/selinux/config
+[root@beegfs-server ~]# rsync /etc/hosts root@beegfs-server:/etc/hosts
+The authenticity of host 'beegfs-server (192.168.15.156)' can't be established.
+ECDSA key fingerprint is SHA256:JbQFp/4SaYFpszIjBlpttyXEMGiNiL5rz5A+HcTkXQo.
+ECDSA key fingerprint is MD5:9c:7c:9f:fd:38:b0:70:5c:20:ab:69:3b:07:05:3f:1c.
+Are you sure you want to continue connecting (yes/no)? yes
+Warning: Permanently added 'beegfs-server,192.168.15.156' (ECDSA) to the list of known hosts.
+root@beegfs-server's password:
+[root@beegfs-server ~]# rsync /etc/hosts root@beegfs-client:/etc/hosts
+The authenticity of host 'beegfs-client (192.168.15.157)' can't be established.
+ECDSA key fingerprint is SHA256:JbQFp/4SaYFpszIjBlpttyXEMGiNiL5rz5A+HcTkXQo.
+ECDSA key fingerprint is MD5:9c:7c:9f:fd:38:b0:70:5c:20:ab:69:3b:07:05:3f:1c.
+Are you sure you want to continue connecting (yes/no)? yes
+Warning: Permanently added 'beegfs-client,192.168.15.157' (ECDSA) to the list of known hosts.
+root@beegfs-client's password:
+[root@beegfs-server ~]# init 6
+
+Remote side unexpectedly closed network connection
+
+---------------------------------------------------------------------------------------------------------
+
+Session stopped
+    - Press <Return> to exit tab
+    - Press R to restart session
+    - Press S to save terminal output to file
+login as: root
+root@192.168.15.156's password:
+    +----------------------------------------------------------------------+
+    ¦                 • MobaXterm Personal Edition v23.0 •                 ¦
+    ¦               (SSH client, X server and network tools)               ¦
+    ¦                                                                      ¦
+    ¦ ? SSH session to root@192.168.15.156                                 ¦
+    ¦   • Direct SSH      :  ?                                             ¦
+    ¦   • SSH compression :  ?                                             ¦
+    ¦   • SSH-browser     :  ?                                             ¦
+    ¦   • X11-forwarding  :  ?  (disabled or not supported by server)      ¦
+    ¦                                                                      ¦
+    ¦ ? For more info, ctrl+click on help or visit our website.            ¦
+    +----------------------------------------------------------------------+
+
+Last login: Sat Jul 22 16:49:32 2023
+[root@beegfs-server ~]# lsblk
+NAME            MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT
+sda               8:0    0   20G  0 disk
++-sda1            8:1    0    1G  0 part /boot
++-sda2            8:2    0   19G  0 part
+  +-centos-root 253:0    0   17G  0 lvm  /
+  +-centos-swap 253:1    0    2G  0 lvm  [SWAP]
+sdb               8:16   0   20G  0 disk
+sr0              11:0    1  973M  0 rom
+[root@beegfs-server ~]# ssh-key
+ssh-keygen   ssh-keyscan
+[root@beegfs-server ~]# ssh-keygen
+Generating public/private rsa key pair.
+Enter file in which to save the key (/root/.ssh/id_rsa):
+Enter passphrase (empty for no passphrase):
+Enter same passphrase again:
+Your identification has been saved in /root/.ssh/id_rsa.
+Your public key has been saved in /root/.ssh/id_rsa.pub.
+The key fingerprint is:
+SHA256:yOYRLBRQBSoerToUEYrnH9QHFWfilaTox3hiPo9hf2U root@beegfs-server
+The key's randomart image is:
++---[RSA 2048]----+
+| ooo=+o.+o=.     |
+|o oo o + *.      |
+|+oo.o = +        |
+|.++. + *         |
+| +. . X S        |
+|o  . * =    E    |
+|o   . *    o     |
+| .   . *  .      |
+|      . o.       |
++----[SHA256]-----+
+[root@beegfs-server ~]# ssh-copy-id root@beegfs-client
+/usr/bin/ssh-copy-id: INFO: Source of key(s) to be installed: "/root/.ssh/id_rsa.pub"
+/usr/bin/ssh-copy-id: INFO: attempting to log in with the new key(s), to filter out any that are already installed
+/usr/bin/ssh-copy-id: INFO: 1 key(s) remain to be installed -- if you are prompted now it is to install the new keys
+root@beegfs-client's password:
+
+Number of key(s) added: 1
+
+Now try logging into the machine, with:   "ssh 'root@beegfs-client'"
+and check to make sure that only the key(s) you wanted were added.
+
+[root@beegfs-server ~]# ssh beegfs-client
+Last login: Sat Jul 22 16:50:13 2023 from 192.168.15.1
+[root@beegfs-client ~]# exit
+logout
+Connection to beegfs-client closed.
+[root@beegfs-server ~]#
+[root@beegfs-server ~]# fdisk /dev/sdb
+Welcome to fdisk (util-linux 2.23.2).
+
+Changes will remain in memory only, until you decide to write them.
+Be careful before using the write command.
+
+Device does not contain a recognized partition table
+Building a new DOS disklabel with disk identifier 0xa13e9ab1.
+
+Command (m for help): n
+Partition type:
+   p   primary (0 primary, 0 extended, 4 free)
+   e   extended
+Select (default p): p
+Partition number (1-4, default 1):
+First sector (2048-41943039, default 2048):
+Using default value 2048
+Last sector, +sectors or +size{K,M,G} (2048-41943039, default 41943039):
+Using default value 41943039
+Partition 1 of type Linux and of size 20 GiB is set
+
+Command (m for help): w
+The partition table has been altered!
+
+Calling ioctl() to re-read partition table.
+Syncing disks.
+[root@beegfs-server ~]# mount /dev/sdb1 /mnt/
+mount: /dev/sdb1 is write-protected, mounting read-only
+mount: unknown filesystem type '(null)'
+[root@beegfs-server ~]# lsblk
+NAME            MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT
+sda               8:0    0   20G  0 disk
++-sda1            8:1    0    1G  0 part /boot
++-sda2            8:2    0   19G  0 part
+  +-centos-root 253:0    0   17G  0 lvm  /
+  +-centos-swap 253:1    0    2G  0 lvm  [SWAP]
+sdb               8:16   0   20G  0 disk
++-sdb1            8:17   0   20G  0 part
+sr0              11:0    1  973M  0 rom
+[root@beegfs-server ~]# mkfs.ext4 /dev/sdb1
+mke2fs 1.42.9 (28-Dec-2013)
+Filesystem label=
+OS type: Linux
+Block size=4096 (log=2)
+Fragment size=4096 (log=2)
+Stride=0 blocks, Stripe width=0 blocks
+1310720 inodes, 5242624 blocks
+262131 blocks (5.00%) reserved for the super user
+First data block=0
+Maximum filesystem blocks=2153775104
+160 block groups
+32768 blocks per group, 32768 fragments per group
+8192 inodes per group
+Superblock backups stored on blocks:
+        32768, 98304, 163840, 229376, 294912, 819200, 884736, 1605632, 2654208,
+        4096000
+
+Allocating group tables: done
+Writing inode tables: done
+Creating journal (32768 blocks): done
+Writing superblocks and filesystem accounting information: done
+
+[root@beegfs-server ~]# mount /dev/sdb1 /mnt/
+[root@beegfs-server ~]# yum install wget -y
+Loaded plugins: fastestmirror
+Loading mirror speeds from cached hostfile
+ * base: centos.mirror.net.in
+ * extras: centos.mirror.net.in
+ * updates: centos.mirror.net.in
+Resolving Dependencies
+--> Running transaction check
+---> Package wget.x86_64 0:1.14-18.el7_6.1 will be installed
+--> Finished Dependency Resolution
+
+Dependencies Resolved
+
+=========================================================================================================
+ Package              Arch                   Version                          Repository            Size
+=========================================================================================================
+Installing:
+ wget                 x86_64                 1.14-18.el7_6.1                  base                 547 k
+
+Transaction Summary
+=========================================================================================================
+Install  1 Package
+
+Total download size: 547 k
+Installed size: 2.0 M
+Downloading packages:
+wget-1.14-18.el7_6.1.x86_64.rpm                                                   | 547 kB  00:00:00
+Running transaction check
+Running transaction test
+Transaction test succeeded
+Running transaction
+  Installing : wget-1.14-18.el7_6.1.x86_64                                                           1/1
+  Verifying  : wget-1.14-18.el7_6.1.x86_64                                                           1/1
+
+Installed:
+  wget.x86_64 0:1.14-18.el7_6.1
+
+Complete!
+[root@beegfs-server ~]# wget --no-check-certificate -O /etc/yum.repos.d/beegfs.repo https://www.beegfs.io/release/beegfs_7.2/dists/beegfs-rhel7.repo
+--2023-07-22 17:05:15--  https://www.beegfs.io/release/beegfs_7.2/dists/beegfs-rhel7.repo
+Resolving www.beegfs.io (www.beegfs.io)... 178.254.21.65
+Connecting to www.beegfs.io (www.beegfs.io)|178.254.21.65|:443... connected.
+WARNING: cannot verify www.beegfs.io's certificate, issued by ‘/C=US/O=Let's Encrypt/CN=R3’:
+  Issued certificate has expired.
+HTTP request sent, awaiting response... 200 OK
+Length: 464
+Saving to: ‘/etc/yum.repos.d/beegfs.repo’
+
+100%[===============================================================>] 464         --.-K/s   in 0s
+
+2023-07-22 17:05:15 (47.3 MB/s) - ‘/etc/yum.repos.d/beegfs.repo’ saved [464/464]
+
+[root@beegfs-server ~]# cat /etc/yum.repos.d/beegfs.repo
+[beegfs]
+name=BeeGFS 7.2 (rhel7)
+
+# If you have an active BeeGFS support contract, use the alternative URL below
+# to retrieve early updates. Replace username/password with your account for
+# the BeeGFS customer login area.
+#baseurl=https://username:password@www.beegfs.io/login/release/beegfs_7.2/dists/rhel7
+baseurl=https://www.beegfs.io/release/beegfs_7.2/dists/rhel7
+
+gpgkey=https://www.beegfs.io/release/beegfs_7.2/gpg/RPM-GPG-KEY-beegfs
+gpgcheck=0
+enabled=1
+[root@beegfs-server ~]# yum install beegfs-utils beegfs-client beegfs-meta beegfs-storage beegfs-mgmtd
+Loaded plugins: fastestmirror
+Loading mirror speeds from cached hostfile
+ * base: centos.mirror.net.in
+ * extras: centos.mirror.net.in
+ * updates: centos.mirror.net.in
+beegfs                                                                            | 2.9 kB  00:00:00
+beegfs/primary_db                                                                 |  11 kB  00:00:00
+Resolving Dependencies
+--> Running transaction check
+---> Package beegfs-client.noarch 20:7.2-el7 will be installed
+--> Processing Dependency: gcc-c++ for package: 20:beegfs-client-7.2-el7.noarch
+--> Processing Dependency: gcc for package: 20:beegfs-client-7.2-el7.noarch
+---> Package beegfs-meta.x86_64 20:7.2-el7 will be installed
+--> Processing Dependency: beegfs-common = 20:7.2-el7 for package: 20:beegfs-meta-7.2-el7.x86_64
+---> Package beegfs-mgmtd.x86_64 20:7.2-el7 will be installed
+---> Package beegfs-storage.x86_64 20:7.2-el7 will be installed
+---> Package beegfs-utils.x86_64 20:7.2-el7 will be installed
+--> Running transaction check
+---> Package beegfs-common.noarch 20:7.2-el7 will be installed
+---> Package gcc.x86_64 0:4.8.5-44.el7 will be installed
+--> Processing Dependency: cpp = 4.8.5-44.el7 for package: gcc-4.8.5-44.el7.x86_64
+--> Processing Dependency: glibc-devel >= 2.2.90-12 for package: gcc-4.8.5-44.el7.x86_64
+--> Processing Dependency: libmpfr.so.4()(64bit) for package: gcc-4.8.5-44.el7.x86_64
+--> Processing Dependency: libmpc.so.3()(64bit) for package: gcc-4.8.5-44.el7.x86_64
+---> Package gcc-c++.x86_64 0:4.8.5-44.el7 will be installed
+--> Processing Dependency: libstdc++-devel = 4.8.5-44.el7 for package: gcc-c++-4.8.5-44.el7.x86_64
+--> Running transaction check
+---> Package cpp.x86_64 0:4.8.5-44.el7 will be installed
+---> Package glibc-devel.x86_64 0:2.17-326.el7_9 will be installed
+--> Processing Dependency: glibc-headers = 2.17-326.el7_9 for package: glibc-devel-2.17-326.el7_9.x86_64
+--> Processing Dependency: glibc = 2.17-326.el7_9 for package: glibc-devel-2.17-326.el7_9.x86_64
+--> Processing Dependency: glibc-headers for package: glibc-devel-2.17-326.el7_9.x86_64
+---> Package libmpc.x86_64 0:1.0.1-3.el7 will be installed
+---> Package libstdc++-devel.x86_64 0:4.8.5-44.el7 will be installed
+---> Package mpfr.x86_64 0:3.1.1-4.el7 will be installed
+--> Running transaction check
+---> Package glibc.x86_64 0:2.17-317.el7 will be updated
+--> Processing Dependency: glibc = 2.17-317.el7 for package: glibc-common-2.17-317.el7.x86_64
+---> Package glibc.x86_64 0:2.17-326.el7_9 will be an update
+---> Package glibc-headers.x86_64 0:2.17-326.el7_9 will be installed
+--> Processing Dependency: kernel-headers >= 2.2.1 for package: glibc-headers-2.17-326.el7_9.x86_64
+--> Processing Dependency: kernel-headers for package: glibc-headers-2.17-326.el7_9.x86_64
+--> Running transaction check
+---> Package glibc-common.x86_64 0:2.17-317.el7 will be updated
+---> Package glibc-common.x86_64 0:2.17-326.el7_9 will be an update
+---> Package kernel-headers.x86_64 0:3.10.0-1160.92.1.el7 will be installed
+--> Finished Dependency Resolution
+
+Dependencies Resolved
+
+=========================================================================================================
+ Package                    Arch              Version                           Repository          Size
+=========================================================================================================
+Installing:
+ beegfs-client              noarch            20:7.2-el7                        beegfs             395 k
+ beegfs-meta                x86_64            20:7.2-el7                        beegfs             1.3 M
+ beegfs-mgmtd               x86_64            20:7.2-el7                        beegfs             646 k
+ beegfs-storage             x86_64            20:7.2-el7                        beegfs             774 k
+ beegfs-utils               x86_64            20:7.2-el7                        beegfs             1.5 M
+Installing for dependencies:
+ beegfs-common              noarch            20:7.2-el7                        beegfs             9.0 k
+ cpp                        x86_64            4.8.5-44.el7                      base               5.9 M
+ gcc                        x86_64            4.8.5-44.el7                      base                16 M
+ gcc-c++                    x86_64            4.8.5-44.el7                      base               7.2 M
+ glibc-devel                x86_64            2.17-326.el7_9                    updates            1.1 M
+ glibc-headers              x86_64            2.17-326.el7_9                    updates            691 k
+ kernel-headers             x86_64            3.10.0-1160.92.1.el7              updates            9.1 M
+ libmpc                     x86_64            1.0.1-3.el7                       base                51 k
+ libstdc++-devel            x86_64            4.8.5-44.el7                      base               1.5 M
+ mpfr                       x86_64            3.1.1-4.el7                       base               203 k
+Updating for dependencies:
+ glibc                      x86_64            2.17-326.el7_9                    updates            3.6 M
+ glibc-common               x86_64            2.17-326.el7_9                    updates             12 M
+
+Transaction Summary
+=========================================================================================================
+Install  5 Packages (+10 Dependent packages)
+Upgrade             (  2 Dependent packages)
+
+Total download size: 62 M
+Is this ok [y/d/N]: y
+Downloading packages:
+Delta RPMs disabled because /usr/bin/applydeltarpm not installed.
+(1/17): beegfs-common-7.2-el7.noarch.rpm                                          | 9.0 kB  00:00:00
+(2/17): beegfs-client-7.2-el7.noarch.rpm                                          | 395 kB  00:00:01
+(3/17): beegfs-mgmtd-7.2-el7.x86_64.rpm                                           | 646 kB  00:00:00
+(4/17): beegfs-meta-7.2-el7.x86_64.rpm                                            | 1.3 MB  00:00:00
+(5/17): beegfs-storage-7.2-el7.x86_64.rpm                                         | 774 kB  00:00:00
+(6/17): beegfs-utils-7.2-el7.x86_64.rpm                                           | 1.5 MB  00:00:00
+(7/17): gcc-4.8.5-44.el7.x86_64.rpm                                               |  16 MB  00:00:00
+(8/17): gcc-c++-4.8.5-44.el7.x86_64.rpm                                           | 7.2 MB  00:00:00
+(9/17): cpp-4.8.5-44.el7.x86_64.rpm                                               | 5.9 MB  00:00:00
+(10/17): glibc-common-2.17-326.el7_9.x86_64.rpm                                   |  12 MB  00:00:00
+(11/17): glibc-devel-2.17-326.el7_9.x86_64.rpm                                    | 1.1 MB  00:00:00
+(12/17): glibc-2.17-326.el7_9.x86_64.rpm                                          | 3.6 MB  00:00:00
+(13/17): glibc-headers-2.17-326.el7_9.x86_64.rpm                                  | 691 kB  00:00:00
+(14/17): libmpc-1.0.1-3.el7.x86_64.rpm                                            |  51 kB  00:00:00
+(15/17): mpfr-3.1.1-4.el7.x86_64.rpm                                              | 203 kB  00:00:00
+(16/17): kernel-headers-3.10.0-1160.92.1.el7.x86_64.rpm                           | 9.1 MB  00:00:00
+(17/17): libstdc++-devel-4.8.5-44.el7.x86_64.rpm                                  | 1.5 MB  00:00:00
+---------------------------------------------------------------------------------------------------------
+Total                                                                     16 MB/s |  62 MB  00:00:03
+Running transaction check
+Running transaction test
+Transaction test succeeded
+Running transaction
+  Installing : 20:beegfs-common-7.2-el7.noarch                                                      1/19
+  Updating   : glibc-2.17-326.el7_9.x86_64                                                          2/19
+  Updating   : glibc-common-2.17-326.el7_9.x86_64                                                   3/19
+  Installing : mpfr-3.1.1-4.el7.x86_64                                                              4/19
+  Installing : libmpc-1.0.1-3.el7.x86_64                                                            5/19
+  Installing : cpp-4.8.5-44.el7.x86_64                                                              6/19
+  Installing : kernel-headers-3.10.0-1160.92.1.el7.x86_64                                           7/19
+  Installing : glibc-headers-2.17-326.el7_9.x86_64                                                  8/19
+  Installing : glibc-devel-2.17-326.el7_9.x86_64                                                    9/19
+  Installing : gcc-4.8.5-44.el7.x86_64                                                             10/19
+  Installing : libstdc++-devel-4.8.5-44.el7.x86_64                                                 11/19
+  Installing : gcc-c++-4.8.5-44.el7.x86_64                                                         12/19
+  Installing : 20:beegfs-client-7.2-el7.noarch                                                     13/19
+Created symlink from /etc/systemd/system/multi-user.target.wants/beegfs-client.service to /usr/lib/systemd/system/beegfs-client.service.
+  Installing : 20:beegfs-mgmtd-7.2-el7.x86_64                                                      14/19
+Created symlink from /etc/systemd/system/multi-user.target.wants/beegfs-mgmtd.service to /usr/lib/systemd/system/beegfs-mgmtd.service.
+  Installing : 20:beegfs-meta-7.2-el7.x86_64                                                       15/19
+Created symlink from /etc/systemd/system/multi-user.target.wants/beegfs-meta.service to /usr/lib/systemd/system/beegfs-meta.service.
+  Installing : 20:beegfs-storage-7.2-el7.x86_64                                                    16/19
+Created symlink from /etc/systemd/system/multi-user.target.wants/beegfs-storage.service to /usr/lib/systemd/system/beegfs-storage.service.
+  Installing : 20:beegfs-utils-7.2-el7.x86_64                                                      17/19
+  Cleanup    : glibc-2.17-317.el7.x86_64                                                           18/19
+  Cleanup    : glibc-common-2.17-317.el7.x86_64                                                    19/19
+  Verifying  : gcc-c++-4.8.5-44.el7.x86_64                                                          1/19
+  Verifying  : glibc-common-2.17-326.el7_9.x86_64                                                   2/19
+  Verifying  : gcc-4.8.5-44.el7.x86_64                                                              3/19
+  Verifying  : 20:beegfs-mgmtd-7.2-el7.x86_64                                                       4/19
+  Verifying  : 20:beegfs-meta-7.2-el7.x86_64                                                        5/19
+  Verifying  : 20:beegfs-client-7.2-el7.noarch                                                      6/19
+  Verifying  : mpfr-3.1.1-4.el7.x86_64                                                              7/19
+  Verifying  : glibc-devel-2.17-326.el7_9.x86_64                                                    8/19
+  Verifying  : cpp-4.8.5-44.el7.x86_64                                                              9/19
+  Verifying  : glibc-headers-2.17-326.el7_9.x86_64                                                 10/19
+  Verifying  : 20:beegfs-storage-7.2-el7.x86_64                                                    11/19
+  Verifying  : libstdc++-devel-4.8.5-44.el7.x86_64                                                 12/19
+  Verifying  : libmpc-1.0.1-3.el7.x86_64                                                           13/19
+  Verifying  : glibc-2.17-326.el7_9.x86_64                                                         14/19
+  Verifying  : kernel-headers-3.10.0-1160.92.1.el7.x86_64                                          15/19
+  Verifying  : 20:beegfs-common-7.2-el7.noarch                                                     16/19
+  Verifying  : 20:beegfs-utils-7.2-el7.x86_64                                                      17/19
+  Verifying  : glibc-2.17-317.el7.x86_64                                                           18/19
+  Verifying  : glibc-common-2.17-317.el7.x86_64                                                    19/19
+
+Installed:
+  beegfs-client.noarch 20:7.2-el7     beegfs-meta.x86_64 20:7.2-el7     beegfs-mgmtd.x86_64 20:7.2-el7
+  beegfs-storage.x86_64 20:7.2-el7    beegfs-utils.x86_64 20:7.2-el7
+
+Dependency Installed:
+  beegfs-common.noarch 20:7.2-el7                        cpp.x86_64 0:4.8.5-44.el7
+  gcc.x86_64 0:4.8.5-44.el7                              gcc-c++.x86_64 0:4.8.5-44.el7
+  glibc-devel.x86_64 0:2.17-326.el7_9                    glibc-headers.x86_64 0:2.17-326.el7_9
+  kernel-headers.x86_64 0:3.10.0-1160.92.1.el7           libmpc.x86_64 0:1.0.1-3.el7
+  libstdc++-devel.x86_64 0:4.8.5-44.el7                  mpfr.x86_64 0:3.1.1-4.el7
+
+Dependency Updated:
+  glibc.x86_64 0:2.17-326.el7_9                   glibc-common.x86_64 0:2.17-326.el7_9
+
+Complete!
+[root@beegfs-server ~]# lsblk
+NAME            MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT
+sda               8:0    0   20G  0 disk
++-sda1            8:1    0    1G  0 part /boot
++-sda2            8:2    0   19G  0 part
+  +-centos-root 253:0    0   17G  0 lvm  /
+  +-centos-swap 253:1    0    2G  0 lvm  [SWAP]
+sdb               8:16   0   20G  0 disk
++-sdb1            8:17   0   20G  0 part /mnt
+sr0              11:0    1  973M  0 rom
+[root@beegfs-server ~]# mkdir -p /mnt/beegfs/meta && mkdir -p /mnt/beegfs/storage && mkdir -p /mnt/beegfs/beegfs_mgmtd
+[root@beegfs-server ~]# df -h
+Filesystem               Size  Used Avail Use% Mounted on
+devtmpfs                 475M     0  475M   0% /dev
+tmpfs                    487M     0  487M   0% /dev/shm
+tmpfs                    487M  7.7M  479M   2% /run
+tmpfs                    487M     0  487M   0% /sys/fs/cgroup
+/dev/mapper/centos-root   17G  1.7G   16G  10% /
+/dev/sda1               1014M  138M  877M  14% /boot
+tmpfs                     98M     0   98M   0% /run/user/0
+/dev/sdb1                 20G   45M   19G   1% /mnt
+[root@beegfs-server ~]# /opt/beegfs/sbin/beegfs-setup-mgmtd -p /mnt/beegfs/beegfs_mgmtd
+Preparing storage directory: /mnt/beegfs/beegfs_mgmtd
+ * Creating format.conf file...
+Updating config file: /etc/beegfs/beegfs-mgmtd.conf
+ * Setting storage directory in config file...
+ * Disabling usage of uninitialized storage directory in config file...
+All done.
+[root@beegfs-server ~]# cat  /etc/beegfs/beegfs-mgmtd.conf
+# This is a config file for BeeGFS management nodes.
+# http://www.beegfs.com
+
+
+# --- [Table of Contents] ---
+#
+# 1) Settings
+# 2) Command Line Arguments
+# 3) Basic Settings Documentation
+# 4) Advanced Settings Documentation
+
+
+#
+# --- Section 1.1: [Basic Settings] ---
+#
+
+storeMgmtdDirectory      = /mnt/beegfs/beegfs_mgmtd
+storeAllowFirstRunInit   = false
+
+sysAllowNewServers       = true
+sysAllowNewTargets       = true
+
+
+#
+# --- Section 1.2: [Advanced Settings] ---
+#
+
+connAuthFile                           =
+connBacklogTCP                         = 128
+connInterfacesFile                     =
+connMgmtdPortTCP                       = 8008
+connMgmtdPortUDP                       = 8008
+connNetFilterFile                      =
+connPortShift                          = 0
+
+logType                                = logfile
+logLevel                               = 2
+logNoDate                              = false
+logNumLines                            = 50000
+logNumRotatedFiles                     = 5
+logStdFile                             = /var/log/beegfs-mgmtd.log
+
+quotaQueryGIDFile                      =
+quotaQueryGIDRange                     =
+quotaQueryUIDFile                      =
+quotaQueryUIDRange                     =
+quotaQueryType                         = system
+quotaQueryWithSystemUsersGroups        = false
+quotaUpdateIntervalMin                 = 10
+
+runDaemonized                          = true
+
+sysTargetOfflineTimeoutSecs            = 180
+
+tuneClientAutoRemoveMins               = 30
+tuneNumWorkers                         = 4
+
+tuneMetaDynamicPools                   = true
+tuneMetaInodesLowLimit                 = 10M
+tuneMetaInodesEmergencyLimit           = 1M
+tuneMetaSpaceLowLimit                  = 10G
+tuneMetaSpaceEmergencyLimit            = 3G
+tuneStorageDynamicPools                = true
+tuneStorageInodesLowLimit              = 10M
+tuneStorageInodesEmergencyLimit        = 1M
+tuneStorageSpaceLowLimit               = 1T
+tuneStorageSpaceEmergencyLimit         = 20G
+
+
+#
+# --- Section 1.3: [Enterprise Features] ---
+#
+# See end-user license agreement for definition and usage limitations of
+# enterprise features.
+#
+
+quotaEnableEnforcement                 = false
+
+
+#
+# --- Section 2: [Command Line Arguments] ---
+#
+
+# Use the command line argument "cfgFile=/etc/anotherconfig.conf" to
+# specify a different config file for beegfs-mgmtd.
+#
+# All other options in this file can also be used as command line
+# arguments, overriding the corresponding config file values.
+
+
+#
+# --- Section 3: [Basic Settings Documentation] ---
+#
+
+# [storeMgmtdDirectory]
+# The absolute path and name of a directory where the file system can store its
+# management data.
+# Default: <none>
+
+# [storeAllowFirstRunInit]
+# Enables or disables daemon startup with an uninitialized storage directory.
+# This can be used to make sure that the daemon does not run when the storage
+# partition is not mounted (e.g. because it needs repair after a power outage).
+# Note: This setting must be enabled during first startup of the daemon, but
+#    may be disabled afterwards.
+# Default: true
+
+# [sysAllowNewServers]
+# Specifies whether new servers can be added to the system. If set to false,
+# registration requests of new servers will be rejected. It is highly
+# recommended to set this option to false after initial setup to avoid
+# accidental registration of new servers.
+# Default: true
+
+# [sysAllowNewTargets]
+# Specifies whether new storage targets can be added to the system. If set to
+# false, registration requests of new targets will be rejected. It is highly
+# recommended to set this option to false after initial setup to avoid
+# accidental registration of new targets.
+# Default: true
+
+
+#
+# --- Section 4: [Advanced Settings Documentation] ---
+#
+
+#
+# --- Section 4.1: [Connections & Communication] ---
+#
+
+# [connAuthFile]
+# The path to a file that contains a shared secret for connection based
+# authentication. Only peers that use the same shared secret will be able to
+# connect.
+# Default: <none>
+
+# [connBacklogTCP]
+# The TCP listen backlog.
+# Default: 64
+
+# [connInterfacesFile]
+# The path to a text file that specifies the names of the interfaces, which
+# may be used for communication. One interface per line. The line number also
+# defines the priority of the interface.
+# Example: "ib0" in the first line, "eth0" in the second line.
+# Values: This setting is optional. If unspecified, all available interfaces
+#    will be used and priorities will be assigned automatically.
+# Note: This has no influence on outgoing connections. The information is sent
+#    to other hosts to inform them about possible communication paths.
+# Default: <none>
+
+# [connInterfacesList]
+# Comma-separated list of interface names. Performs the same function as
+# connInterfacesFile.
+# Default: <none>
+
+# [connMgmtdPortUDP], [connMgmtdPortTCP]
+# The UDP and TCP ports of the management node.
+# Default: 8008
+
+# [connNetFilterFile]
+# The path to a text file that specifies allowed IP subnets, which may be used
+# for outgoing communication. One subnet per line in classless notation (IP
+# address and number of significant bits).
+# Example: "192.168.10.0/24" in the first line, "192.168.20.0/24" in the second
+#    line.
+# Values: This setting is optional. If unspecified, all addresses are allowed
+#    for outgoing communication.
+# Default: <none>
+
+# [connPortShift]
+# Shifts all following UDP and TCP ports according to the specified value.
+# Intended to make port configuration easier in case you do not want to
+# configure each port individually.
+# Default: 0
+
+
+#
+# --- Section 4.2: [Logging] ---
+#
+
+# [logType]
+# Defines the logger type. This can either be "syslog" to send log messages to
+# the general system logger or "logfile". If set to logfile logs will be written
+# to logStdFile.
+# Default: logfile
+
+# [logLevel]
+# Defines the amount of output messages. The higher this level, the more
+# detailed the log messages will be.
+# Note: Levels above 3 might decrease performance.
+# Default: 2 (Max: 5)
+
+# [logNoDate]
+# Defines whether "date & time" (=false) or the current "time only" (=true)
+# should be logged.
+# Default: false
+
+# [logNumLines]
+# The maximum number of lines per log file.
+# Default: 50000
+
+# [logNumRotatedFiles]
+# The number of old files to keep when "logNumLines" is reached and the log file
+# is rewritten (log rotation).
+# Default: 5
+
+# [logStdFile]
+# The path and filename of the log file for standard log messages.
+# The parameter will be considered only if logType value is not equal to syslog.
+# If no name is specified, the messages will be written to the console.
+# Default: /var/log/beegfs-mgmtd.log
+
+
+#
+# --- Section 4.3: [Quota Settings] ---
+#
+
+# [quotaEnableEnforcement]
+# Enables enforcement of user and group quota limits by periodically checking
+# if the limits are exceeded.
+# Note: This uses quota information provided by the underlying local file
+#    systems of the storage targets.
+# Note: Set quota limits with "beegfs-ctl --setquota".
+# Note: If this option is true, performance might be slightly decreased due to
+#    extra information tracking.
+# Note: If meta and storage services are running when this option is set to
+#    true and applied by a restart, a restart of those services is
+#    necessary as well.
+# Default: false
+
+# [quotaQueryGIDFile]
+# The path to a file which contains the user IDs which needs to be checked by
+# the quota enforcement. The GIDs must be a space separted list in a single or
+# multiple lines. If quotaQueryType is set to "file" this configuration option
+# is required.
+# Default: <none>
+
+# [quotaQueryGIDRange]
+# The range of group IDs which should be checked for quota enforcement. The
+# range must be specified with two numeric values which is separated by a comma.
+# If quotaQueryType is set to "range" this configuration option is required.
+# Note: Do not define ranges too big because this will decrease the performance.
+# Default: <none>
+
+# [quotaQueryUIDFile]
+# The path to a file which contains the group IDs which needs to be checked by
+# the quota enforcement. The UIDs must be a space separted list in a single or
+# multiple lines. If quotaQueryType is set to "file" this configuration option
+# is required.
+# Default: <none>
+
+# [quotaQueryUIDRange]
+# The range of user IDs which should be checked for quota enforcement. The range
+# must be specified with two numeric values which is separated by a comma. If
+# quotaQueryType is set to "range" this configuration option is required.
+# Note: Do not define ranges too big because this will decrease the performance.
+# Default: <none>
+
+# [quotaQueryType]
+# Defines the type to get the user and group IDs. This can be "system" to get
+# the user and group IDs from the local system which may be connected to an
+# LDAP or some other user management system. The second valid value is "range"
+# which must be specified in quotaQueryUIDRange and quotaQueryGIDRange. In this
+# case all IDs of user ID range and the group ID range will be queried. The
+# third valid value is "file" which reads the UIDs and GIDs from files. The path
+# to the files must be specified in quotaQueryUIDFile and quotaQueryGIDFile.
+# Note: When the user management system is slow it can decrease the performance.
+# Note: Do not define ranges too big because this will decrease the performance.
+# Default: system
+
+# [quotaQueryWithSystemUsersGroups]
+# Enables also system users/groups to be checked for quota enforcement.
+# default: false
+
+# [quotaUpdateIntervalMin]
+# The interval in minutes to query the storage servers for the used quota.
+# Note: A smaller interval will reduce the time until an exceeded quota limit
+#    is noticed, but will also put more load on the system and thus might
+#    reduce performance.
+# Default: 10
+
+# [quotaStoreIntervalMin]
+# Interval (in minutes) to wait between two quota data flushes to disk.
+# Decreasing this value will cause more I/O, but will be more crash resilient.
+# Default: 10
+
+
+#
+# --- Section 4.4: [Startup] ---
+#
+
+# [runDaemonized]
+# Detach the process from its parent (and from stdin/-out/-err).
+# Default: true
+
+
+#
+# --- Section 4.5: [System Settings] ---
+#
+
+# [sysTargetOfflineTimeoutSecs]
+# Timeout until metadata nodes and storage targets are considered offline when
+# no target state are received from that server.
+# Note: Too low values might lead to false positive detection of offline
+#    servers.
+# Note: This value must match the one set in the metadata and server daemon
+#    config files.
+# Note: Raising this might cause systemd to kill the mgmtd service prematurely.
+#    If this value is raised above 240, and systemd is being used, the
+#    TimeoutStopSec value in the service file should be adapted accordingly.
+# Values: time in seconds
+# Default: 180
+
+#
+# --- Section 4.6: [Tuning] ---
+#
+
+# [tuneClientAutoRemoveMins]
+# The time (in minutes) after which an unreachable node is assumed to be dead
+# and thus will be removed from the file system, which will release all
+# associated resources, such as open file handles.
+# Note: 0 disables automatic removal. Other values less than 5 are forbidden
+#    because they may cause spurious removals of active clients that just happen
+#    to be very busy.
+# Note: A value greater than 0 is highly recommended for clients to allow the
+#    automatic release of old file handles.
+# Default: Client: 30
+
+# [tuneNumWorkers]
+# The number of worker threads. Should be at least 3. A value of up to twice
+# the number of CPU cores of your machine is the recommended choice.
+# Note: The management daemon does not use a lot of CPU cyles and is not
+#    critical for file system performance.
+# Default: 4
+
+# [tuneNumQuotaWorkers]
+# The number of worker threads used for retrieval of quota information from
+# storage servers.
+# Default: 8
+
+# [tune{Meta,Storage}DynamicPools]
+# Temporarily raise the Low/Emergency limits if the spread (difference in free
+# capacity between the targets with the most and the least free space) becomes
+# too large. This will move targets to a lower pool earlier if there are other
+# targets with much more free capacity.
+
+# [tune{Meta,Storage}{Space,Inodes}LowLimit]
+# [tune{Meta,Storage}{Space,Inodes}EmergencyLimit]
+# The free space pool thresholds. If a metadata or storage target is below a
+# threshold, it will only be used to store new files and directories when no
+# higher class targets are available (i.e. while there are targets in the
+# "normal" pool, no targets from the "low" pool will be used.)
+# Note: Preferred target settings of a client will be ignored if it helps to
+#    avoid using targets from the emergency class.
+# Default: Space: Meta: 10G/3G; Storage: 512G/10G
+#          Inodes: Meta: 10M/1M; Storage: 10M/1M
+
+# [tune{Meta,Storage}{Space,Inodes}NormalSpreadThreshold]
+# [tune{Meta,Storage}{Space,Inodes}LowSpreadThreshold]
+# [tune{Meta,Storage}{Space,Inodes}LowDynamicLimit]
+# [tune{Meta,Storage}{Space,Inodes}EmergencyDynamicLimit]
+# Only effective if tune{Meta,Storage}DynamicPools is enabled.
+# Whenever the spread (see above) of the free capacities in the normal / low
+# class of storage targets is above this threshold, the StorageLowLimit /
+# StorageEmergencyLimit is temporarily raised to StorageLowDynamicLimit /
+# StorageEmergencyDynamicLimit.
+# When the {Normal,Low}SpreadThreshold values are set to 0, the value from the
+# corresponding {Low,Emergency}Limit is used for the spread threshold.
+# When the {Low,Emergency}DynamicLimits are set to 0, they are automatically
+# assumed as two times the corresponding {Low,Emergency}(non-dynamic)Limit.
+# Default: 0
+
+
+#
+# --- Section 5: [Expert options] ---
+#
+
+# [tuneProcessFDLimit]
+# Sets the maximum number of files the server can open. If the process rlimit
+# is already larger than this number the limit will not be decreased.
+# Default: 10000
+
+# [pidFile]
+# Creates a PID file for the daemon when set. Set by init scripts.
+# Default: <none>
+[root@beegfs-server ~]# vim /etc/beegfs/beegfs-mgmtd.conf
+[root@beegfs-server ~]# vim /etc/beegfs/beegfs-client.conf
+[root@beegfs-server ~]# systemctl start beegfs-mgmtd &&     systemctl enable beegfs-mgmtd &&     systemctl status beegfs-mgmtd
+? beegfs-mgmtd.service - BeeGFS Management Server
+   Loaded: loaded (/usr/lib/systemd/system/beegfs-mgmtd.service; enabled; vendor preset: disabled)
+   Active: active (running) since Sat 2023-07-22 17:12:34 IST; 53ms ago
+     Docs: http://www.beegfs.com/content/documentation/
+ Main PID: 1590 (beegfs-mgmtd/Ma)
+   CGroup: /system.slice/beegfs-mgmtd.service
+           +-1590 /opt/beegfs/sbin/beegfs-mgmtd cfgFile=/etc/beegfs/beegfs-mgmtd.conf runDaemonized=fa...
+
+Jul 22 17:12:34 beegfs-server systemd[1]: Started BeeGFS Management Server.
+[root@beegfs-server ~]# cat /etc/beegfs/beegfs-client.conf                                               # This is a config file for BeeGFS clients.
+# http://www.beegfs.com
+
+
+# --- [Table of Contents] ---
+#
+# 1) Settings
+# 2) Mount Options
+# 3) Basic Settings Documentation
+# 4) Advanced Settings Documentation
+
+
+#
+# --- Section 1.1: [Basic Settings] ---
+#
+
+sysMgmtdHost                  = 192.168.15.156
+
+
+#
+# --- Section 1.2: [Advanced Settings] ---
+#
+
+connAuthFile                  =
+connClientPortUDP             = 8004
+connHelperdPortTCP            = 8006
+connMgmtdPortTCP              = 8008
+connMgmtdPortUDP              = 8008
+connPortShift                 = 0
+
+connCommRetrySecs             = 600
+connFallbackExpirationSecs    = 900
+connInterfacesFile            =
+connMaxInternodeNum           = 12
+connMaxConcurrentAttempts     = 0
+connNetFilterFile             =
+
+connUseRDMA                   = true
+connRDMABufNum                = 70
+connRDMABufSize               = 8192
+connRDMATypeOfService         = 0
+connTcpOnlyFilterFile         =
+
+logClientID                   = false
+logHelperdIP                  =
+logLevel                      = 3
+logType                       = helperd
+
+quotaEnabled                  = false
+
+sysCreateHardlinksAsSymlinks  = false
+sysMountSanityCheckMS         = 11000
+sysSessionCheckOnClose        = false
+sysSyncOnClose                = false
+sysTargetOfflineTimeoutSecs   = 900
+sysUpdateTargetStatesSecs     = 30
+sysXAttrsEnabled              = false
+
+tuneFileCacheType             = buffered
+tunePreferredMetaFile         =
+tunePreferredStorageFile      =
+tuneRemoteFSync               = true
+tuneUseGlobalAppendLocks      = false
+tuneUseGlobalFileLocks        = false
+
+
+#
+# --- Section 1.3: [Enterprise Features] ---
+#
+# See end-user license agreement for definition and usage limitations of
+# enterprise features.
+#
+
+sysACLsEnabled                = false
+
+
+#
+# --- Section 2: [Mount Options] ---
+#
+
+# Valid mount options are:
+# cfgFile, logLevel, connPortShift, connMgmtdPortUDP, connMgmtdPortTCP,
+# sysMgmtdHost, sysMountSanityCheckMS.
+#
+# Use the mount option "cfgFile" to specify a different config file
+# for the beegfs client.
+# Example:
+# $ /bin/mount -t beegfs beegfs_nodev /beegfs -ocfgFile=/etc/anotherconfig.conf
+#
+# Mount options override the corresponding config file values.
+# Example:
+# $ /bin/mount -ocfgFile=/etc/anotherconfig.conf,logLevel=3 ...
+
+
+#
+# --- Section 3: [Basic Settings Documentation] ---
+#
+
+# [sysMgmtdHost]
+# Hostname (or IP) of the host running the management service.
+# (See also "connMgmtdPortUDP" and "connMgmtdPortTCP".)
+# Default: <none>
+
+
+#
+# --- Section 4: [Advanced Settings Documentation] ---
+#
+
+#
+# --- Section 4.1: [Connections & Communication] ---
+#
+
+# [connAuthFile]
+# The path to a file that contains a shared secret for connection based
+# authentication. Only peers that use the same shared secret will be able to
+# connect.
+# Default: <none>
+
+# [connClientPortUDP]
+# The UDP port of the client.
+# Default: 8004
+
+# [connHelperdPortTCP]
+# The TCP port of the client helper daemon.
+# Default: 8006
+
+# [connMgmtdPortUDP], [connMgmtdPortTCP]
+# The UDP and TCP ports of the management node.
+# Default: 8008
+
+# [connPortShift]
+# Shifts all following UDP and TCP ports according to the specified value.
+# Intended to make port configuration easier in case you do not want to
+# configure each port individually.
+# Default: 0
+
+# [connCommRetrySecs]
+# The time (in seconds) for retries in case a network communication fails
+# (e.g. if a server is down). After this time, the I/O operation will fail
+# and the calling process will receive an error.
+# Note: Set this value to 0 for infinite retries. In this case, a process
+#    accessing the file system will block until the corresponding server
+#    becomes available (or until it is interrupted by a signal).
+# Default: 600
+
+# [connFallbackExpirationSecs]
+# The time in seconds after which a connection to a fallback interface expires.
+# When a fallback connection expires, the system will try to establish a new
+# connection to the other hosts  primary interface (falling back to another
+# interface again if necessary).
+# Note: The priority of node interfaces can be configured using the
+#    "connInterfacesFile" parameter.
+# Default: 900
+
+# [connInterfacesFile]
+# The path to a text file that specifies the names of the interfaces, which
+# may be used for communication by other nodes. One interface per line. The
+# line number also defines the priority of an interface.
+# Example: "ib0" in the first line, "eth0" in the second line.
+# Values: This setting is optional. If unspecified, all available interfaces
+#    will be published and priorities will be assigned automatically.
+# Note: This has no influence on outgoing connections. The information is sent
+#    to other hosts to inform them about possible communication paths.
+# Default: <none>
+
+# [connMaxInternodeNum]
+# The maximum number of simultaneous connections to the same node.
+# Default: 12
+
+# [connMaxConcurrentAttempts]
+# The maximum number of simultaneous connection attempts. This may help in case
+# establishing new connections keeps failing and produces fallbacks.
+# It may happen particularly when using RDMA in an Omni-Path setup. If you
+# don't have failing connection attempts, tuning this option might still lead
+# to a faster connection process. This option is experimental, so there is no
+# experience with different values. Setting it to 0 disables it, which means
+# concurrent connection attempts are not limited.
+# Default: 0
+
+# [connNetFilterFile]
+# The path to a text file that specifies allowed IP subnets, which may be used
+# for outgoing communication. One subnet per line in classless notation (IP
+# address and number of significant bits).
+# Example: "192.168.10.0/24" in the first line, "192.168.20.0/24" in the second
+# line.
+# This value is optional. If unspecified, all addresses are allowed for
+# outgoing communication.
+# Default: <none>
+
+# [connUseRDMA]
+# Enables the use of Remote Direct Memory Access (RDMA) for Infiniband or RoCE.
+# For this setting to be effective, OFED ibverbs support also has to be enabled
+# at compile time of the beegfs client modules (typically via
+# beegfs-client-autobuild.conf).
+# Default: true
+
+# [connRDMABufNum], [connRDMABufSize]
+# Infiniband RDMA buffer settings.
+# connRDMABufSize is the maximum size of a buffer (in bytes) that will be sent
+# over the network; connRDMABufNum is the number of available buffers that can
+# be in flight for a single connection. These client settings are also applied
+# on the server side for each connection.
+# Note: RAM usage per connection is connRDMABufSize x connRDMABufNum x 2. Keep
+#    resulting RAM usage (x connMaxInternodeNum x number_of_clients) on the
+#    server in mind when increasing these values.
+# Note: The client needs to allocate physically contiguous pages for
+# connRDMABufSize, so this setting shouldn't be higher than a few kbytes.
+# Default: 8192, 70
+
+# [connRDMATypeOfService]
+# Infiniband provides the option to set a type of service for an application.
+# This type of service can be used by your subnet manager to provide Quality of
+# Service functionality (e.g. setting different service levels).
+# In openSM the service type will be mapped to the parameter qos-class, which
+# can be handled in your QoS configuration.
+# See
+#    www.openfabrics.org/downloads/OFED/ofed-1.4/OFED-1.4-docs/
+#    QoS_management_in_OpenSM.txt
+# for more information on how to configure openSM for QoS.
+# This parameter sets the type of service for all outgoing connections of this
+# daemon.
+# Default: 0 (Max: 255)
+
+# [connTcpOnlyFilterFile]
+# The path to a text file that specifies IP address ranges to which no RDMA
+# connection should be established. This is useful e.g. for environments where
+# all hosts support RDMA, but some hosts cannot connect via RDMA to some other
+# hosts.
+# Example: "192.168.10.0/24" in the first line, "192.168.20.0/24" in the second
+#    line.
+# Values: This setting is optional.
+# Default: <none>
+
+#
+# --- Section 4.2: [Logging] ---
+#
+
+# [logClientID]
+# Defines whether the ClientID should appear in each log line. This usually
+# makes sense only if you use remote logging and want to use the same
+# beegfs-helperd instance for multiple clients.
+# Note: Use "logHelperdIP" to enable remote logging.
+# Default: false
+
+# [logHelperdIP]
+# Defines the IP address of the node on which the beegfs-helperd runs for
+# remote logging. This is typically useful only if you want to combine the
+# log messages of several clients on a single machine.
+# If this value is undefined, the beegfs-helperd is assumed to be running on
+# the local machine.
+# Default: <none>
+
+# [logLevel]
+# Defines the amount of log messages. The higher this level, the more detailed
+# the log messages will be.
+# Level 3 will print connection messages, level 4 will print syscall messages,
+# level 5 will print debug messages.
+# Note: Levels above 3 might decrease performance.
+# Default: 3 (Max: 5)
+
+# [logType]
+# Defines the logger type. This can either be "helperd" to send log messages to
+# the helper daemon (which will append them to the specified log file) or
+# "syslog" to send log messages to the general system logger.
+# Default: helperd
+
+
+#
+# --- Section 4.3: [Quota Settings] ---
+#
+
+# [quotaEnabled]
+# Enables user and group quota support by transferring extra user data to the
+# servers. This uses quota information of the underlying file systems on the
+# storage servers, which needs to be enabled by the server administrator.
+# Note: In the first implementation, only quota monitoring is available.
+# Note: Get quota information with "beegfs-ctl --getquota".
+# Note: If this option is true, performance might be slightly decreased due to
+#    extra information tracking.
+# Default: false
+
+
+#
+# --- Section 4.4: [System Settings] ---
+#
+
+# [sysCreateHardlinksAsSymlinks]
+# Create a symlink when an application tries to create a hardlink for files in
+# different directories.
+# Default: false
+
+# [sysMountSanityCheckMS]
+# Perform some basic checks during mount (e.g. whether the client helper daemon
+# and storage servers are reachable). Mounting will fail if a problem is
+# detected.
+# Values: Set the time (in ms) you want to spend waiting for the servers
+# (especially the management daemon) to respond. Use 0 to disable all checks
+# and allow mounting even if no servers are reachable.
+# Default: 11000
+
+# [sysSessionCheckOnClose]
+# Checks for a valid session on the storage servers when a file is closed. If
+# this option is set to true, a potential cache loss from a crash of a storage
+# server can be detected. This will be reported to the user application as a
+# close() error code.
+# Note: There is also a session check included in all read/write/fsync messages,
+#    which is independent of this setting.
+# Note: If this option is set to true, more network messages are required on
+#    close(), so performance will decreased.
+# Default: false
+
+# [sysSyncOnClose]
+# Sync file contents on close. If this option is set to true, the storage
+# servers will flush the write cache of a file to disk immediately when it is
+# closed by the application. If this option is set to false, the write cache
+# will be flushed to disk asynchronously after a few seconds.
+# Note: If this option is true, performance will be decreased.
+# Default: false
+
+# [sysTargetOfflineTimeoutSecs]
+# Timeout until all storage targets and metadata nodes are considered offline
+# when no target state updates can be fetched from the management server.
+# If this value is 0, targets will never be set to offline due to an
+# unreachable management node and will stay in state probably-offline.
+# Note: This must be at least twice as large as the value of
+#    sysTargetOfflineTimoutSecs in the server config files.
+# Values: time in seconds
+# Default: 900
+
+# [sysUpdateTargetStatesSecs]
+# Interval in which the states of the storage targets are checked.
+# Note: This must be significantly shorter than the sysTargetOfflineTimeoutSecs
+# value set in the server (recommendation: maximum 1/3 of it).
+# Values: time in seconds
+# Default: 30
+
+# [sysXAttrsEnabled]
+# Enable extended attributes (also know as EAs/xattrs).
+# Default: false
+
+# [sysACLsEnabled]
+# Allow the creation and enforcement of Access Control Lists (ACLs).
+# Note: Only works if sysXAttrsEnabled=true.
+# Note: Requires at least Linux kernel version 3.2.
+# Note: Enabling this setting can affect metadata performance.
+# Default: false
+
+# [sysFileEventLogMask]
+# Specifies which file system events shall be logged by the metadata servers. If
+# unset, this client doesn't send log events at all. This can either be "none"
+# or a comma separated list of event types to log. The following event types
+# (and any comma-separated combination) are possible:
+# "flush" (explicit data flushes on files), "close" (close writable file),
+# "trunc" (file truncation), "setattr" (set attributes),
+# "link-op" (create,mkdir,mknod,create symlink,create hardlink,rmdir,unlink,
+#            rename)
+# Note: If a client opens a file multiple times, "close" will only generate an
+# event if the last fd is closed. If events for each fd shall be generated,
+# "flush" needs to be used. However, "flush" might have a small performance
+# impact.
+# Example: sysFileEventLogMask = close,trunc,setattr,link-op
+# Default: none
+
+# [sysRenameEbusyAsXdev]
+# Changes the semantics of rename() to return an EXDEV error if a file could not
+# be moved because it is in use (instead of the default EBUSY). Applications and
+# tools like mv can handle EXDEV and fall back to copy/unlink for the files.
+# This is mostly useful for NFS exports, where files may not be closed by the
+# server until after the last open file handle has been closed by clients. This
+# can cause spurious EBUSY errors in clients that close a file and rename it
+# immediately afterwards.
+# Default: false
+
+
+#
+# --- Section 4.5: [Tuning] ---
+#
+
+# [tuneFileCacheType]
+# Sets the file read/write cache type.
+# Values: "none" (disable client caching), "buffered" (use a pool of small
+#    static buffers for write-back and read-ahead), "native" (experimental, use
+#    the kernel pagecache), "paged" (experimental, deprecated).
+# Note: The cache protocols are currently non-coherent (but caches are
+#    automatically flushed when a file is closed).
+# Note: When client and servers are running on the same machine, "paged" mode
+#    contains the typical potential for memory allocation deadlocks (also known
+#    from local NFS server mounts). So do not use "paged" mode for clients that
+#    run on a metadata or storage server machine.
+# Default: buffered
+
+# [tunePreferredMetaFile], [tunePreferredStorageFile]
+# Path to a text file that contains the numeric IDs of preferred storage targets
+# and metadata servers. These will be preferred when the client creates new file
+# system entries. This is useful e.g. to take advantage of data locality in the
+# case of multiple data centers. If unspecified, all available targets and
+# servers will be used equally.
+# Usage: One targetID per line for storage servers, one nodeID per line for
+#    metadata servers.
+# Note: TargetIDs and nodeIDs can be queried with the beegfs-ctl tool.
+# Default: <none>
+
+# [tuneRemoteFSync]
+# Controls whether fsync() syscalls from a user application should only be
+# executed on the client to transfer data from the client cache to server
+# cache (=false); or also on the servers to flush the server's cached file
+# data to the disks (=true).
+# Default: true
+
+# [tuneUseGlobalAppendLocks]
+# Controls whether files opened in append mode should be protected by locks on
+# the local machine only (=false) or globally on the servers (=true).
+# Default: false
+
+# [tuneUseGlobalFileLocks]
+# Controls whether application advisory file locks via flock() and fcntl()
+# should be checked for conflicts on the local machine only (=false) or
+# globally on the servers (=true).
+# Default: false
+
+# [tuneCoherentBuffers]
+# Enables or disables coherence between the buffers used by
+# tuneFileCacheType=buffered and the page cache.
+# If a file is concurrently accessed via mmap() regions and read()/write()
+# system calls, the buffers used by tuneFileCacheType=buffered and the page
+# cache used by mmap() may go out of sync - changes made in an mmap()ed region
+# may not be visible to read() calls immediately, or changes made by write()
+# calls may not be immediately reflected in mmap()ed regions.
+# Many programs that use both methods of accessing a file assume that
+# read()/write() and mmap() present the same view of the file, if this is not
+# the case, those programs may not work correctly. Programs that have been
+# observed to misbehave with non-coherent buffers are, for example, git and
+# some in-memory database applications.
+# When this option is enabled, files that are currently mmap()ed will behave as
+# though they had been opened with tuneFileCacheType=none
+# Default: true
+
+
+#
+# --- Section 5: [Expert options]
+#
+
+# [connUnmountRetries]
+# Retry communications during unmount.
+# If this option is set to `true` and a communication error occurs during
+# unmont, for example due to a transient network fault, the unsuccessful
+# communications will be retried normally. When set to `false` they will not be
+# retried; this leads to a quicker unmount, but resources allocated to current
+# client will not be freed for a few hours.
+# Default: true
+
+# [tuneFileCacheBufSize]
+# When using buffered mode: maximum size of the (contiguous) data cache for an
+# open file.
+# When using native mode: threshold for direct operations. If a read() or
+# write() passes a buffer size larger than tuneFileCacheBufSize the client will
+# bypass the page cache and send/receive the data directly to/from the storage
+# servers.
+# Default: 524288 (512KiB)
+
+# [tuneFileCacheBufNum]
+# When using buffered mode: maximum number of file caches to preallocate
+# for the mount. When a file is opened a cache is allocated, up to this number.
+# If the maximum number of caches is reached no cache is allocated and all
+# read/write operations for the file go to the storage servers directly.
+# Default: 4*(number of CPUs)
+
+# [tunePageCacheValidityMS]
+# Maximum lifetime of cached data in the page cache.
+# In buffered mode the page cache is used for mmap(), in native mode the page
+# cache is used for all data. Data in the page cache that was not yet written
+# to the storage server is written after at most this time, data that was read
+# but not modified is discarded.
+# Default: 2000000000 (approx. 23 days)
+
+# [tuneDirSubentryCacheValidityMS]
+# Validity time of directory attribute data, in milliseconds.
+# Attributes of directories (eg stat() data) that have been loaded from the
+# metadata servers are assumed to be valid for this amount of time without
+# requiring a refresh. Once the time has passed the next access will cause a
+# refresh.
+# Default: 1000
+
+# [tuneFileSubentryCacheValidityMS]
+# Validity time of file attribute data, in milliseconds.
+# Attributes of files (eg stat() data) that have been loaded from the metadata
+# servers are assumed to be valid for this amount of time without requiring a
+# refresh. Once the time has passed the next access will cause a refresh.
+# Default: 1000
+
+# [tunePathBufSize]
+# Size of buffers used for constructing paths.
+# Whenever a full path must be constructed (eg for log messages) a preallocated
+# buffer of this size will be used.
+# Default: 4096
+
+# [tunePathBufNum]
+# Number of path buffers for path construction.
+# Determines how many path buffers are preallocated during mount. If no buffers
+# are available for an operation the operation must wait for another thread to
+# free enough buffers.
+# Default: 8
+
+# [tuneMsgBufSize]
+# Size of buffers used for messaging.
+# Messages sent and received by the client (except logging messages) use
+# buffers preallocated at mount time. Buffers are allocated with the size
+# given here.
+# Default: 65536
+
+# [tuneMsgBufNum]
+# Number of message buffers.
+# During mount this many message buffers are preallocated. If an operation
+# requires communication with a server but all buffers are used, the operation
+# must wait until a buffer is released.
+# Default: 4*(number of CPUs) + 1
+
+# [tuneRefreshOnGetAttr]
+# If set to `true`, file attributes will be loaded from the server on each call
+# to fstat(). When set to `false` a call to fstat() may return stale
+# information for files that are not currently open; this can happen mainly
+# when NFS exports are used.
+# Default: false
+
+# [tuneInodeBlockBits]
+# Sets the block size of file on the mountpoint to 2**tuneInodeBlockBits.
+# Default: 19 (512KiB)
+
+# [tuneEarlyCloseResponse]
+# Request close responses from the metadata server before the file is fully closed.
+# This may improve close() performance, but closed files may be accounted as
+# open for a short time after close() has returned. Files accounted as open
+# cannot be moved.
+# Default: false
+
+# [tuneUseBufferedAppend]
+# Used only buffered mode. If set, writes to files opened with O_APPEND will be
+# cached. Ignored unless tuneUseGlobalAppendLocks is also set.
+# Default: true
+
+# [tuneStatFsCacheSecs]
+# Validity time of statfs() results, in seconds.
+# Results of statfs(), once queried from the storage servers, will be cached
+# for this amount of time.
+# Default: 10
+
+# [sysInodeIDStyle]
+# Sets the hash function used to compute inode numbers from metadata IDs.
+# The *32 options produce 32 bit inodes numbers, the *64 variants produce 64
+# bit inode numbers.
+# Possible values:
+#   hash32
+#   hash64
+#   md4hash32
+#   md4hash64
+# Default: md4hash64
+[root@beegfs-server ~]# /opt/beegfs/sbin/beegfs-setup-meta -p /mnt/beegfs/meta -s 1 -m 192.168.15.156
+Preparing storage directory: /mnt/beegfs/meta
+ * Creating format.conf file...
+ * Creating server numeric ID file: /mnt/beegfs/meta/nodeNumID
+Updating config file: /etc/beegfs/beegfs-meta.conf
+ * Setting management host: 192.168.15.156
+ * Setting storage directory in config file...
+ * Disabling usage of uninitialized storage directory in config file...
+ * Setting usage of extended attributes to: true
+All done.
+[root@beegfs-server ~]# vim /etc/beegfs/beegfs-meta.conf
+[root@beegfs-server ~]#  systemctl start beegfs-meta && systemctl enable beegfs-meta && systemctl status beegfs-meta
+? beegfs-meta.service - BeeGFS Metadata Server
+   Loaded: loaded (/usr/lib/systemd/system/beegfs-meta.service; enabled; vendor preset: disabled)
+   Active: active (running) since Sat 2023-07-22 17:18:44 IST; 147ms ago
+     Docs: http://www.beegfs.com/content/documentation/
+ Main PID: 1660 (beegfs-meta/Mai)
+   CGroup: /system.slice/beegfs-meta.service
+           +-1660 /opt/beegfs/sbin/beegfs-meta cfgFile=/etc/beegfs/beegfs-meta.conf runDaemonized=fals...
+
+Jul 22 17:18:44 beegfs-server systemd[1]: Started BeeGFS Metadata Server.
+[root@beegfs-server ~]# /opt/beegfs/sbin/beegfs-setup-storage -p /mnt/beegfs/storage -s 2 -i 1 -m 192.168.15.156
+Preparing storage target directory: /mnt/beegfs/storage
+ * Creating format.conf file...
+ * Creating chunks directory...
+ * Creating buddymir directory...
+ * Creating target numeric ID file: /mnt/beegfs/storage/targetNumID
+ * Creating server numeric ID file: /mnt/beegfs/storage/nodeNumID
+Updating config file: /etc/beegfs/beegfs-storage.conf
+ * Setting management host: 192.168.15.156
+ * Appending to target directory list in config file...
+ * Disabling usage of uninitialized storage targets in config file...
+All done.
+[root@beegfs-server ~]# systemctl start beegfs-storage && systemctl enable beegfs-storage && systemctl status beegfs-storage
+? beegfs-storage.service - BeeGFS Storage Server
+   Loaded: loaded (/usr/lib/systemd/system/beegfs-storage.service; enabled; vendor preset: disabled)
+   Active: active (running) since Sat 2023-07-22 17:19:24 IST; 149ms ago
+     Docs: http://www.beegfs.com/content/documentation/
+ Main PID: 1718 (beegfs-storage/)
+   CGroup: /system.slice/beegfs-storage.service
+           +-1718 /opt/beegfs/sbin/beegfs-storage cfgFile=/etc/beegfs/beegfs-storage.conf runDaemonize...
+
+Jul 22 17:19:24 beegfs-server systemd[1]: Started BeeGFS Storage Server.
+[root@beegfs-server ~]# beegfs-check-servers
+Management
+==========
+beegfs-server [ID: 1]: reachable at 192.168.15.156:8008 (protocol: TCP)
+
+Metadata
+==========
+beegfs-server [ID: 1]: reachable at 192.168.15.156:8005 (protocol: TCP)
+
+Storage
+==========
+beegfs-server [ID: 2]: reachable at 192.168.15.156:8003 (protocol: TCP)
+
+[root@beegfs-server ~]# beegfs-ctl --listnodes --nodetype=storage --nicdetails
+beegfs-server [ID: 2]
+   Ports: UDP: 8003; TCP: 8003
+   Interfaces:
+   + ens33[ip addr: 192.168.15.156; type: TCP]
+
+Number of nodes: 1
+[root@beegfs-server ~]#

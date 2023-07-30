@@ -1,0 +1,286 @@
+login as: root
+root@192.168.15.142's password:
+    +----------------------------------------------------------------------+
+    ¦                 • MobaXterm Personal Edition v23.0 •                 ¦
+    ¦               (SSH client, X server and network tools)               ¦
+    ¦                                                                      ¦
+    ¦ ? SSH session to root@192.168.15.142                                 ¦
+    ¦   • Direct SSH      :  ?                                             ¦
+    ¦   • SSH compression :  ?                                             ¦
+    ¦   • SSH-browser     :  ?                                             ¦
+    ¦   • X11-forwarding  :  ?  (disabled or not supported by server)      ¦
+    ¦                                                                      ¦
+    ¦ ? For more info, ctrl+click on help or visit our website.            ¦
+    +----------------------------------------------------------------------+
+
+Last login: Sun Jul 16 19:54:05 2023
+[root@localhost ~]# hostnamectl set-hostname ceph-client
+[root@localhost ~]# hostname
+ceph-client
+[root@localhost ~]# exit
+logout
+
+---------------------------------------------------------------------------------------------------------
+
+Session stopped
+    - Press <Return> to exit tab
+    - Press R to restart session
+    - Press S to save terminal output to file
+login as: root
+root@192.168.15.142's password:
+    +----------------------------------------------------------------------+
+    ¦                 • MobaXterm Personal Edition v23.0 •                 ¦
+    ¦               (SSH client, X server and network tools)               ¦
+    ¦                                                                      ¦
+    ¦ ? SSH session to root@192.168.15.142                                 ¦
+    ¦   • Direct SSH      :  ?                                             ¦
+    ¦   • SSH compression :  ?                                             ¦
+    ¦   • SSH-browser     :  ?                                             ¦
+    ¦   • X11-forwarding  :  ?  (disabled or not supported by server)      ¦
+    ¦                                                                      ¦
+    ¦ ? For more info, ctrl+click on help or visit our website.            ¦
+    +----------------------------------------------------------------------+
+
+Last login: Sun Jul 16 20:09:55 2023 from 192.168.15.1
+[root@ceph-client ~]# cat /etc/hosts
+127.0.0.1   localhost localhost.localdomain localhost4 localhost4.localdomain4
+::1         localhost localhost.localdomain localhost6 localhost6.localdomain6
+192.168.15.138 ceph-monitor
+192.168.15.139 ceph-controller
+192.168.15.140 ceph-compute01
+192.168.15.141 ceph-compute02
+192.168.15.142 ceph-client
+[root@ceph-client ~]# systemctl stop firewalld
+[root@ceph-client ~]# systemctl disable firewalld
+Removed symlink /etc/systemd/system/multi-user.target.wants/firewalld.service.
+Removed symlink /etc/systemd/system/dbus-org.fedoraproject.FirewallD1.service.
+[root@ceph-client ~]# vi /etc/selinux/config
+[root@ceph-client ~]# init 6
+
+Remote side unexpectedly closed network connection
+
+---------------------------------------------------------------------------------------------------------
+
+Session stopped
+    - Press <Return> to exit tab
+    - Press R to restart session
+    - Press S to save terminal output to file
+login as: root
+root@192.168.15.142's password:
+    +----------------------------------------------------------------------+
+    ¦                 • MobaXterm Personal Edition v23.0 •                 ¦
+    ¦               (SSH client, X server and network tools)               ¦
+    ¦                                                                      ¦
+    ¦ ? SSH session to root@192.168.15.142                                 ¦
+    ¦   • Direct SSH      :  ?                                             ¦
+    ¦   • SSH compression :  ?                                             ¦
+    ¦   • SSH-browser     :  ?                                             ¦
+    ¦   • X11-forwarding  :  ?  (disabled or not supported by server)      ¦
+    ¦                                                                      ¦
+    ¦ ? For more info, ctrl+click on help or visit our website.            ¦
+    +----------------------------------------------------------------------+
+
+Last login: Sun Jul 16 20:52:39 2023
+[root@ceph-client ~]# yum install chrony -y
+Loaded plugins: fastestmirror
+Loading mirror speeds from cached hostfile
+ * base: centos.mirror.net.in
+ * extras: centos.mirror.net.in
+ * updates: centos.mirror.net.in
+Package chrony-3.4-1.el7.x86_64 already installed and latest version
+Nothing to do
+[root@ceph-client ~]# chronyc sourcestats
+210 Number of sources = 4
+Name/IP Address            NP  NR  Span  Frequency  Freq Skew  Offset  Std Dev
+==============================================================================
+144.24.146.96               0   0     0     +0.000   2000.000     +0ns  4000ms
+103.146.168.7.ipacct.in     0   0     0     +0.000   2000.000     +0ns  4000ms
+time.cloudflare.com         0   0     0     +0.000   2000.000     +0ns  4000ms
+157.245.102.2               0   0     0     +0.000   2000.000     +0ns  4000ms
+[root@ceph-client ~]# useradd cephadm && echo "cdac" | passwd --stdin cephadm
+Changing password for user cephadm.
+passwd: all authentication tokens updated successfully.
+[root@ceph-client ~]# echo "cephadm ALL = (root) NOPASSWD:ALL" | sudo tee /etc/sudoers.d/cephadm
+cephadm ALL = (root) NOPASSWD:ALL
+[root@ceph-client ~]# chmod 0440 /etc/sudoers.d/cephadm
+[root@ceph-client ~]# sed -i --follow-symlinks 's/SELINUX=enforcing/SELINUX=disabled/g' /etc/sysconfig/selinux
+[root@ceph-client ~]# sudo yum install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
+Loaded plugins: fastestmirror
+epel-release-latest-7.noarch.rpm                                                  |  15 kB  00:00:00
+Examining /var/tmp/yum-root-bUlSOq/epel-release-latest-7.noarch.rpm: epel-release-7-14.noarch
+Marking /var/tmp/yum-root-bUlSOq/epel-release-latest-7.noarch.rpm to be installed
+Resolving Dependencies
+--> Running transaction check
+---> Package epel-release.noarch 0:7-14 will be installed
+--> Finished Dependency Resolution
+
+Dependencies Resolved
+
+=========================================================================================================
+ Package                Arch             Version           Repository                               Size
+=========================================================================================================
+Installing:
+ epel-release           noarch           7-14              /epel-release-latest-7.noarch            25 k
+
+Transaction Summary
+=========================================================================================================
+Install  1 Package
+
+Total size: 25 k
+Installed size: 25 k
+Downloading packages:
+Running transaction check
+Running transaction test
+Transaction test succeeded
+Running transaction
+  Installing : epel-release-7-14.noarch                                                              1/1
+  Verifying  : epel-release-7-14.noarch                                                              1/1
+
+Installed:
+  epel-release.noarch 0:7-14
+
+Complete!
+[root@ceph-client ~]# vim /etc/chrony..conf
+[root@ceph-client ~]# vim /etc/chrony.conf
+[root@ceph-client ~]# systemctl restart chronyd
+[root@ceph-client ~]# cat /etc/chrony.conf
+# Use public servers from the pool.ntp.org project.
+# Please consider joining the pool (http://www.pool.ntp.org/join.html).
+#server 0.centos.pool.ntp.org iburst
+#server 1.centos.pool.ntp.org iburst
+#server 2.centos.pool.ntp.org iburst
+#server 3.centos.pool.ntp.org iburst
+server ceph-controller
+
+
+# Record the rate at which the system clock gains/losses time.
+driftfile /var/lib/chrony/drift
+
+# Allow the system clock to be stepped in the first three updates
+# if its offset is larger than 1 second.
+makestep 1.0 3
+
+# Enable kernel synchronization of the real-time clock (RTC).
+rtcsync
+
+# Enable hardware timestamping on all interfaces that support it.
+#hwtimestamp *
+
+# Increase the minimum number of selectable sources required to adjust
+# the system clock.
+#minsources 2
+
+# Allow NTP client access from local network.
+#allow 192.168.0.0/16
+
+# Serve time even if not synchronized to a time source.
+#local stratum 10
+
+# Specify file containing keys for NTP authentication.
+#keyfile /etc/chrony.keys
+
+# Specify directory for log files.
+logdir /var/log/chrony
+
+# Select which information is logged.
+#log measurements statistics tracking
+[root@ceph-client ~]# reboot
+
+Remote side unexpectedly closed network connection
+
+---------------------------------------------------------------------------------------------------------
+
+Session stopped
+    - Press <Return> to exit tab
+    - Press R to restart session
+    - Press S to save terminal output to file
+login as: root
+root@192.168.15.142's password:
+    +----------------------------------------------------------------------+
+    ¦                 • MobaXterm Personal Edition v23.0 •                 ¦
+    ¦               (SSH client, X server and network tools)               ¦
+    ¦                                                                      ¦
+    ¦ ? SSH session to root@192.168.15.142                                 ¦
+    ¦   • Direct SSH      :  ?                                             ¦
+    ¦   • SSH compression :  ?                                             ¦
+    ¦   • SSH-browser     :  ?                                             ¦
+    ¦   • X11-forwarding  :  ?  (disabled or not supported by server)      ¦
+    ¦                                                                      ¦
+    ¦ ? For more info, ctrl+click on help or visit our website.            ¦
+    +----------------------------------------------------------------------+
+
+Last login: Sun Jul 16 21:24:25 2023
+[root@ceph-client ~]#
+[root@ceph-client ~]#
+[root@ceph-client ~]#
+[root@ceph-client ~]#
+[root@ceph-client ~]#
+[root@ceph-client ~]#
+[root@ceph-client ~]# rbd create disk01 --size 4096
+[root@ceph-client ~]# rbd ls -l
+NAME    SIZE PARENT FMT PROT LOCK
+disk01 4 GiB          2
+[root@ceph-client ~]# modprobe rbd
+[root@ceph-client ~]# rbd feature disable disk01 exclusive-lock object-map fast-diff deep-flatten
+[root@ceph-client ~]# rbd map disk01
+/dev/rbd0
+[root@ceph-client ~]# rbd showmapped
+id pool image  snap device
+0  rbd  disk01 -    /dev/rbd0
+[root@ceph-client ~]# mkfs.xfs /dev/rbd0
+Discarding blocks...Done.
+meta-data=/dev/rbd0              isize=512    agcount=8, agsize=131072 blks
+         =                       sectsz=512   attr=2, projid32bit=1
+         =                       crc=1        finobt=0, sparse=0
+data     =                       bsize=4096   blocks=1048576, imaxpct=25
+         =                       sunit=1024   swidth=1024 blks
+naming   =version 2              bsize=4096   ascii-ci=0 ftype=1
+log      =internal log           bsize=4096   blocks=2560, version=2
+         =                       sectsz=512   sunit=8 blks, lazy-count=1
+realtime =none                   extsz=4096   blocks=0, rtextents=0
+[root@ceph-client ~]# mkdir -p /mnt/mydisk
+[root@ceph-client ~]# mount /dev/rbd0 /mnt/mydisk
+[root@ceph-client ~]# df -h
+Filesystem               Size  Used Avail Use% Mounted on
+devtmpfs                 475M     0  475M   0% /dev
+tmpfs                    487M     0  487M   0% /dev/shm
+tmpfs                    487M  7.7M  479M   2% /run
+tmpfs                    487M     0  487M   0% /sys/fs/cgroup
+/dev/mapper/centos-root   17G  1.8G   16G  11% /
+/dev/sda1               1014M  138M  877M  14% /boot
+tmpfs                     98M     0   98M   0% /run/user/0
+/dev/rbd0                4.0G   33M  4.0G   1% /mnt/mydisk
+[root@ceph-client ~]# dd if=/dev/rbd0 of=file1.txt bs=1024 count=220040
+220040+0 records in
+220040+0 records out
+225320960 bytes (225 MB) copied, 0.80751 s, 279 MB/s
+[root@ceph-client ~]# df -h
+Filesystem               Size  Used Avail Use% Mounted on
+devtmpfs                 475M     0  475M   0% /dev
+tmpfs                    487M     0  487M   0% /dev/shm
+tmpfs                    487M  7.7M  479M   2% /run
+tmpfs                    487M     0  487M   0% /sys/fs/cgroup
+/dev/mapper/centos-root   17G  2.0G   16G  12% /
+/dev/sda1               1014M  138M  877M  14% /boot
+tmpfs                     98M     0   98M   0% /run/user/0
+/dev/rbd0                4.0G   33M  4.0G   1% /mnt/mydisk
+[root@ceph-client ~]# lsblk
+NAME            MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT
+sda               8:0    0   20G  0 disk
++-sda1            8:1    0    1G  0 part /boot
++-sda2            8:2    0   19G  0 part
+  +-centos-root 253:0    0   17G  0 lvm  /
+  +-centos-swap 253:1    0    2G  0 lvm  [SWAP]
+sr0              11:0    1  973M  0 rom
+rbd0            252:0    0    4G  0 disk /mnt/mydisk
+[root@ceph-client ~]# ll /mnt/mydisk/
+total 0
+[root@ceph-client ~]# ll
+total 220044
+-rw-------. 1 root root      1266 Nov 27  2022 anaconda-ks.cfg
+-rw-r--r--  1 root root 225320960 Jul 16 22:08 file1.txt
+[root@ceph-client ~]# ll -h
+total 215M
+-rw-------. 1 root root 1.3K Nov 27  2022 anaconda-ks.cfg
+-rw-r--r--  1 root root 215M Jul 16 22:08 file1.txt
+[root@ceph-client ~]#

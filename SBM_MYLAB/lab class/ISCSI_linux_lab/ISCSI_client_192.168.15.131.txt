@@ -1,0 +1,214 @@
+login as: root
+root@192.168.15.131's password:
+    +----------------------------------------------------------------------+
+    ¦                 • MobaXterm Personal Edition v23.0 •                 ¦
+    ¦               (SSH client, X server and network tools)               ¦
+    ¦                                                                      ¦
+    ¦ ? SSH session to root@192.168.15.131                                 ¦
+    ¦   • Direct SSH      :  ?                                             ¦
+    ¦   • SSH compression :  ?                                             ¦
+    ¦   • SSH-browser     :  ?                                             ¦
+    ¦   • X11-forwarding  :  ?  (disabled or not supported by server)      ¦
+    ¦                                                                      ¦
+    ¦ ? For more info, ctrl+click on help or visit our website.            ¦
+    +----------------------------------------------------------------------+
+
+Last login: Fri Jul 14 22:41:03 2023 from 192.168.15.1
+[root@localhost ~]# history
+    1  yum install icsci-initiator-utils
+    2  yum install iscsi-initiator-utils
+    3  systemctl stop firewalld
+    4  cat /etc/iscsi/initiatorname.iscsi
+    5  iscsiadm -m -t st -p 192.168.15.130 --login
+    6  iscsiadm -m discovery -t st -p 192.168.15.130 --login
+    7  lsblk
+    8  iscsiadm -m discovery -t st -p 192.168.15.130
+    9  iscsiadm -m discovery -t st -p 192.168.15.130 --login
+   10  fdisk -l
+   11  lsblk
+   12  syetemctl start iscsi
+   13  systemctl start iscsi
+   14  lsblk
+   15  iscsiadm -m discovery -t st -p 192.168.15.130
+   16  exit
+   17  history
+[root@localhost ~]# lsblk
+NAME            MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT
+sda               8:0    0   20G  0 disk
++-sda1            8:1    0    1G  0 part /boot
++-sda2            8:2    0   19G  0 part
+  +-centos-root 253:0    0   17G  0 lvm  /
+  +-centos-swap 253:1    0    2G  0 lvm  [SWAP]
+sr0              11:0    1  973M  0 rom
+[root@localhost ~]# iscsiadm -m discovery -t st -p 192.168.15.130 --login
+192.168.15.130:3260,1 iqn.2023-07.cdac.acts.hpcsa.sbm:disk1
+[root@localhost ~]# lsblk
+NAME            MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT
+sda               8:0    0   20G  0 disk
++-sda1            8:1    0    1G  0 part /boot
++-sda2            8:2    0   19G  0 part
+  +-centos-root 253:0    0   17G  0 lvm  /
+  +-centos-swap 253:1    0    2G  0 lvm  [SWAP]
+sr0              11:0    1  973M  0 rom
+[root@localhost ~]# iscsiadm -m node -U all
+Logging out of session [sid: 1, target: iqn.2023-07.cdac.acts.hpcsa.sbm:disk1, portal: 192.168.15.130,3260]
+Logout of [sid: 1, target: iqn.2023-07.cdac.acts.hpcsa.sbm:disk1, portal: 192.168.15.130,3260] successful.
+[root@localhost ~]# iscsiadm -m discovery -t st -p 192.168.15.130 --login
+192.168.15.130:3260,1 iqn.2023-07.cdac.acts.hpcsa.sbm:disk1
+Logging in to [iface: default, target: iqn.2023-07.cdac.acts.hpcsa.sbm:disk1, portal: 192.168.15.130,3260] (multiple)
+Login to [iface: default, target: iqn.2023-07.cdac.acts.hpcsa.sbm:disk1, portal: 192.168.15.130,3260] successful.
+[root@localhost ~]# lsblk
+NAME            MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT
+sda               8:0    0   20G  0 disk
++-sda1            8:1    0    1G  0 part /boot
++-sda2            8:2    0   19G  0 part
+  +-centos-root 253:0    0   17G  0 lvm  /
+  +-centos-swap 253:1    0    2G  0 lvm  [SWAP]
+sdb               8:16   0    1G  0 disk
+sr0              11:0    1  973M  0 rom
+[root@localhost ~]# mkfs.ext4 /dev/sdb
+mke2fs 1.42.9 (28-Dec-2013)
+/dev/sdb is entire device, not just one partition!
+Proceed anyway? (y,n) n
+[root@localhost ~]# fdisk /dev/sd
+sda   sda1  sda2  sdb
+[root@localhost ~]# fdisk /dev/sdb
+Welcome to fdisk (util-linux 2.23.2).
+
+Changes will remain in memory only, until you decide to write them.
+Be careful before using the write command.
+
+Device does not contain a recognized partition table
+Building a new DOS disklabel with disk identifier 0x43043263.
+
+Command (m for help): n
+Partition type:
+   p   primary (0 primary, 0 extended, 4 free)
+   e   extended
+Select (default p):
+Using default response p
+Partition number (1-4, default 1):
+First sector (8192-2097151, default 8192):
+Using default value 8192
+Last sector, +sectors or +size{K,M,G} (8192-2097151, default 2097151):
+Using default value 2097151
+Partition 1 of type Linux and of size 1020 MiB is set
+
+Command (m for help): w
+The partition table has been altered!
+
+Calling ioctl() to re-read partition table.
+Syncing disks.
+[root@localhost ~]# mkfs.ext4 /dev/sdb
+sdb   sdb1
+[root@localhost ~]# mkfs.ext4 /dev/sdb1
+mke2fs 1.42.9 (28-Dec-2013)
+Filesystem label=
+OS type: Linux
+Block size=4096 (log=2)
+Fragment size=4096 (log=2)
+Stride=0 blocks, Stripe width=1024 blocks
+65280 inodes, 261120 blocks
+13056 blocks (5.00%) reserved for the super user
+First data block=0
+Maximum filesystem blocks=268435456
+8 block groups
+32768 blocks per group, 32768 fragments per group
+8160 inodes per group
+Superblock backups stored on blocks:
+        32768, 98304, 163840, 229376
+
+Allocating group tables: done
+Writing inode tables: done
+Creating journal (4096 blocks): done
+Writing superblocks and filesystem accounting information: done
+
+[root@localhost ~]# mkdir /mnt/iscsilab
+[root@localhost ~]# mount /dev/sdb1 /mnt/iscsilab/
+[root@localhost ~]# df -h
+Filesystem               Size  Used Avail Use% Mounted on
+devtmpfs                 898M     0  898M   0% /dev
+tmpfs                    910M     0  910M   0% /dev/shm
+tmpfs                    910M  9.6M  901M   2% /run
+tmpfs                    910M     0  910M   0% /sys/fs/cgroup
+/dev/mapper/centos-root   17G  1.5G   16G   9% /
+/dev/sda1               1014M  151M  864M  15% /boot
+tmpfs                    182M     0  182M   0% /run/user/0
+/dev/sdb1                988M  2.6M  919M   1% /mnt/iscsilab
+[root@localhost ~]# cd /mnt/iscsilab/
+[root@localhost iscsilab]# iscsiadm -m session
+tcp: [2] 192.168.15.130:3260,1 iqn.2023-07.cdac.acts.hpcsa.sbm:disk1 (non-flash)
+[root@localhost iscsilab]# lsblk
+NAME            MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT
+sda               8:0    0   20G  0 disk
++-sda1            8:1    0    1G  0 part /boot
++-sda2            8:2    0   19G  0 part
+  +-centos-root 253:0    0   17G  0 lvm  /
+  +-centos-swap 253:1    0    2G  0 lvm  [SWAP]
+sdb               8:16   0    1G  0 disk
++-sdb1            8:17   0 1020M  0 part /mnt/iscsilab
+sr0              11:0    1  973M  0 rom
+[root@localhost iscsilab]# dd if=/dev/zero of=file.test bs=1024 count=520040
+520040+0 records in
+520040+0 records out
+532520960 bytes (533 MB) copied, 6.32227 s, 84.2 MB/s
+[root@localhost iscsilab]# lsblk
+NAME            MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT
+sda               8:0    0   20G  0 disk
++-sda1            8:1    0    1G  0 part /boot
++-sda2            8:2    0   19G  0 part
+  +-centos-root 253:0    0   17G  0 lvm  /
+  +-centos-swap 253:1    0    2G  0 lvm  [SWAP]
+sdb               8:16   0    1G  0 disk
++-sdb1            8:17   0 1020M  0 part /mnt/iscsilab
+sr0              11:0    1  973M  0 rom
+[root@localhost iscsilab]# df -Th
+Filesystem              Type      Size  Used Avail Use% Mounted on
+devtmpfs                devtmpfs  898M     0  898M   0% /dev
+tmpfs                   tmpfs     910M     0  910M   0% /dev/shm
+tmpfs                   tmpfs     910M  9.6M  901M   2% /run
+tmpfs                   tmpfs     910M     0  910M   0% /sys/fs/cgroup
+/dev/mapper/centos-root xfs        17G  1.5G   16G   9% /
+/dev/sda1               xfs      1014M  151M  864M  15% /boot
+tmpfs                   tmpfs     182M     0  182M   0% /run/user/0
+/dev/sdb1               ext4      988M  511M  411M  56% /mnt/iscsilab
+[root@localhost iscsilab]#
+[root@localhost iscsilab]# history
+    1  yum install icsci-initiator-utils
+    2  yum install iscsi-initiator-utils
+    3  systemctl stop firewalld
+    4  cat /etc/iscsi/initiatorname.iscsi
+    5  iscsiadm -m -t st -p 192.168.15.130 --login
+    6  iscsiadm -m discovery -t st -p 192.168.15.130 --login
+    7  lsblk
+    8  iscsiadm -m discovery -t st -p 192.168.15.130
+    9  iscsiadm -m discovery -t st -p 192.168.15.130 --login
+   10  fdisk -l
+   11  lsblk
+   12  syetemctl start iscsi
+   13  systemctl start iscsi
+   14  lsblk
+   15  iscsiadm -m discovery -t st -p 192.168.15.130
+   16  exit
+   17  history
+   18  lsblk
+   19  iscsiadm -m discovery -t st -p 192.168.15.130 --login
+   20  lsblk
+   21  iscsiadm -m node -U all
+   22  iscsiadm -m discovery -t st -p 192.168.15.130 --login
+   23  lsblk
+   24  mkfs.ext4 /dev/sdb
+   25  fdisk /dev/sdb
+   26  mkfs.ext4 /dev/sdb1
+   27  mkdir /mnt/iscsilab
+   28  mount /dev/sdb1 /mnt/iscsilab/
+   29  df -h
+   30  cd /mnt/iscsilab/
+   31  iscsiadm -m session
+   32  lsblk
+   33  dd if=/dev/zero of=file.test bs=1024 count=520040
+   34  lsblk
+   35  df -Th
+   36  history
+[root@localhost iscsilab]#
+

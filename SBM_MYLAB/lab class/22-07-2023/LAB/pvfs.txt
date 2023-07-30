@@ -1,0 +1,41 @@
+yum update
+yum install orangefs*
+pvfs2-genconfig /etc/orangefs/orangefs.conf
+mkdir /pvfsmnt
+* Enter protocol type [Default is tcp]:
+
+* Enter port number [Default is 3334]:
+
+* Enter directory name: [Default is /var/lib/orangefs/data]:
+
+* Enter directory name: [Default is /var/lib/orangefs/meta]:
+
+* Enter hostnames [Default is localhost]: centos-3,centos-1,centos-2
+
+* Enter yes or no [Default is yes]: y
+
+* Enter hostnames [Default is localhost]: centos-3
+
+* Would you like to verify server list (y/n) [Default is n]? y
+
+****** I/O servers:
+centos-1
+centos-3
+centos-2
+
+****** Metadata servers:
+centos-3
+
+* Does this look ok (y/n) [Default is y]? y
+
+Writing fs config file... done
+
+pvfs2-server -f /etc/orangefs/orangefs.conf
+
+systemctl start orangefs-server && systemctl status orangefs-server
+
+nano /etc/pvfs2tab
+mount -t pvfs2 tcp://localhost:3334/orangefs /pvfsmnt
+
+
+

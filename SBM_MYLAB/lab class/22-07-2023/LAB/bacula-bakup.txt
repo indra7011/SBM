@@ -1,0 +1,149 @@
+yum install -y bacula-director bacula-storage bacula-console bacula-client mariadb-server nano httpd
+
+systemctl enable mariadb && systemctl start mariadb && systemctl status mariadb
+
+/usr/libexec/bacula/grant_mysql_privileges
+/usr/libexec/bacula/create_mysql_database -u root
+/usr/libexec/bacula/make_mysql_tables -u bacula
+
+mysql_secure_installation
+
+alternatives --config libbaccats.so
+select mysql
+
+setenforce 0
+
+systemctl stop firewalld
+
+mkdir -p /bacula/backup /bacula/restore
+
+chown -R bacula:bacula /bacula
+chmod -R 700 /bacula
+
+
+nano /etc/hosts
+systemip backup.hpcsa.com
+
+nano /etc/bacula/bacula-dir.conf
+
+Director {                           
+  Name = bacula-dir
+  DIRport = 9101                
+  QueryFile = "/etc/bacula/query.sql"
+  WorkingDirectory = "/var/spool/bacula"
+  PidDirectory = "/var/run"
+  Maximum Concurrent Jobs = 1
+  Password = "manish"         
+  Messages = Daemon
+  DirAddress = 127.0.0.1 #DIR address
+}
+
+Job {
+  Name = "BackupLocalFiles"
+  JobDefs = "DefaultJob"
+}
+
+
+Job {
+  Name = "RestoreLocalFiles"
+  Type = Restore
+  Client=bacula-fd
+  FileSet="Full Set"
+  Storage = File
+  Pool = Default
+  Messages = Standard
+  Where = /bacula/restore # restore point
+}
+
+
+FileSet {
+  Name = "Full Set"
+  Include {
+    Options {
+      signature = MD5
+      compression = GZIP
+    }    
+File = /var/www/html/ #folder needed to backup
+}
+  Exclude {
+    File = /var/lib/bacula
+    File = /proc
+    File = /tmp
+    File = /.journal
+    File = /.fsck
+    File = /bacula
+  }
+}
+
+Storage {
+  Name = File
+# Do not use "localhost" here
+  Address = backup.hpcsa.com               # N.B. Use a fully qualified name here
+  SDPort = 9103
+  Password = "@@SD_PASSWORD@@"
+  Device = FileStorage
+  Media Type = File
+}
+
+
+# Generic catalog service
+Catalog {
+  Name = MyCatalog
+# Uncomment the following line if you want the dbi driver
+# dbdriver = "dbi:postgresql"; dbaddress = 127.0.0.1; dbport =
+  dbname = "bacula"; dbuser = "root"; dbpassword = "manish"
+}
+
+
+# File Pool definition
+Pool {
+  Name = File
+  Pool Type = Backup
+  Label Format = Local-
+  Recycle = yes                       # Bacula can automatically recycle Volumes
+  AutoPrune = yes                     # Prune expired volumes
+  Volume Retention = 30 days         # one year
+  Maximum Volume Bytes = 10G          # Limit Volume size to something reasonable
+  Maximum Volumes = 100               # Limit number of Volumes in Pool
+}
+
+bacula-dir -tc /etc/bacula/bacula-dir.conf
+
+
+nano /etc/bacula/bacula-sd.conf
+
+Storage {                             # definition of myself
+  Name = BackupServer-sd
+  SDPort = 9103                  # Director's port
+  WorkingDirectory = "/var/lib/bacula"
+  Pid Directory = "/var/run/bacula"
+  Maximum Concurrent Jobs = 20
+  SDAddress = backup.hpcsa.com
+}
+
+
+Device {
+  Name = FileStorage
+  Media Type = File
+  Archive Device = /bacula/backup 
+  LabelMedia = yes;                   # lets Bacula label unlabeled media
+  Random Access = Yes;
+  AutomaticMount = yes;               # when device opened, read it
+  RemovableMedia = no;
+  AlwaysOpen = no;
+}
+
+bacula-sd -tc /etc/bacula/bacula-sd.conf
+ 
+
+systemctl enable bacula-dir &&  systemctl start bacula-dir &&  systemctl status bacula-dir  
+systemctl enable bacula-sd &&  systemctl start bacula-sd &&  systemctl status bacula-sd 
+systemctl enable bacula-fd &&  systemctl start bacula-fd &&  systemctl status bacula-fd 
+
+bconsole
+label
+run
+
+status director
+
+restore all
