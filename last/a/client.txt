@@ -1,0 +1,133 @@
+[root@client ~]# yum install glusterfs-fuse
+Loaded plugins: fastestmirror
+Loading mirror speeds from cached hostfile
+ * base: centos.mirror.net.in
+ * extras: centos.mirror.net.in
+ * updates: centos.mirror.net.in
+Resolving Dependencies
+--> Running transaction check
+---> Package glusterfs-fuse.x86_64 0:6.0-61.el7 will be installed
+--> Processing Dependency: glusterfs-libs(x86-64) = 6.0-61.el7 for package: glusterfs-fuse-6.0-61.el7.x86_64
+--> Processing Dependency: glusterfs-client-xlators(x86-64) = 6.0-61.el7 for package: glusterfs-fuse-6.0-61.el7.x86_64
+--> Processing Dependency: glusterfs(x86-64) = 6.0-61.el7 for package: glusterfs-fuse-6.0-61.el7.x86_64
+--> Processing Dependency: psmisc for package: glusterfs-fuse-6.0-61.el7.x86_64
+--> Processing Dependency: attr for package: glusterfs-fuse-6.0-61.el7.x86_64
+--> Processing Dependency: libglusterfs.so.0()(64bit) for package: glusterfs-fuse-6.0-61.el7.x86_64
+--> Processing Dependency: libgfxdr.so.0()(64bit) for package: glusterfs-fuse-6.0-61.el7.x86_64
+--> Processing Dependency: libgfrpc.so.0()(64bit) for package: glusterfs-fuse-6.0-61.el7.x86_64
+--> Running transaction check
+---> Package attr.x86_64 0:2.4.46-13.el7 will be installed
+---> Package glusterfs.x86_64 0:6.0-61.el7 will be installed
+---> Package glusterfs-client-xlators.x86_64 0:6.0-61.el7 will be installed
+---> Package glusterfs-libs.x86_64 0:6.0-61.el7 will be installed
+---> Package psmisc.x86_64 0:22.20-17.el7 will be installed
+--> Finished Dependency Resolution
+
+Dependencies Resolved
+
+=========================================================================================================
+ Package                             Arch              Version                  Repository          Size
+=========================================================================================================
+Installing:
+ glusterfs-fuse                      x86_64            6.0-61.el7               updates            129 k
+Installing for dependencies:
+ attr                                x86_64            2.4.46-13.el7            base                66 k
+ glusterfs                           x86_64            6.0-61.el7               updates            586 k
+ glusterfs-client-xlators            x86_64            6.0-61.el7               updates            786 k
+ glusterfs-libs                      x86_64            6.0-61.el7               updates            389 k
+ psmisc                              x86_64            22.20-17.el7             base               141 k
+
+Transaction Summary
+=========================================================================================================
+Install  1 Package (+5 Dependent packages)
+
+Total download size: 2.0 M
+Installed size: 9.1 M
+Is this ok [y/d/N]: y
+Downloading packages:
+(1/6): attr-2.4.46-13.el7.x86_64.rpm                                              |  66 kB  00:00:01
+(2/6): glusterfs-6.0-61.el7.x86_64.rpm                                            | 586 kB  00:00:01
+(3/6): glusterfs-client-xlators-6.0-61.el7.x86_64.rpm                             | 786 kB  00:00:01
+(4/6): glusterfs-fuse-6.0-61.el7.x86_64.rpm                                       | 129 kB  00:00:00
+(5/6): glusterfs-libs-6.0-61.el7.x86_64.rpm                                       | 389 kB  00:00:00
+(6/6): psmisc-22.20-17.el7.x86_64.rpm                                             | 141 kB  00:00:00
+---------------------------------------------------------------------------------------------------------
+Total                                                                    1.0 MB/s | 2.0 MB  00:00:02
+Running transaction check
+Running transaction test
+Transaction test succeeded
+Running transaction
+  Installing : glusterfs-libs-6.0-61.el7.x86_64                                                      1/6
+  Installing : glusterfs-client-xlators-6.0-61.el7.x86_64                                            2/6
+  Installing : glusterfs-6.0-61.el7.x86_64                                                           3/6
+  Installing : psmisc-22.20-17.el7.x86_64                                                            4/6
+  Installing : attr-2.4.46-13.el7.x86_64                                                             5/6
+  Installing : glusterfs-fuse-6.0-61.el7.x86_64                                                      6/6
+  Verifying  : glusterfs-client-xlators-6.0-61.el7.x86_64                                            1/6
+  Verifying  : glusterfs-6.0-61.el7.x86_64                                                           2/6
+  Verifying  : glusterfs-fuse-6.0-61.el7.x86_64                                                      3/6
+  Verifying  : glusterfs-libs-6.0-61.el7.x86_64                                                      4/6
+  Verifying  : attr-2.4.46-13.el7.x86_64                                                             5/6
+  Verifying  : psmisc-22.20-17.el7.x86_64                                                            6/6
+
+Installed:
+  glusterfs-fuse.x86_64 0:6.0-61.el7
+
+Dependency Installed:
+  attr.x86_64 0:2.4.46-13.el7                              glusterfs.x86_64 0:6.0-61.el7
+  glusterfs-client-xlators.x86_64 0:6.0-61.el7             glusterfs-libs.x86_64 0:6.0-61.el7
+  psmisc.x86_64 0:22.20-17.el7
+
+Complete!
+[root@client ~]# mkdir /mnt/gdrive
+[root@client ~]# mount -t glusterfs node1.hpcsa.in:/gdisk2 /mnt/gdrive
+[root@client ~]# df -h
+Filesystem               Size  Used Avail Use% Mounted on
+devtmpfs                 475M     0  475M   0% /dev
+tmpfs                    487M     0  487M   0% /dev/shm
+tmpfs                    487M  7.7M  479M   2% /run
+tmpfs                    487M     0  487M   0% /sys/fs/cgroup
+/dev/mapper/centos-root   17G  1.5G   16G   9% /
+/dev/sda1               1014M  138M  877M  14% /boot
+tmpfs                     98M     0   98M   0% /run/user/0
+node1.hpcsa.in:/gdisk2    20G  238M   20G   2% /mnt/gdrive
+[root@client ~]# cd /m
+media/ mnt/
+[root@client ~]# cd /mnt/gdrive/
+[root@client gdrive]# dd in=/dev/zero of=file.txt bs=1024 count=520040
+dd: unrecognized operand ‘in=/dev/zero’
+Try 'dd --help' for more information.
+[root@client gdrive]# dd if=/dev/zero of=file.txt bs=1024 count=520040
+520040+0 records in
+520040+0 records out
+532520960 bytes (533 MB) copied, 17.5343 s, 30.4 MB/s
+[root@client gdrive]# df -h
+Filesystem               Size  Used Avail Use% Mounted on
+devtmpfs                 475M     0  475M   0% /dev
+tmpfs                    487M     0  487M   0% /dev/shm
+tmpfs                    487M  7.7M  479M   2% /run
+tmpfs                    487M     0  487M   0% /sys/fs/cgroup
+/dev/mapper/centos-root   17G  1.5G   16G   9% /
+/dev/sda1               1014M  138M  877M  14% /boot
+tmpfs                     98M     0   98M   0% /run/user/0
+node1.hpcsa.in:/gdisk2    20G  745M   20G   4% /mnt/gdrive
+[root@client gdrive]# history
+    1  hostnamectl set-hostname client.hpcsa.in
+    2  exec bash
+    3  ifup ens33
+    4  yum install vim -y
+    5  yum install rsync -y
+    6  systemctl stop firewalld
+    7  systemctl disable firewalld
+    8  vim /etc/selinux/config
+    9  init 6
+   10  yum install glusterfs-fuse
+   11  mkdir /mnt/gdrive
+   12  mount -t glusterfs node1.hpcsa.in:/gdisk2 /mnt/gdrive
+   13  df -h
+   14  cd /mnt/gdrive/
+   15  dd in=/dev/zero of=file.txt bs=1024 count=520040
+   16  dd if=/dev/zero of=file.txt bs=1024 count=520040
+   17  df -h
+   18  history
+[root@client gdrive]#

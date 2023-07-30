@@ -1,0 +1,26 @@
+   1  yum clean all
+    2  yum install mdadm -y
+    3  #mdadm --create --verbose /dev/md1 --level=1 --raid-devices=2 /dev/sdb /dev/sdc
+    4  lsblk
+    6  mdadm --create --verbose /dev/md2 --level=1 --raid-devices=2 /dev/sdd /dev/sde
+    7  lsblk
+    8  mdadm --create --verbose /dev/md102 --level=0 --raid-devices=2 /dev/md1 /dev/md2
+    9  lsblk
+   10  mdadm --detail /dev/md102
+mdadm --fail /dev/md1 /dev/sdb ---check the mark as faulty
+mdadm --detail /dev/md1
+mdadm -r /dev/md1 /dev/sdb---removed
+mdadm --detail /dev/md1 
+mdadm --detail /dev/md2---
+mdadm --fail /dev/md2 /dev/sdd--- check the mark faulty
+mdadm --detail  /dev/md2
+mdadm -r /dev/md2 /dev/sdd -- removed
+mdadm --detail /dev/md2
+lsblk
+cat > test.txt
+mdadm --add /dev/md1 /dev/sdd
+   41  mdadm --add /dev/md2 /dev/sdb
+   42  mdadm --detail /dev/md102
+   43  ls
+   44  mdadm --detail /dev/md1
+   45  mdadm --detail /dev/md2

@@ -1,0 +1,370 @@
+[root@node3 ~]# fdisk /dev/sdb
+Welcome to fdisk (util-linux 2.23.2).
+
+Changes will remain in memory only, until you decide to write them.
+Be careful before using the write command.
+
+Device does not contain a recognized partition table
+Building a new DOS disklabel with disk identifier 0x330b68cb.
+
+Command (m for help): n
+Partition type:
+   p   primary (0 primary, 0 extended, 4 free)
+   e   extended
+Select (default p): p
+Partition number (1-4, default 1):
+First sector (2048-41943039, default 2048):
+Using default value 2048
+Last sector, +sectors or +size{K,M,G} (2048-41943039, default 41943039):
+Using default value 41943039
+Partition 1 of type Linux and of size 20 GiB is set
+
+Command (m for help): w
+The partition table has been altered!
+
+Calling ioctl() to re-read partition table.
+Syncing disks.
+[root@node3 ~]# mkfs.xfs /dev/sdb1
+meta-data=/dev/sdb1              isize=512    agcount=4, agsize=1310656 blks
+         =                       sectsz=512   attr=2, projid32bit=1
+         =                       crc=1        finobt=0, sparse=0
+data     =                       bsize=4096   blocks=5242624, imaxpct=25
+         =                       sunit=0      swidth=0 blks
+naming   =version 2              bsize=4096   ascii-ci=0 ftype=1
+log      =internal log           bsize=4096   blocks=2560, version=2
+         =                       sectsz=512   sunit=0 blks, lazy-count=1
+realtime =none                   extsz=4096   blocks=0, rtextents=0
+[root@node3 ~]# mkdir /mnt/disk1
+[root@node3 ~]# mount /dev/sdb1 /mnt/disk1/
+[root@node3 ~]# lsblk
+NAME            MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT
+sda               8:0    0   20G  0 disk
+├─sda1            8:1    0    1G  0 part /boot
+└─sda2            8:2    0   19G  0 part
+  ├─centos-root 253:0    0   17G  0 lvm  /
+  └─centos-swap 253:1    0    2G  0 lvm  [SWAP]
+sdb               8:16   0   20G  0 disk
+└─sdb1            8:17   0   20G  0 part /mnt/disk1
+sr0              11:0    1  973M  0 rom
+[root@node3 ~]# yum install wget centos-release-gluster epel-release glusterfs-server -y
+Loaded plugins: fastestmirror
+Loading mirror speeds from cached hostfile
+ * base: centos.mirror.net.in
+ * extras: centos.mirror.net.in
+ * updates: centos.mirror.net.in
+No package glusterfs-server available.
+Resolving Dependencies
+--> Running transaction check
+---> Package centos-release-gluster9.noarch 0:1.0-1.el7 will be installed
+--> Processing Dependency: centos-release-storage-common for package: centos-release-gluster9-1.0-1.el7.noarch
+---> Package epel-release.noarch 0:7-11 will be installed
+---> Package wget.x86_64 0:1.14-18.el7_6.1 will be installed
+--> Running transaction check
+---> Package centos-release-storage-common.noarch 0:2-2.el7.centos will be installed
+--> Finished Dependency Resolution
+
+Dependencies Resolved
+
+=========================================================================================================
+ Package                                Arch            Version                    Repository       Size
+=========================================================================================================
+Installing:
+ centos-release-gluster9                noarch          1.0-1.el7                  extras          4.1 k
+ epel-release                           noarch          7-11                       extras           15 k
+ wget                                   x86_64          1.14-18.el7_6.1            base            547 k
+Installing for dependencies:
+ centos-release-storage-common          noarch          2-2.el7.centos             extras          5.1 k
+
+Transaction Summary
+=========================================================================================================
+Install  3 Packages (+1 Dependent package)
+
+Total download size: 571 k
+Installed size: 2.0 M
+Downloading packages:
+(1/4): centos-release-gluster9-1.0-1.el7.noarch.rpm                               | 4.1 kB  00:00:00
+(2/4): epel-release-7-11.noarch.rpm                                               |  15 kB  00:00:00
+(3/4): centos-release-storage-common-2-2.el7.centos.noarch.rpm                    | 5.1 kB  00:00:00
+(4/4): wget-1.14-18.el7_6.1.x86_64.rpm                                            | 547 kB  00:00:00
+---------------------------------------------------------------------------------------------------------
+Total                                                                    2.2 MB/s | 571 kB  00:00:00
+Running transaction check
+Running transaction test
+Transaction test succeeded
+Running transaction
+  Installing : centos-release-storage-common-2-2.el7.centos.noarch                                   1/4
+  Installing : centos-release-gluster9-1.0-1.el7.noarch                                              2/4
+  Installing : wget-1.14-18.el7_6.1.x86_64                                                           3/4
+  Installing : epel-release-7-11.noarch                                                              4/4
+  Verifying  : centos-release-gluster9-1.0-1.el7.noarch                                              1/4
+  Verifying  : centos-release-storage-common-2-2.el7.centos.noarch                                   2/4
+  Verifying  : epel-release-7-11.noarch                                                              3/4
+  Verifying  : wget-1.14-18.el7_6.1.x86_64                                                           4/4
+
+Installed:
+  centos-release-gluster9.noarch 0:1.0-1.el7  epel-release.noarch 0:7-11  wget.x86_64 0:1.14-18.el7_6.1
+
+Dependency Installed:
+  centos-release-storage-common.noarch 0:2-2.el7.centos
+
+Complete!
+[root@node3 ~]# yum install wget centos-release-gluster epel-release glusterfs-server -y
+Loaded plugins: fastestmirror
+Loading mirror speeds from cached hostfile
+epel/x86_64/metalink                                                              | 6.1 kB  00:00:00
+ * base: centos.mirror.net.in
+ * centos-gluster9: centos.mirror.net.in
+ * epel: epel.excellmedia.net
+ * extras: centos.mirror.net.in
+ * updates: centos.mirror.net.in
+centos-gluster9                                                                   | 3.0 kB  00:00:00
+epel                                                                              | 4.7 kB  00:00:00
+(1/4): centos-gluster9/7/x86_64/primary_db                                        |  89 kB  00:00:00
+(2/4): epel/x86_64/group_gz                                                       |  99 kB  00:00:00
+(3/4): epel/x86_64/updateinfo                                                     | 1.0 MB  00:00:04
+epel/x86_64/primary_db         FAILED                                          /s | 3.4 MB  93:22:17 ETA
+https://mirrors.thzhost.com/epel/7/x86_64/repodata/51a5a2e2b6ae6b8972227f10bb9860ff84b6dbf4388a5b7942428658c6b4743f-primary.sqlite.bz2: [Errno 12] Timeout on https://mirrors.thzhost.com/epel/7/x86_64/repodata/51a5a2e2b6ae6b8972227f10bb9860ff84b6dbf4388a5b7942428658c6b4743f-primary.sqlite.bz2: (28, 'Operation too slow. Less than 1000 bytes/sec transferred the last 30 seconds')
+Trying other mirror.
+(4/4): epel/x86_64/primary_db                                                     | 7.0 MB  00:00:00
+Package wget-1.14-18.el7_6.1.x86_64 already installed and latest version
+Package centos-release-gluster9-1.0-1.el7.noarch already installed and latest version
+Resolving Dependencies
+--> Running transaction check
+---> Package epel-release.noarch 0:7-11 will be updated
+---> Package epel-release.noarch 0:7-14 will be an update
+---> Package glusterfs-server.x86_64 0:9.6-1.el7 will be installed
+--> Processing Dependency: glusterfs = 9.6-1.el7 for package: glusterfs-server-9.6-1.el7.x86_64
+--> Processing Dependency: glusterfs-cli = 9.6-1.el7 for package: glusterfs-server-9.6-1.el7.x86_64
+--> Processing Dependency: glusterfs-client-xlators = 9.6-1.el7 for package: glusterfs-server-9.6-1.el7.x86_64
+--> Processing Dependency: glusterfs-fuse = 9.6-1.el7 for package: glusterfs-server-9.6-1.el7.x86_64
+--> Processing Dependency: glusterfs-libs = 9.6-1.el7 for package: glusterfs-server-9.6-1.el7.x86_64
+--> Processing Dependency: libgfapi0 = 9.6-1.el7 for package: glusterfs-server-9.6-1.el7.x86_64
+--> Processing Dependency: libgfchangelog0 = 9.6-1.el7 for package: glusterfs-server-9.6-1.el7.x86_64
+--> Processing Dependency: libgfapi.so.0(GFAPI_3.4.0)(64bit) for package: glusterfs-server-9.6-1.el7.x86_64
+--> Processing Dependency: libgfapi.so.0(GFAPI_3.4.2)(64bit) for package: glusterfs-server-9.6-1.el7.x86_64
+--> Processing Dependency: libgfapi.so.0(GFAPI_3.5.1)(64bit) for package: glusterfs-server-9.6-1.el7.x86_64
+--> Processing Dependency: libgfapi.so.0(GFAPI_3.6.0)(64bit) for package: glusterfs-server-9.6-1.el7.x86_64
+--> Processing Dependency: libgfapi.so.0(GFAPI_3.7.0)(64bit) for package: glusterfs-server-9.6-1.el7.x86_64
+--> Processing Dependency: libgfapi.so.0(GFAPI_3.7.4)(64bit) for package: glusterfs-server-9.6-1.el7.x86_64
+--> Processing Dependency: libgfapi.so.0(GFAPI_6.0)(64bit) for package: glusterfs-server-9.6-1.el7.x86_64
+--> Processing Dependency: libgfapi.so.0(GFAPI_PRIVATE_3.4.0)(64bit) for package: glusterfs-server-9.6-1.el7.x86_64
+--> Processing Dependency: libgfapi.so.0(GFAPI_PRIVATE_3.7.0)(64bit) for package: glusterfs-server-9.6-1.el7.x86_64
+--> Processing Dependency: libgfapi.so.0(GFAPI_PRIVATE_6.0)(64bit) for package: glusterfs-server-9.6-1.el7.x86_64
+--> Processing Dependency: libgfapi.so.0(GFAPI_PRIVATE_6.1)(64bit) for package: glusterfs-server-9.6-1.el7.x86_64
+--> Processing Dependency: rpcbind for package: glusterfs-server-9.6-1.el7.x86_64
+--> Processing Dependency: libgfapi.so.0()(64bit) for package: glusterfs-server-9.6-1.el7.x86_64
+--> Processing Dependency: libgfchangelog.so.0()(64bit) for package: glusterfs-server-9.6-1.el7.x86_64
+--> Processing Dependency: libgfrpc.so.0()(64bit) for package: glusterfs-server-9.6-1.el7.x86_64
+--> Processing Dependency: libgfxdr.so.0()(64bit) for package: glusterfs-server-9.6-1.el7.x86_64
+--> Processing Dependency: libglusterd.so.0()(64bit) for package: glusterfs-server-9.6-1.el7.x86_64
+--> Processing Dependency: libglusterfs.so.0()(64bit) for package: glusterfs-server-9.6-1.el7.x86_64
+--> Processing Dependency: liburcu-bp.so.6()(64bit) for package: glusterfs-server-9.6-1.el7.x86_64
+--> Processing Dependency: liburcu-cds.so.6()(64bit) for package: glusterfs-server-9.6-1.el7.x86_64
+--> Running transaction check
+---> Package glusterfs.x86_64 0:9.6-1.el7 will be installed
+---> Package glusterfs-cli.x86_64 0:9.6-1.el7 will be installed
+---> Package glusterfs-client-xlators.x86_64 0:9.6-1.el7 will be installed
+---> Package glusterfs-fuse.x86_64 0:9.6-1.el7 will be installed
+--> Processing Dependency: attr for package: glusterfs-fuse-9.6-1.el7.x86_64
+--> Processing Dependency: psmisc for package: glusterfs-fuse-9.6-1.el7.x86_64
+---> Package libgfapi0.x86_64 0:9.6-1.el7 will be installed
+---> Package libgfchangelog0.x86_64 0:9.6-1.el7 will be installed
+---> Package libgfrpc0.x86_64 0:9.6-1.el7 will be installed
+---> Package libgfxdr0.x86_64 0:9.6-1.el7 will be installed
+---> Package libglusterd0.x86_64 0:9.6-1.el7 will be installed
+---> Package libglusterfs0.x86_64 0:9.6-1.el7 will be installed
+---> Package rpcbind.x86_64 0:0.2.0-49.el7 will be installed
+--> Processing Dependency: libtirpc >= 0.2.4-0.7 for package: rpcbind-0.2.0-49.el7.x86_64
+--> Processing Dependency: libtirpc.so.1()(64bit) for package: rpcbind-0.2.0-49.el7.x86_64
+---> Package userspace-rcu.x86_64 0:0.10.0-3.el7 will be installed
+--> Running transaction check
+---> Package attr.x86_64 0:2.4.46-13.el7 will be installed
+---> Package libtirpc.x86_64 0:0.2.4-0.16.el7 will be installed
+---> Package psmisc.x86_64 0:22.20-17.el7 will be installed
+--> Finished Dependency Resolution
+
+Dependencies Resolved
+
+=========================================================================================================
+ Package                          Arch           Version                   Repository               Size
+=========================================================================================================
+Installing:
+ glusterfs-server                 x86_64         9.6-1.el7                 centos-gluster9         1.3 M
+Updating:
+ epel-release                     noarch         7-14                      epel                     15 k
+Installing for dependencies:
+ attr                             x86_64         2.4.46-13.el7             base                     66 k
+ glusterfs                        x86_64         9.6-1.el7                 centos-gluster9         647 k
+ glusterfs-cli                    x86_64         9.6-1.el7                 centos-gluster9         200 k
+ glusterfs-client-xlators         x86_64         9.6-1.el7                 centos-gluster9         854 k
+ glusterfs-fuse                   x86_64         9.6-1.el7                 centos-gluster9         161 k
+ libgfapi0                        x86_64         9.6-1.el7                 centos-gluster9         119 k
+ libgfchangelog0                  x86_64         9.6-1.el7                 centos-gluster9          62 k
+ libgfrpc0                        x86_64         9.6-1.el7                 centos-gluster9          85 k
+ libgfxdr0                        x86_64         9.6-1.el7                 centos-gluster9          57 k
+ libglusterd0                     x86_64         9.6-1.el7                 centos-gluster9          41 k
+ libglusterfs0                    x86_64         9.6-1.el7                 centos-gluster9         340 k
+ libtirpc                         x86_64         0.2.4-0.16.el7            base                     89 k
+ psmisc                           x86_64         22.20-17.el7              base                    141 k
+ rpcbind                          x86_64         0.2.0-49.el7              base                     60 k
+ userspace-rcu                    x86_64         0.10.0-3.el7              centos-gluster9          93 k
+
+Transaction Summary
+=========================================================================================================
+Install  1 Package (+15 Dependent packages)
+Upgrade  1 Package
+
+Total download size: 4.3 M
+Downloading packages:
+Delta RPMs disabled because /usr/bin/applydeltarpm not installed.
+(1/17): attr-2.4.46-13.el7.x86_64.rpm                                             |  66 kB  00:00:00
+warning: /var/cache/yum/x86_64/7/centos-gluster9/packages/glusterfs-9.6-1.el7.x86_64.rpm: Header V4 RSA/SHA256 Signature, key ID e451e5b5: NOKEY
+Public key for glusterfs-9.6-1.el7.x86_64.rpm is not installed
+(2/17): glusterfs-9.6-1.el7.x86_64.rpm                                            | 647 kB  00:00:00
+(3/17): glusterfs-cli-9.6-1.el7.x86_64.rpm                                        | 200 kB  00:00:00
+warning: /var/cache/yum/x86_64/7/epel/packages/epel-release-7-14.noarch.rpm: Header V4 RSA/SHA256 Signature, key ID 352c64e5: NOKEY
+Public key for epel-release-7-14.noarch.rpm is not installed
+(4/17): epel-release-7-14.noarch.rpm                                              |  15 kB  00:00:00
+(5/17): glusterfs-fuse-9.6-1.el7.x86_64.rpm                                       | 161 kB  00:00:00
+(6/17): glusterfs-client-xlators-9.6-1.el7.x86_64.rpm                             | 854 kB  00:00:00
+(7/17): libgfapi0-9.6-1.el7.x86_64.rpm                                            | 119 kB  00:00:00
+(8/17): libgfchangelog0-9.6-1.el7.x86_64.rpm                                      |  62 kB  00:00:00
+(9/17): libgfrpc0-9.6-1.el7.x86_64.rpm                                            |  85 kB  00:00:00
+(10/17): libgfxdr0-9.6-1.el7.x86_64.rpm                                           |  57 kB  00:00:00
+(11/17): libglusterd0-9.6-1.el7.x86_64.rpm                                        |  41 kB  00:00:00
+(12/17): libglusterfs0-9.6-1.el7.x86_64.rpm                                       | 340 kB  00:00:00
+(13/17): psmisc-22.20-17.el7.x86_64.rpm                                           | 141 kB  00:00:00
+(14/17): rpcbind-0.2.0-49.el7.x86_64.rpm                                          |  60 kB  00:00:00
+(15/17): libtirpc-0.2.4-0.16.el7.x86_64.rpm                                       |  89 kB  00:00:00
+(16/17): userspace-rcu-0.10.0-3.el7.x86_64.rpm                                    |  93 kB  00:00:00
+(17/17): glusterfs-server-9.6-1.el7.x86_64.rpm                                    | 1.3 MB  00:00:00
+---------------------------------------------------------------------------------------------------------
+Total                                                                    5.5 MB/s | 4.3 MB  00:00:00
+Retrieving key from file:///etc/pki/rpm-gpg/RPM-GPG-KEY-EPEL-7
+Importing GPG key 0x352C64E5:
+ Userid     : "Fedora EPEL (7) <epel@fedoraproject.org>"
+ Fingerprint: 91e9 7d7c 4a5e 96f1 7f3e 888f 6a2f aea2 352c 64e5
+ Package    : epel-release-7-11.noarch (@extras)
+ From       : /etc/pki/rpm-gpg/RPM-GPG-KEY-EPEL-7
+Retrieving key from file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-SIG-Storage
+Importing GPG key 0xE451E5B5:
+ Userid     : "CentOS Storage SIG (http://wiki.centos.org/SpecialInterestGroup/Storage) <security@centos.org>"
+ Fingerprint: 7412 9c0b 173b 071a 3775 951a d4a2 e50b e451 e5b5
+ Package    : centos-release-storage-common-2-2.el7.centos.noarch (@extras)
+ From       : /etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-SIG-Storage
+Running transaction check
+Running transaction test
+Transaction test succeeded
+Running transaction
+  Installing : userspace-rcu-0.10.0-3.el7.x86_64                                                    1/18
+  Installing : libgfrpc0-9.6-1.el7.x86_64                                                           2/18
+  Installing : libgfxdr0-9.6-1.el7.x86_64                                                           3/18
+  Installing : libglusterfs0-9.6-1.el7.x86_64                                                       4/18
+  Installing : glusterfs-client-xlators-9.6-1.el7.x86_64                                            5/18
+  Installing : glusterfs-9.6-1.el7.x86_64                                                           6/18
+  Installing : libglusterd0-9.6-1.el7.x86_64                                                        7/18
+  Installing : glusterfs-cli-9.6-1.el7.x86_64                                                       8/18
+  Installing : libgfapi0-9.6-1.el7.x86_64                                                           9/18
+  Installing : libgfchangelog0-9.6-1.el7.x86_64                                                    10/18
+  Installing : psmisc-22.20-17.el7.x86_64                                                          11/18
+  Installing : attr-2.4.46-13.el7.x86_64                                                           12/18
+  Installing : glusterfs-fuse-9.6-1.el7.x86_64                                                     13/18
+  Installing : libtirpc-0.2.4-0.16.el7.x86_64                                                      14/18
+  Installing : rpcbind-0.2.0-49.el7.x86_64                                                         15/18
+  Installing : glusterfs-server-9.6-1.el7.x86_64                                                   16/18
+  Updating   : epel-release-7-14.noarch                                                            17/18
+  Cleanup    : epel-release-7-11.noarch                                                            18/18
+  Verifying  : epel-release-7-14.noarch                                                             1/18
+  Verifying  : libtirpc-0.2.4-0.16.el7.x86_64                                                       2/18
+  Verifying  : libgfapi0-9.6-1.el7.x86_64                                                           3/18
+  Verifying  : libgfchangelog0-9.6-1.el7.x86_64                                                     4/18
+  Verifying  : glusterfs-9.6-1.el7.x86_64                                                           5/18
+  Verifying  : libglusterfs0-9.6-1.el7.x86_64                                                       6/18
+  Verifying  : userspace-rcu-0.10.0-3.el7.x86_64                                                    7/18
+  Verifying  : glusterfs-server-9.6-1.el7.x86_64                                                    8/18
+  Verifying  : libglusterd0-9.6-1.el7.x86_64                                                        9/18
+  Verifying  : glusterfs-client-xlators-9.6-1.el7.x86_64                                           10/18
+  Verifying  : libgfrpc0-9.6-1.el7.x86_64                                                          11/18
+  Verifying  : attr-2.4.46-13.el7.x86_64                                                           12/18
+  Verifying  : glusterfs-fuse-9.6-1.el7.x86_64                                                     13/18
+  Verifying  : psmisc-22.20-17.el7.x86_64                                                          14/18
+  Verifying  : glusterfs-cli-9.6-1.el7.x86_64                                                      15/18
+  Verifying  : libgfxdr0-9.6-1.el7.x86_64                                                          16/18
+  Verifying  : rpcbind-0.2.0-49.el7.x86_64                                                         17/18
+  Verifying  : epel-release-7-11.noarch                                                            18/18
+
+Installed:
+  glusterfs-server.x86_64 0:9.6-1.el7
+
+Dependency Installed:
+  attr.x86_64 0:2.4.46-13.el7                     glusterfs.x86_64 0:9.6-1.el7
+  glusterfs-cli.x86_64 0:9.6-1.el7                glusterfs-client-xlators.x86_64 0:9.6-1.el7
+  glusterfs-fuse.x86_64 0:9.6-1.el7               libgfapi0.x86_64 0:9.6-1.el7
+  libgfchangelog0.x86_64 0:9.6-1.el7              libgfrpc0.x86_64 0:9.6-1.el7
+  libgfxdr0.x86_64 0:9.6-1.el7                    libglusterd0.x86_64 0:9.6-1.el7
+  libglusterfs0.x86_64 0:9.6-1.el7                libtirpc.x86_64 0:0.2.4-0.16.el7
+  psmisc.x86_64 0:22.20-17.el7                    rpcbind.x86_64 0:0.2.0-49.el7
+  userspace-rcu.x86_64 0:0.10.0-3.el7
+
+Updated:
+  epel-release.noarch 0:7-14
+
+Complete!
+[root@node3 ~]# systemctl start glusterd
+[root@node3 ~]# systemctl enable glusterd
+Created symlink from /etc/systemd/system/multi-user.target.wants/glusterd.service to /usr/lib/systemd/system/glusterd.service.
+[root@node3 ~]# systemctl status glusterd
+● glusterd.service - GlusterFS, a clustered file-system server
+   Loaded: loaded (/usr/lib/systemd/system/glusterd.service; enabled; vendor preset: disabled)
+   Active: active (running) since Sat 2023-07-29 04:05:45 IST; 15s ago
+     Docs: man:glusterd(8)
+ Main PID: 1515 (glusterd)
+   CGroup: /system.slice/glusterd.service
+           └─1515 /usr/sbin/glusterd -p /var/run/glusterd.pid --log-level INFO
+
+Jul 29 04:05:45 node3.hpcsa.in systemd[1]: [/usr/lib/systemd/system/glusterd.service:4] Unknown lv...nit'
+Jul 29 04:05:45 node3.hpcsa.in systemd[1]: [/usr/lib/systemd/system/glusterd.service:5] Unknown lv...nit'
+Jul 29 04:05:45 node3.hpcsa.in systemd[1]: Starting GlusterFS, a clustered file-system server...
+Jul 29 04:05:45 node3.hpcsa.in systemd[1]: Started GlusterFS, a clustered file-system server.
+Jul 29 04:05:54 node3.hpcsa.in systemd[1]: [/usr/lib/systemd/system/glusterd.service:4] Unknown lv...nit'
+Jul 29 04:05:54 node3.hpcsa.in systemd[1]: [/usr/lib/systemd/system/glusterd.service:5] Unknown lv...nit'
+Hint: Some lines were ellipsized, use -l to show in full.
+[root@node3 ~]# gluster peer status
+Number of Peers: 2
+
+Hostname: node1.hpcsa.in
+Uuid: 5357897c-d8ef-4ad7-bf8a-ddfece48873b
+State: Peer in Cluster (Connected)
+
+Hostname: node2.hpcsa.in
+Uuid: 33c57084-2abf-4527-9a1e-12c54e452c72
+State: Peer in Cluster (Connected)
+[root@node3 ~]# gluster pool list
+UUID                                    Hostname        State
+5357897c-d8ef-4ad7-bf8a-ddfece48873b    node1.hpcsa.in  Connected
+33c57084-2abf-4527-9a1e-12c54e452c72    node2.hpcsa.in  Connected
+8200e305-55dc-42cd-9467-1b693dba5305    localhost       Connected
+[root@node3 ~]# mkdir /mnt/disk1/diskvol
+[root@node3 ~]# history
+    1  hostnamectl set-hostname node3.hpcsa.in
+    2  exec bash
+    3  ifup ens33
+    4  yum install vim -y
+    5  yum install rsync -y
+    6  systemctl stop firewalld
+    7  systemctl disable firewalld
+    8  vim /etc/selinux/config
+    9  init 6
+   10  fdisk /dev/sdb
+   11  mkfs.xfs /dev/sdb1
+   12  mkdir /mnt/disk1
+   13  mount /dev/sdb1 /mnt/disk1/
+   14  lsblk
+   15  yum install wget centos-release-gluster epel-release glusterfs-server -y
+   16  systemctl start glusterd
+   17  systemctl enable glusterd
+   18  systemctl status glusterd
+   19  gluster peer status
+   20  gluster pool list
+   21  mkdir /mnt/disk1/diskvol
+   22  history

@@ -1,0 +1,88 @@
+  iscsi configuration on centos7
+------------------------------
+
+*****On iscsi-client*****
+-------------------------
+
+# yum install iscsi-initiator-utils -y
+
+#systemctl stop firewalld && systemctl disable firewalld && systemctl status firewalld
+
+# cd /etc/iscsi
+
+# cat initiatorname.iscsi			>> copy it # change client name to >> sys:306631cea220
+
+# systemctl start iscsi
+
+# systemctl status iscsi
+
+*****On iscsi-server*****
+-------------------------
+
+(Add Two Hard disk sdb and sdc of 20GB each)
+
+
+# lsblk     or  # sfdisk -s
+
+# fdisk -l
+
+# pvcreate /dev/sdb /dev/sdc
+
+# vgcreate vg_iscsi /dev/sdb /dev/sdc
+
+# lvcreate -n lv_iscsi-disk-01 -L 1G vg_iscsi
+
+# lvs                               --> show partitions
+
+# yum install targetcli -y
+
+# targetcli
+
+/> cd backstores/block
+
+> create block1 /dev/mapper/vg_iscsi-lv_iscsi--disk--01
+
+> cd ../../iscsi
+
+> create iqn.2022-12.cdac.acts.hpcsa.sbm:disk1
+
+> cd iqn.2022-12.cdac.acts.hpcsa.sbm:disk1/tpg1/acls
+
+> create iqn.2022-12.acts.student:306631cea220
+
+> cd ..
+
+> cd iqn.2022-12.cdac.acts.hpcsa.sbm:disk1/tpg1/luns
+
+> create /backstores/block/block1ls
+
+> exit
+
+
+# systemctl start target
+
+# systemctl status target   iqn.1994-05.com.redhat:688154a4cea5
+i
+
+
+****i*On iscsi-client*****
+-------------------------
+
+# iscsiadm -m discovery -t st -p 192.168.82.112 --login                -->  #XXX=server IP :: Note Ensure firewalld service is disabled on both the machines
+
+# fdisk -l
+
+# fdisk /dev/sdx                                                       --> #use X=iscsi mount disk
+
+# #Press :n then enter entersystemc	
+  #Press key :w
+ 
+# fdisk -l
+
+# mkdir /mnt/disk-1
+
+# mkfs.xfs -f /dev/sdx     or  # mkfs.ext4 /dev/sdx
+
+# mount /dev/sdx /mnt/disk-1/
+
+# df -Th

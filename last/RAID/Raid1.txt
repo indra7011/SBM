@@ -1,0 +1,33 @@
+System configuration - 3 total hard disk a,b,c and NAT adapter , 1GB RAM and 1 processor.
+a  - 20 GB b,c - 1 GB
+    1  yum install mdadm -y
+    3  lsblk
+    4  mdadm --create --verbose /dev/md0 --level=1 --raid-devices=2 /dev/sdb /dev/sdc
+        lsblk
+    9  mdadm --detail /dev/md0
+   10  fdisk /dev/md0
+   11  fdisk -l
+   14   mkfs.ext4 /dev/md0p1
+   15   mkdir /mnt/raid1
+   16   mount /dev/md0p1 /mnt/raid1/
+   18  df -h
+   19   cd /mnt/raid1/
+   20  ls
+   21  blkid ---------- get UUID of  /mnt/raid1
+   22  vi /etc/fstab 
+	\______ add at the end (UUID=64762dcb-6c02-40e5-b2fa-36fa12f1c635       /mnt/raid1      ext4    defaults        0 0)
+   23  mount -a
+   24  ls
+   27  cd /mnt/raid1/
+   28  cat > test.txt
+   29  cat test.txt
+   32  mdadm --detail /dev/md0
+   33  lsblk
+   34  cat /proc/mdstat 
+(remove one extra hard disk)
+ and check for file test.txt
+power off and add new disk
+and do lsblk
+and check which is free and then use this command.
+   35  mdadm --add /dev/md0 /dev/sdb
+lsblk

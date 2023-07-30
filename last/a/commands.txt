@@ -1,0 +1,57 @@
+lsblk
+yum install mdadm -y 
+mdadm --create --verbose /dev/md1 --level=1 --raid-devices=2 /dev/sdb /dev/sdc
+cat /proc/mdstat
+mdadm  --examine /dev/sdb
+mdadm  --examine /dev/sdc
+mdadm  --detail /dev/md1
+fdisk /dev/md1
+mkfs.ext4 /dev/md1
+lsblk
+mkdir /mnt/raid1
+mount /dev/md1 /mnt/raid1
+df -TH
+cd /mnt/raid1/
+ls
+touch test
+fdisk -l
+dd if=/dev/zero of=lol.file bs=1024 count=502400
+lsblk
+blkid ------------ab98db03-74ad-4d5f-b828-8a4469998776---------uid
+vi /etc/fstab ----------------UUID=ab98db03-74ad-4d5f-b828-8a4469998776 /mnt/raid1 ext4 default 0 0
+mount -a
+
+power off remove one disk power on
+ifup ens33
+mdadm  --detail /dev/md1
+power off add one disk power on
+ifup ens33
+lsblk
+mdadm  --detail /dev/md1  
+mdadm  --add /dev/md1 /dev/sdc
+cat /proc/mdstat
+mdadm  --detail /dev/md1 
+lsblk
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

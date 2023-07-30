@@ -1,0 +1,108 @@
+
+1. Identify the new hard disks:
+
+This is achieved using the `lsblk` command. `lsblk` lists information about all available or the specified block devices. It reads the sysfs filesystem and udev db to gather information.
+
+
+[root@nfs-client ~]# lsblk
+
+
+Here, `sdb` and `sdc` are the new hard disks that you want to add.
+
+2. Create physical volumes:
+
+This is done with `pvcreate`. This initializes physical volume(s) for later use by the Logical Volume Manager (LVM). Each physical volume can be a disk partition, whole disk, meta-device, or loopback file.
+
+
+pvcreate /dev/sdb /dev/sdc
+
+
+3. Create a volume group:
+
+`vgcreate` creates a new volume group named HPCSA on physical volumes /dev/sdb and /dev/sdc.
+
+
+vgcreate HPCSA /dev/sdb /dev/sdc
+vgdisplay
+vgs
+
+4. Create a logical volume:
+
+`lvcreate` creates a logical volume in a volume group. In this case, it's creating a logical volume named `hpcsa_lab` with a size of 1G in the volume group `HPCSA`.
+
+
+lvcreate -n hpcsa_lab --size 1G HPCSA
+lvs
+
+
+5. Partition the new logical volume:
+
+`fdisk` is a dialogue-driven command-line utility that creates and manipulates partition tables and partitions on a hard disk.
+
+
+fdisk /dev/mapper/HPCSA-hpcsa_lab (n,p,enter enter,w)
+
+partprobe /dev/HPCSA/hpcsa_lab - To said kernel table structure has been changed hence to accept the new change of changed partitioned table.
+
+Here you're asked to press `n` to create a new partition.
+
+6. Create a filesystem:
+
+`mkfs.ext4` is used to create an ext4 filesystem on the partition.
+
+
+mkfs.ext4 /dev/mapper/HPCSA-hpcsa_lab1
+
+
+7. Create a mount point and mount the logical volume:
+
+Create a directory that will serve as the mount point, and then use the `mount` command to mount the logical volume.
+
+
+mkdir lab
+mount /dev/mapper/HPCSA-hpcsa_lab1 lab
+df -h
+lsblk
+
+
+8. Extend the logical volume:
+
+`lvextend` allows you to extend the size of a logical volume. Here, you're extending the logical volume `hpcsa_lab` by an additional 2G.
+
+
+lvextend -L +2G /dev/mapper/HPCSA-hpcsa_lab
+lvs
+
+9. Resize the filesystem:
+
+`resizefs` resizes the filesystem on the logical volume to use all of the available space.
+
+
+resize2fs /dev/mapper/HPCSA-hpcsa_lab1
+df -h  (don't need to do fdisk)
+
+10. Create a snapshot:
+
+`lvcreate` with `-s` creates a snapshot logical volume, which is a read-only copy of another logical volume.
+
+
+lvcreate -L 3GB -s -n hpcsa_lab_snap /dev/mapper/HPCSA-hpcsa_lab
+lvs
+
+11. Merge the snapshot:
+
+`lvconvert` with `--merge` will merge the snapshot back into its origin volume. If both origin and snapshot volume are not open the merge will start immediately, otherwise, it will be delayed until the origin volume becomes inactive.
+umount lab
+lvconvert --merge /dev/mapper/HPCSA-hpcsa_lab1
+
+lvconvert --merge /dev/mapper/HPCSA-hpcsa_lab_snap
+
+Remember to add the disks to `/etc/fstab` if you want them to be mounted automatically at system startup.
+
+To extend the vg
+vgextend HPCSA /dev/sdd
+To create mirror
+lvcreate -L 1G -m1 -n hpcsa_lab_mirror HPCSA
+lsblk
+lvs
+vgs

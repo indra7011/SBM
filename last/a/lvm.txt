@@ -1,0 +1,52 @@
+ 
+    2  hostnamectl set-hostname lvm
+    3  exec bash
+   
+   18  lsblk
+   19  pvcreate /dev/sdb /dev/sdc
+   20  pvdisplay
+   21  vgcreate HPCSA /dev/sdb /dev/sdc
+   22  vgdisplay
+   23  pvs
+   24  lvcreate -n hpcsa_lab --size 1G HPCSA
+   25  lvs
+   26  fdisk /dev/mapper/HPCSA-hpcsa_lab
+   27  lvs
+   28  fdisk /dev/mapper/HPCSA-hpcsa_lab
+   29  partprobe /dev/sd
+   30  partprobe /dev/mapper/
+   31  partprobe /dev/mapper/HPCSA-hpcsa_lab
+   32  mkfs.ext4 /dev/mapper/HPCSA-hpcsa_lab
+   33  mkdir lab
+   34  mount /dev/mapper/HPCSA-hpcsa_lab lab
+   35  lsblk
+   36  lvextend -L +2G /dev/mapper/HPCSA-hpcsa_lab
+   37  lsblk
+   38  lvextend -L +1G /dev/mapper/HPCSA-hpcsa_lab1
+   39  resize2fs /dev/mapper/HPCSA-hpcsa_lab
+   40  lvcreate -L 1GB -s -n hpcsa_lab_snap /dev/mapper/HPCSA-hpcsa_lab
+   41  lvs
+   42  lvdisplay
+   43  lvs
+   44  lvconvert --merge /dev/mapper/HPCSA-hpcsa_lab
+   45  cd lab/
+   46  ll
+   47  echo "this is sbm lab" > test.txt
+   48  cat test.txt
+   49  lsblk
+   50  lvcreate -L 500m -s -n hpcsa_lab_snap test.txt
+   51  lvcreate -L 1GB -s -n hpcsa_lab_snap test.txt
+   52  cd
+   53  lvconvert --merge /dev/mapper/HPCSA-hpcsa_lab_snap
+   54  lsblk
+   55  lvconvert --merge /dev/mapper/HPCSA-hpcsa_lab_snap
+   56  lvcreate -L 1GB -s -n hpcsa_lab_snap /dev/mapper/HPCSA-hpcsa_lab
+   57  lvs
+   58  lvcreate -L 1GB -s -n hpcsa_lab_snap3 /dev/mapper/HPCSA-hpcsa_lab3
+   59  lvconvert --merge /dev/mapper/HPCSA-hpcsa_lab_snap3
+   60  lvcreate -L 1GB -s -n hpcsa_lab_snap /dev/mapper/HPCSA-hpcsa_lab
+   61  lvcreate -L 1G -m1 -n hpcsa_lab3 HPCSA
+   62  lvs
+   63  lvcreate -L 1GB -s -n hpcsa_lab_snap3 /dev/mapper/HPCSA-hpcsa_lab3
+   64  lvs
+   65  lvconvert --merge /dev/mapper/HPCSA-hpcsa_lab_snap3

@@ -1,0 +1,71 @@
+System configuration - 5 total hard disk a,b,c,d,e and NAT adapter , 1GB RAM and 1 processor.
+a  - 20 GB b,c,d,e - 1 GB    
+    1  ls
+    2  lsblk
+    3  yum clean all
+    4  yum update -y
+
+   12  mdadm --create --verbose /dev/md0 --level=5 --raid-devices=3 /dev/sdb /dev/sdc /dev/sdd --spare-devices=1 /dev/sde
+   13  lsblk
+   14  mdadm --detail /dev/md0
+   15  fdisk /dev/md0
+   16  fdisk -l
+   17  mkfs.ext4 /dev/md0p1
+   18  mkdir /mnt/raid5/
+   19  mount /dev/md0p1 /mnt/raid5SS
+   20  df -h
+   21  cd /mnt/raid5
+   22  ls
+   23  echo " hi welcome to cdac" > text.txt
+   24  ls
+   25  cat text.txt
+   26  blkid
+   27  vi /etc/fstab
+	\____add at the end (UUID=64762dcb-6c02-40e5-b2fa-36fa12f1c635       /mnt/raid1      ext4    defaults        0 0)
+   28  mdadm --detail /dev/md0p1 ------------check which disk in raid 5
+   29  mdadm --fail /dev/md0 /dev/sdb ------------fail that disk
+   30  mdadm --detail /dev/md0p1------------------check details failed will named as faulty
+   36  mdadm -r /dev/md0 /dev/sdb----------------remove the failed disk
+   37  mdadm --detail /dev/md0p1-----------check for the spare will add into the raid5
+   38  mdadm --add /dev/md0 /dev/sdb--------------add the disk the and it will be spare
+   39  mdadm --detail /dev/md0------------------check for the detail
+   42  ls
+   44  lsblk
+
+
+$$$$$$$$$$$$$Remove raid5 $$$$$$$$$$$$$$$$$$$
+   48  #umount /dev/md0
+   49  umount /dev/md0
+   50  clear
+   51  mdadm --stop /dev/md0
+   52  mdadm --detail /dev/md0
+   53  mdadm --stop /dev/md0
+   54  mdadm --stop /dev/md1
+   55  history
+   56   mdadm --detail /dev/md0
+   57  umount /dev/md0
+   58  mdadm --detail /dev/md0
+   59  mdadm --stop /dev/md0
+   60  #
+   61  umount /dev/md127
+   62  umount /dev/md0
+   63  lsof | grep md0
+   64  mdadm --stop /dev/md0
+   65  cd /mnt/raid5/
+   66  ls
+   67  mdadm --stop /dev/md0
+   68  lsblk
+   69  mdadm --stop /dev/md0p1
+   70  mdadm --stop /dev/md0
+   71  blkid
+   72  mdadm --stop /dev/md0p1
+   73  mdadm --stop /dev/md0
+   74  cd ~
+   75  mdadm --stop /dev/md0
+   76  umount /dev/md0p1
+   77  mdadm --stop /dev/md0
+   78  lsblk
+   79  mdadm --zero-superblock /dev/sdb
+   80  mdadm --zero-superblock /dev/sd[b-e]
+   81  mdadm --zero-superblock /dev/sd[c-e]
+   82  lsblk

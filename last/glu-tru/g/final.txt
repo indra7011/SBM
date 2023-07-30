@@ -1,0 +1,81 @@
+change the hostname in all machine
+,,,,,,,,,,,,,,,,,,,,,,,,,,,
+
+hostnamectl set-hostname node1.hpcsa.in
+hostnamectl set-hostname node2.hpcsa.in
+hostnamectl set-hostname node3.hpcsa.in
+hostnamectl set-hostname client.hpcsa.in
+    
+
+    ifup ens33
+     yum install vim -y
+     yum install rsync -y
+     systemctl stop firewalld
+     systemctl disable firewalld
+      vim /etc/selinux/config
+     init 6
+
+now on node1
+,,,,,,,,,,,,,,,,,,
+    vim /etc/hosts
+       rsync /etc/hosts root@192.168.15.180:/etc/hosts
+   13  rsync /etc/hosts root@192.168.15.181:/etc/hosts
+   14  rsync /etc/hosts root@192.168.15.182:/etc/hosts
+   15  ping client.hpcsa.in
+   
+ run these command on node1,node2,node3
+,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+
+  	lsblk
+   17  fdisk /dev/sdb
+   18  mkfs.xfs /dev/sdb1
+   19  mount /dev/sdb1 /mnt/disk1/
+   20  mkdir /mnt/disk1
+   21  mount /dev/sdb1 /mnt/disk1/
+   22  lsblk
+   23  yum install wget
+   24  yum install wget centos-release-gluster epel-release glusterfs-server -y
+   25  systemctl start glusterd
+   26  systemctl enable glusterd
+   27  systemctl status glusterd
+
+run this command on node1
+,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+
+   28  gluster peer probe node2.hpcsa.in
+   29  gluster peer probe node3.hpcsa.in
+   30  gluster peer status
+   31  gluster pool list
+
+ run these command on node1,node2,node3
+,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+
+   32  mkdir /mnt/disk1/diskvol
+
+
+run this command on node1
+,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+
+   33  gluster volume create gdisk2 replica 3 node1.hpcsa.in:/mnt/disk1/diskvol/gdisk2  node2.hpcsa.in:/mnt/disk1/diskvol/gdisk2  node3.hpcsa.in:/mnt/disk1/diskvol/gdisk2
+   34  gluster volume start gdisk2
+   35  gluster volume info gdisk2
+
+
+run this in client machine 
+,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+
+
+	yum install glusterfs-fuse
+   11  mkdir /mnt/gdrive
+   12  mount -t glusterfs node1.hpcsa.in:/gdisk2 /mnt/gdrive
+   13  df -h
+   14  cd /mnt/gdrive/
+   15  dd in=/dev/zero of=file.txt bs=1024 count=520040
+   16  dd if=/dev/zero of=file.txt bs=1024 count=520040
+   17  df -h
+
+
+
+
+
+

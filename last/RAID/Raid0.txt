@@ -1,0 +1,31 @@
+System configuration - 3 total hard disk a,b,c and NAT adapter , 1GB RAM and 1 processor.
+
+
+
+    1  lsblk :-----------lists information about all available or the specified block devices.
+    2  #yum clean all :--------------removes the cache of repositories which are enabled in /etc/yum.
+    3  #yum update :-To update all packages in the system and their dependencies
+    4  yum install mdadm -y :------is used to monitor and manage software RAID devices. RAID is nothing but a technique used for Performance management and Reduce data redundancy. RAID: Redundant Array of Independent Disk
+    5  mdadm --create --verbose /dev/md0 --level=0 --raid-devices=2 /dev/sdb /dev/sdc :------In this command example, you will be naming the device /dev/md0 , and include the two disks that will build the array
+    7  lsblk
+    8  mdadm --detail /dev/md0 :-----Find out the current number of RAID devices in the array
+    9  mdadm  --detail /dev/md0
+   10  fdisk /dev/md0  
+   11  fdisk -l
+   12  mkfs.ext4 /dev/md0p1
+   13  mkdir /mnt/raid0
+   14  mount /dev/md0p1 /mnt/raid0/
+   15  df -h
+   16  ls
+   17  cd /mnt/raid0/
+   18  ls
+   19  touch test
+   20  ls
+   21  dd if=/dev/zero of=500mb.file bs=1024 count=502400
+   22  df -h
+   23  lsblk -tmd
+   24*
+   25  lsblk -tmd
+
+
+LINK:-----Document:-----https://www.golinuxcloud.com/configure-software-linear-raid-linux/

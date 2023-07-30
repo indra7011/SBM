@@ -1,0 +1,142 @@
+
+
+ON ISCSI CLIENT
+
+1. Install the required package for iSCSI:
+
+
+yum install iscsi-initiator-utils
+
+This command installs `iscsi-initiator-utils`, which is a daemon for managing Internet Small Computer System Interface (iSCSI) sessions.
+
+2. Navigate to the iSCSI directory and check the initiator name:
+
+
+cd /etc/iscsi/
+cat initiatorname.iscsi # change client name if required
+
+This displays the name of the iSCSI initiator, which you can change if necessary.
+
+3. Restart the iSCSI service:
+
+
+systemctl restart iscsi
+
+This restarts the iSCSI service, applying any changes made to its configuration.
+
+---
+
+ON ISCSI SERVER
+
+1. Check the available disk drives:
+
+
+fdisk -l
+
+This command lists all disk partitions.
+
+2. Create physical volumes for the new drives:
+
+
+pvcreate /dev/sdc /dev/sdb
+
+This command creates physical volumes on the specified devices, which can be used to build a volume group.
+
+3. Create a volume group:
+
+
+vgcreate vg_iscsi /dev/sdb /dev/sdc
+
+This creates a volume group named `vg_iscsi` using the previously created physical volumes.
+
+4. Create logical volumes:
+
+
+lvcreate -n lv_iscsi-disk-01 -l 1G vg_iscsi
+lvcreate -n lv_iscsi-disk-01 -L 1G vg_iscsi
+
+These commands create two logical volumes named `lv_iscsi-disk-01` in the volume group `vg_iscsi`.
+
+5. Check the logical volumes:
+
+
+lvs
+
+This displays the information about all available logical volumes.
+
+6. Install the package `targetcli`:
+
+
+yum install targetcli
+
+This installs `targetcli`, a command-line interface for managing Linux kernel storage targets.
+
+7. Configure the target and map it to the iSCSI client:
+
+
+targetcli
+cd backstores/block
+create block1 /dev/mapper/vg_iscsi-lv_iscsi--disk--01
+cd iscsi
+create iqn.2022-12.cdac.acts.hpcsa.sbm:disk1
+cd iqn.2022-12.cdac.acts.hpcsa.sbm:disk1/tpg1/acls
+create iqn.2022-12.acts.student:306631cea220 #client PC iscsi initiator name
+cd iscsi/iqn.2022-12.cdac.acts.hpcsa.sbm:disk1/tpg1/luns
+create /backstores/block/block1
+exit
+
+These commands create an iSCSI target using `targetcli`, associate a block device with it, and map the iSCSI initiator (client) to the target.
+
+8. Restart the `target` service:
+
+
+systemctl restart target
+
+This command restarts the `target` service, applying any changes made to its configuration.
+
+9. Check the status of the `target` service:
+
+
+systemctl status target
+
+This displays the status of the `target` service.
+
+---
+
+ON ISCSI CLIENT AGAIN
+
+1. Login to the iSCSI target:
+
+
+iscsiadm -m -t st -p 192.168.76.XXX --login 
+server ip
+
+This command logs in to the iSCSI target on the specified IP address.
+
+2. Discover the iSCSI target:
+
+
+iscsiadm -m discovery -t st -p 192.168.76.XXX --login #XXX=server IP
+
+This command discovers iSCSI targets on the specified IP address.
+
+3. Check the available disk drives again:
+
+
+fdisk -l
+
+This command lists all disk partitions, including the new iSCSI device.
+
+4. Format and mount the new iSCSI disk:
+
+
+fdisk /dev/sdx #use X=iscsi mount disk
+#Press n then enter enter
+#Press key w 
+fdisk -l
+mkdir /mnt/disk-1
+mkfs.ext4 /dev/sdx1
+mount /dev/sdh1 /mnt/disk-1/
+
+These commands create a new partition on the iSCSI disk, format it with the ext4 filesystem, and mount it at `/mnt/disk-1`.
+

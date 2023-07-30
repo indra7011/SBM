@@ -1,0 +1,56 @@
+yum install iscsi-initiator-utils
+cd /etc/iscsi/
+
+copy-  peast-----on the truenas---Initiators Groups---
+
+
+
+#systemctl restart iscsi
+
+
+
+lsblk
+iscsiadm -m discovery -t st -p 192.168.100.209
+iscsiadm -m discovery -t st -p 192.168.100.209 --login
+lsblk
+fdisk -l
+iscsiadm -m session -P 3
+
+#iscsiadm -m node logoutall=all
+
+iscsiadm -m node -U all
+lsblk
+iscsiadm -m discovery -t st -p 192.168.100.209 --login
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

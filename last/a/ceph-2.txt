@@ -1,0 +1,153 @@
+#Excute ON ALL SERVERS
+
+192.168.xxx.xxx  centos-1.hpcsa.cdac.in centos-1  ceph-controller
+192.168.xxx.xxx  centos-2.hpcsa.cdac.in centos-2  ceph-compute01
+192.168.xxx.xxx  centos-3.hpcsa.cdac.in centos-3  ceph-compute02
+192.168.xxx.xxx  centos-4.hpcsa.cdac.in centos-4  ceph-monitor
+192.168.xxx.xxx  centos-4.hpcsa.cdac.in centos-4  ceph-client
+
+systemctl stop firewalld && systemctl disable firewalld
+
+yum install chrony
+chronyc sourcestats
+useradd cephadm && echo "cdac" | passwd --stdin cephadm
+echo "cephadm ALL = (root) NOPASSWD:ALL" | sudo tee /etc/sudoers.d/cephadm
+chmod 0440 /etc/sudoers.d/cephadm
+sed -i --follow-symlinks 's/SELINUX=enforcing/SELINUX=disabled/g' /etc/sysconfig/selinux
+sudo yum install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
+reboot
+
+
+#Excute ON-compute01
+nano /etc/chrony.conf
+#comment all availble servers
+#add line server ceph-controller
+systemctl restart chronyd
+#Excute ON-ceph-compute02
+nano /etc/chrony.conf
+#comment all availble servers
+#add line server ceph-controller
+systemctl restart chronyd
+
+
+#Excute ON- ceph-monitor
+nano /etc/chrony.conf
+#comment all availble servers
+#add line server ceph-controller
+systemctl restart chronyd
+
+
+#Excute ON- ceph-client
+nano /etc/chrony.conf
+#comment all availble servers
+#add line server ceph-controller
+systemctl restart chronyd
+
+
+
+#Excute ON-controller
+hostnamectl set-hostname ceph-controller
+
+#Excute ON-compute01
+hostnamectl set-hostname ceph-compute01
+
+#Excute ON-ceph-compute02
+hostnamectl set-hostname ceph-compute02
+
+#Excute ON- ceph-monitor
+hostnamectl set-hostname ceph-monitor
+
+#Excute ON- ceph-client
+hostnamectl set-hostname ceph-client
+
+#Excute ON CEPH-CONROLLER
+sudo rpm -Uvh https://download.ceph.com/rpm-mimic/el7/noarch/ceph-release-1-1.el7.noarch.rpm
+yum update -y && sudo yum install ceph-deploy python2-pip  -y
+su - cephadm
+ssh-keygen
+
+#press enter enter
+ssh-copy-id cephadm@ceph-compute01
+#password will be cdac
+ssh-copy-id cephadm@ceph-compute02
+ssh-copy-id cephadm@ceph-monitor
+ssh-copy-id cephadm@ceph-client
+nano ~/.ssh/config
+
+#add line 
+Host ceph-compute01
+   Hostname ceph-compute01
+   User cephadm
+Host ceph-compute02
+   Hostname ceph-compute02
+   User cephadm
+Host ceph-monitor
+   Hostname ceph-monitor
+   User cephadm
+Host ceph-client
+   Hostname ceph-client
+   User cephadm
+   
+chmod 644 ~/.ssh/config
+
+#verify ssh login on all node from controller
+ssh cephadm@ceph-monitor
+ssh cephadm@ceph-compute01
+ssh cephadm@ceph-compute02
+
+#Excute on CEPH controller using cephadm user
+mkdir ceph_cluster
+cd ceph_cluster
+ceph-deploy new ceph-monitor
+nano ceph.conf
+add line - public network = 192.168.154.0/24 (your local ip address)
+ceph-deploy install ceph-controller ceph-compute01 ceph-compute02 ceph-monitor
+
+#Excute ON ceph-controller Node using cephadm user
+cd ceph_cluster/
+ceph-deploy mon create-initial
+ceph-deploy admin ceph-controller ceph-compute01 ceph-compute02 ceph-monitor
+ceph-deploy mgr create ceph-compute01 ceph-compute02
+ceph-deploy disk list ceph-compute01 ceph-compute02
+#Please verify disk attached with ceph-compute01 and ceph-compute02 before proceed.
+
+
+ceph-deploy disk zap ceph-compute01 /dev/sdb
+ceph-deploy disk zap ceph-compute01 /dev/sdc
+ceph-deploy disk zap ceph-compute01 /dev/sdd
+
+ceph-deploy disk zap ceph-compute02 /dev/sdb
+ceph-deploy disk zap ceph-compute02 /dev/sdc
+ceph-deploy disk zap ceph-compute02 /dev/sdd
+
+ceph-deploy osd create --data /dev/sdb ceph-compute01
+ceph-deploy osd create --data /dev/sdc ceph-compute01
+ceph-deploy osd create --data /dev/sdd ceph-compute01
+
+ceph-deploy osd create --data /dev/sdb ceph-compute02
+ceph-deploy osd create --data /dev/sdc ceph-compute02
+ceph-deploy osd create --data /dev/sdd ceph-compute02
+
+
+ceph-deploy install ceph-client
+ceph-deploy admin ceph-client
+
+
+#Form ROOT user on ON CEPH-CONROLLER
+ceph health
+ceph health detail
+ceph -s
+ceph osd pool create rbd 50 50
+
+
+#Excute on CEPH-CLIENT NODE
+rbd create disk01 --size 4096
+rbd ls -l
+modprobe rbd
+rbd feature disable disk01 exclusive-lock object-map fast-diff deep-flatten
+rbd map disk01
+rbd showmapped
+mkfs.xfs /dev/rbd0
+mkdir -p /mnt/mydisk
+mount /dev/rbd0 /mnt/mydisk
+df -h
