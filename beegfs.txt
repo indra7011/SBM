@@ -1,0 +1,103 @@
+beegfs config server machine with +1hdd 1gb ram 1core
+beegfs config client machine with 1hdd 1gb ram 1core
+
+hostnamectl set-hostname server
+hostnamectl set-hostname client
+
+
+
+on both VM machine 
+
+systemctl stop firewalld
+systemctl disable firewalld
+vi /etc/selinux/config
+------disabled----
+
+yum install rsync -y
+yum install wget -y
+init 6
+
+on server machine
+
+vi /etc/hosts
+cat /etc/hosts
+rsync /etc/hosts root@client:/etc/hosts
+
+----------------------------------------------------
+[root@client ~]# cat /etc/hosts  ----->> kindely check it <<<-----------
+-------------------------------------------------------
+lsblk
+
+on both machine
+ssh-keygen
+
+goto server machine
+ssh-copy-id root@client
+ssh client			----->>>>kindley check it 
+exit
+
+lsblk
+fdisk /dev/sdb
+	press n
+	press enter
+	press enter
+	press enter
+	press w
+lsblk
+mkfs.ext4 /dev/sdb1
+mount /dev/sdb1 /mnt/
+
+on both machine
+
+wget --no-check-certificate -O /etc/yum.repos.d/beegfs.repo https://www.beegfs.io/release/beegfs_7.2/dists/beegfs-rhel7.repo
+
+
+
+on server machine
+
+cat /etc/yum.repos.d/beegfs.repo
+yum install beegfs-utils beegfs-client beegfs-meta beegfs-storage beegfs-mgmtd
+
+
+on client machine
+
+mkdir /mnt/beegfs
+yum install -y kernel-devel beegfs-utils beegfs-client beegfs-mgmtd
+
+
+
+on server machine
+lsblk
+mkdir -p /mnt/beegfs/meta && mkdir -p /mnt/beegfs/storage && mkdir -p /mnt/beegfs/beegfs_mgmtd
+df -h
+/opt/beegfs/sbin/beegfs-setup-mgmtd -p /mnt/beegfs/beegfs_mgmtd
+
+
+on client machine
+
+/opt/beegfs/sbin/beegfs-setup-client -m 192.168.113.186
+
+
+
+goto server machine
+
+systemctl start beegfs-mgmtd &&     systemctl enable beegfs-mgmtd &&     systemctl status beegfs-mgmtd
+vi /etc/beegfs/beegfs-client.conf
+sysMgmtdHost                  = 192.168.113.186   ---->> enter the server ip
+
+/opt/beegfs/sbin/beegfs-setup-meta -p /mnt/beegfs/meta -s 1 -m 192.168.113.186
+
+systemctl start beegfs-meta && systemctl enable beegfs-meta && systemctl status beegfs-meta
+/opt/beegfs/sbin/beegfs-setup-storage -p /mnt/beegfs/storage -s 2 -i 1 -m 192.168.113.186  --->>server ip
+
+systemctl start beegfs-meta && systemctl enable beegfs-meta && systemctl status beegfs-meta
+systemctl start beegfs-storage && systemctl enable beegfs-storage && systemctl status beegfs-storage
+
+beegfs-check-servers
+beegfs-ctl --listnodes --nodetype=storage --nicdetails
+
+goto client
+vi /etc/beegfs/beegfs-mounts.conf
+cat /etc/beegfs/beegfs-mounts.conf
+/mnt/beegfs /etc/beegfs/beegfs-client.conf
+
