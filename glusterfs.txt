@@ -1,0 +1,81 @@
+create 4VM machine node1-->2hdd,,node2-->2hdd,, node3-->2hdd,,, client-->1hdd with 1core
+
+change the hostname in all machine
+,,,,,,,,,,,,,,,,,,,,,,,,,,,
+
+hostnamectl set-hostname node1.hpcsa.in
+hostnamectl set-hostname node2.hpcsa.in
+hostnamectl set-hostname node3.hpcsa.in
+hostnamectl set-hostname client.hpcsa.in
+
+ifup ens33
+yum install vim -y
+yum install rsync -y
+systemctl stop firewalld
+systemctl disable firewalld
+vim /etc/selinux/config
+init 6
+
+now on node1
+,,,,,,,,,,,,,,,,,,
+
+vim /etc/hosts
+rsync /etc/hosts root@192.168.15.180:/etc/hosts
+rsync /etc/hosts root@192.168.15.181:/etc/hosts
+rsync /etc/hosts root@192.168.15.182:/etc/hosts
+ping client.hpcsa.in
+
+ run these command on node1,node2,node3
+,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+
+lsblk
+fdisk /dev/sdb
+	press n
+	press enter
+	press enter
+	press enter
+	press enter
+	press w
+mkfs.xfs /dev/sdb1
+mkdir /mnt/disk1
+mount /dev/sdb1 /mnt/disk1/
+lsblk
+yum install wget -y
+yum install wget centos-release-gluster epel-release glusterfs-server -y  ----2times run the cmd if glusterd services not started----
+systemctl start glusterd
+systemctl enable glusterd
+systemctl status glusterd
+
+run this command on node1
+,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+
+gluster peer probe node2.hpcsa.in
+gluster peer probe node3.hpcsa.in
+gluster peer status
+gluster pool list
+
+ run these command on node1,node2,node3
+,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+
+mkdir /mnt/disk1/diskvol
+
+
+run this command on node1
+,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+
+gluster volume create gdisk2 replica 3 node1.hpcsa.in:/mnt/disk1/diskvol/gdisk2  node2.hpcsa.in:/mnt/disk1/diskvol/gdisk2  node3.hpcsa.in:/mnt/disk1/diskvol/gdisk2
+gluster volume start gdisk2
+gluster volume info gdisk2
+
+
+run this in client machine 
+,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+
+yum install glusterfs-fuse
+mkdir /mnt/gdrive
+mount -t glusterfs node1.hpcsa.in:/gdisk2 /mnt/gdrive
+df -h
+cd /mnt/gdrive/
+dd if=/dev/zero of=file.txt bs=1024 count=520040
+df -h
+
