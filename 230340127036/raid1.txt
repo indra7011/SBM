@@ -1,0 +1,349 @@
+Script started on Monday 31 July 2023 05:37:24 PM IST
+]0;root@localhost:~[?1034h[root@localhost ~]# lsblk
+NAME            MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT
+sda               8:0    0   20G  0 disk 
+├─sda1            8:1    0    1G  0 part /boot
+└─sda2            8:2    0   19G  0 part 
+  ├─centos-root 253:0    0   17G  0 lvm  /
+  └─centos-swap 253:1    0    2G  0 lvm  [SWAP]
+sdb               8:16   0   20G  0 disk 
+sdc               8:32   0   20G  0 disk 
+sr0              11:0    1  973M  0 rom  
+]0;root@localhost:~[root@localhost ~]# yum install mdadm  [K[K -y
+Loaded plugins: fastestmirror
+Determining fastest mirrors
+ * base: centos.mirror.net.in
+ * extras: centos.mirror.net.in
+ * updates: centos.mirror.net.in
+base                                                                  | 3.6 kB  00:00:00     
+extras                                                                | 2.9 kB  00:00:00     
+updates                                                               | 2.9 kB  00:00:00     
+(1/4): base/7/x86_64/group_gz                                         | 153 kB  00:00:00     
+(2/4): extras/7/x86_64/primary_db                                     | 250 kB  00:00:00     
+(4/4): updates/7/x86_64/primary 61% [=============         ]  0.0 B/s |  17 MB  --:--:-- ETA (3/4): updates/7/x86_64/primary_db                                    |  22 MB  00:00:00     
+(4/4): base/7/x86_64/primary_db 100% [=====================]  11 MB/s |  28 MB  00:00:00 ETA (4/4): base/7/x86_64/primary_db                                       | 6.1 MB  00:00:01     
+Resolving Dependencies
+--> Running transaction check
+---> Package mdadm.x86_64 0:4.1-9.el7_9 will be installed
+--> Processing Dependency: libreport-filesystem for package: mdadm-4.1-9.el7_9.x86_64
+--> Running transaction check
+---> Package libreport-filesystem.x86_64 0:2.1.11-53.el7.centos will be installed
+--> Finished Dependency Resolution
+
+Dependencies Resolved
+
+=============================================================================================
+ Package                     Arch          Version                      Repository      Size
+=============================================================================================
+Installing:
+ mdadm                       x86_64        4.1-9.el7_9                  updates        439 k
+Installing for dependencies:
+ libreport-filesystem        x86_64        2.1.11-53.el7.centos         base            41 k
+
+Transaction Summary
+=============================================================================================
+Install  1 Package (+1 Dependent package)
+
+Total download size: 480 k
+Installed size: 1.0 M
+Downloading packages:
+(2/2): mdadm-4.1-9.el7_9.x86_64. 0% [                      ]  0.0 B/s |    0 B  --:--:-- ETA warning: /var/cache/yum/x86_64/7/base/packages/libreport-filesystem-2.1.11-53.el7.centos.x86_64.rpm: Header V3 RSA/SHA256 Signature, key ID f4a80eb5: NOKEY
+Public key for libreport-filesystem-2.1.11-53.el7.centos.x86_64.rpm is not installed
+(1/2): libreport-filesystem-2.1.11-53.el7.centos.x86_64.rpm           |  41 kB  00:00:02     
+Public key for mdadm-4.1-9.el7_9.x86_64.rpm is not installed
+(2/2): mdadm-4.1-9.el7_9.x86_64.rpm                                   | 439 kB  00:00:02     
+---------------------------------------------------------------------------------------------
+Total                                                        200 kB/s | 480 kB  00:00:02     
+Retrieving key from file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7
+Importing GPG key 0xF4A80EB5:
+ Userid     : "CentOS-7 Key (CentOS 7 Official Signing Key) <security@centos.org>"
+ Fingerprint: 6341 ab27 53d7 8a78 a7c2 7bb1 24c6 a8a7 f4a8 0eb5
+ Package    : centos-release-7-9.2009.0.el7.centos.x86_64 (@anaconda)
+ From       : /etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7
+Running transaction check
+Running transaction test
+Transaction test succeeded
+Running transaction
+  Installing : libreport-filesystem-2.1.11-53.el7. [                                   ] 1/2  Installing : libreport-filesystem-2.1.11-53.el7. [####                               ] 1/2  Installing : libreport-filesystem-2.1.11-53.el7. [#########                          ] 1/2  Installing : libreport-filesystem-2.1.11-53.el7. [##############                     ] 1/2  Installing : libreport-filesystem-2.1.11-53.el7. [###################                ] 1/2  Installing : libreport-filesystem-2.1.11-53.el7. [########################           ] 1/2  Installing : libreport-filesystem-2.1.11-53.el7. [##############################     ] 1/2  Installing : libreport-filesystem-2.1.11-53.el7.centos.x86_64                          1/2 
+  Installing : mdadm-4.1-9.el7_9.x86_64 [                                              ] 2/2  Installing : mdadm-4.1-9.el7_9.x86_64 [###                                           ] 2/2  Installing : mdadm-4.1-9.el7_9.x86_64 [#####                                         ] 2/2  Installing : mdadm-4.1-9.el7_9.x86_64 [########                                      ] 2/2  Installing : mdadm-4.1-9.el7_9.x86_64 [###########                                   ] 2/2  Installing : mdadm-4.1-9.el7_9.x86_64 [##############                                ] 2/2  Installing : mdadm-4.1-9.el7_9.x86_64 [#################                             ] 2/2  Installing : mdadm-4.1-9.el7_9.x86_64 [####################                          ] 2/2  Installing : mdadm-4.1-9.el7_9.x86_64 [#######################                       ] 2/2  Installing : mdadm-4.1-9.el7_9.x86_64 [#########################                     ] 2/2  Installing : mdadm-4.1-9.el7_9.x86_64 [##########################                    ] 2/2  Installing : mdadm-4.1-9.el7_9.x86_64 [############################                  ] 2/2  Installing : mdadm-4.1-9.el7_9.x86_64 [################################              ] 2/2  Installing : mdadm-4.1-9.el7_9.x86_64 [##################################            ] 2/2  Installing : mdadm-4.1-9.el7_9.x86_64 [#####################################         ] 2/2  Installing : mdadm-4.1-9.el7_9.x86_64 [########################################      ] 2/2  Installing : mdadm-4.1-9.el7_9.x86_64 [#########################################     ] 2/2  Installing : mdadm-4.1-9.el7_9.x86_64 [##########################################    ] 2/2  Installing : mdadm-4.1-9.el7_9.x86_64 [###########################################   ] 2/2  Installing : mdadm-4.1-9.el7_9.x86_64 [############################################  ] 2/2  Installing : mdadm-4.1-9.el7_9.x86_64 [############################################# ] 2/2  Installing : mdadm-4.1-9.el7_9.x86_64                                                  2/2 
+  Verifying  : mdadm-4.1-9.el7_9.x86_64                                                  1/2 
+  Verifying  : libreport-filesystem-2.1.11-53.el7.centos.x86_64                          2/2 
+
+Installed:
+  mdadm.x86_64 0:4.1-9.el7_9                                                                 
+
+Dependency Installed:
+  libreport-filesystem.x86_64 0:2.1.11-53.el7.centos                                         
+
+Complete!
+]0;root@localhost:~[root@localhost ~]# lsblk
+NAME            MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT
+sda               8:0    0   20G  0 disk 
+├─sda1            8:1    0    1G  0 part /boot
+└─sda2            8:2    0   19G  0 part 
+  ├─centos-root 253:0    0   17G  0 lvm  /
+  └─centos-swap 253:1    0    2G  0 lvm  [SWAP]
+sdb               8:16   0   20G  0 disk 
+sdc               8:32   0   20G  0 disk 
+sr0              11:0    1  973M  0 rom  
+]0;root@localhost:~[root@localhost ~]# mdadm --create --verbose /dev/md1 --level=1 --raid-devices=2 /dev/sdb /de v/sdc[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C
+[C[C[C[C[C
+mdadm: Note: this array has metadata at the start and
+    may not be suitable as a boot device.  If you plan to
+    store '/boot' on this device please ensure that
+    your boot-loader understands md/v1.x metadata, or use
+    --metadata=0.90
+mdadm: size set to 20954112K
+Continue creating array? yes
+mdadm: Defaulting to version 1.2 metadata
+mdadm: array /dev/md1 started.
+]0;root@localhost:~[root@localhost ~]# mdadm --examine /dev/sdb
+/dev/sdb:
+          Magic : a92b4efc
+        Version : 1.2
+    Feature Map : 0x0
+     Array UUID : 7dc1b3fd:6ddc9526:b39ae556:52efe46e
+           Name : localhost.localdomain:1  (local to host localhost.localdomain)
+  Creation Time : Mon Jul 31 17:40:41 2023
+     Raid Level : raid1
+   Raid Devices : 2
+
+ Avail Dev Size : 41908224 sectors (19.98 GiB 21.46 GB)
+     Array Size : 20954112 KiB (19.98 GiB 21.46 GB)
+    Data Offset : 34816 sectors
+   Super Offset : 8 sectors
+   Unused Space : before=34664 sectors, after=0 sectors
+          State : active
+    Device UUID : 3fd6aedf:c4b161e5:9eb6819b:04ead062
+
+    Update Time : Mon Jul 31 17:41:26 2023
+  Bad Block Log : 512 entries available at offset 136 sectors
+       Checksum : 389039ee - correct
+         Events : 7
+
+
+   Device Role : Active device 0
+   Array State : AA ('A' == active, '.' == missing, 'R' == replacing)
+]0;root@localhost:~[root@localhost ~]# mdadm --examine /dev/sdb[Kc
+/dev/sdc:
+          Magic : a92b4efc
+        Version : 1.2
+    Feature Map : 0x0
+     Array UUID : 7dc1b3fd:6ddc9526:b39ae556:52efe46e
+           Name : localhost.localdomain:1  (local to host localhost.localdomain)
+  Creation Time : Mon Jul 31 17:40:41 2023
+     Raid Level : raid1
+   Raid Devices : 2
+
+ Avail Dev Size : 41908224 sectors (19.98 GiB 21.46 GB)
+     Array Size : 20954112 KiB (19.98 GiB 21.46 GB)
+    Data Offset : 34816 sectors
+   Super Offset : 8 sectors
+   Unused Space : before=34664 sectors, after=0 sectors
+          State : active
+    Device UUID : a12437e2:c208b3dd:add27359:946f6f1c
+
+    Update Time : Mon Jul 31 17:41:33 2023
+  Bad Block Log : 512 entries available at offset 136 sectors
+       Checksum : ab2278f5 - correct
+         Events : 8
+
+
+   Device Role : Active device 1
+   Array State : AA ('A' == active, '.' == missing, 'R' == replacing)
+]0;root@localhost:~[root@localhost ~]# ^C
+]0;root@localhost:~[root@localhost ~]# mdadm --detail /dev/md1
+/dev/md1:
+           Version : 1.2
+     Creation Time : Mon Jul 31 17:40:41 2023
+        Raid Level : raid1
+        Array Size : 20954112 (19.98 GiB 21.46 GB)
+     Used Dev Size : 20954112 (19.98 GiB 21.46 GB)
+      Raid Devices : 2
+     Total Devices : 2
+       Persistence : Superblock is persistent
+
+       Update Time : Mon Jul 31 17:42:26 2023
+             State : clean 
+    Active Devices : 2
+   Working Devices : 2
+    Failed Devices : 0
+     Spare Devices : 0
+
+Consistency Policy : resync
+
+              Name : localhost.localdomain:1  (local to host localhost.localdomain)
+              UUID : 7dc1b3fd:6ddc9526:b39ae556:52efe46e
+            Events : 17
+
+    Number   Major   Minor   RaidDevice State
+       0       8       16        0      active sync   /dev/sdb
+       1       8       32        1      active sync   /dev/sdc
+]0;root@localhost:~[root@localhost ~]# mkfs.ext4 /dev/md1 
+mke2fs 1.42.9 (28-Dec-2013)
+Filesystem label=
+OS type: Linux
+Block size=4096 (log=2)
+Fragment size=4096 (log=2)
+Stride=0 blocks, Stripe width=0 blocks
+1310720 inodes, 5238528 blocks
+261926 blocks (5.00%) reserved for the super user
+First data block=0
+Maximum filesystem blocks=2153775104
+160 block groups
+32768 blocks per group, 32768 fragments per group
+8192 inodes per group
+Superblock backups stored on blocks: 
+	32768, 98304, 163840, 229376, 294912, 819200, 884736, 1605632, 2654208, 
+	4096000
+
+Allocating group tables:   0/160129/160       done                            
+Writing inode tables:   0/160       done                            
+Creating journal (32768 blocks): done
+Writing superblocks and filesystem accounting information:   0/160       done
+
+]0;root@localhost:~[root@localhost ~]# mkdir /mnt/raid1
+]0;root@localhost:~[root@localhost ~]# mount /dev/md1 /mnt/raid1/
+]0;root@localhost:~[root@localhost ~]# df-h
+bash: df-h: command not found
+]0;root@localhost:~[root@localhost ~]# df-h -h
+Filesystem               Size  Used Avail Use% Mounted on
+devtmpfs                 475M     0  475M   0% /dev
+tmpfs                    487M     0  487M   0% /dev/shm
+tmpfs                    487M  7.7M  479M   2% /run
+tmpfs                    487M     0  487M   0% /sys/fs/cgroup
+/dev/mapper/centos-root   17G  1.5G   16G   9% /
+/dev/sda1               1014M  138M  877M  14% /boot
+tmpfs                     98M     0   98M   0% /run/user/0
+/dev/md1                  20G   45M   19G   1% /mnt/raid1
+]0;root@localhost:~[root@localhost ~]# gsg[K[K[Kdf[K[Kdhhffsj[K[K[K[K[K[K[Kx[Kmkfs.ext4 /dev/md1
+mke2fs 1.42.9 (28-Dec-2013)
+/dev/md1 is mounted; will not make a filesystem here!
+]0;root@localhost:~[root@localhost ~]# blkid /dev/md1[K1 
+/dev/md1: UUID="291013ba-220f-4841-9ac0-ef87198316b3" TYPE="ext4" 
+]0;root@localhost:~[root@localhost ~]# vi /etc/fstab 
+[?1049h[?1h=[1;58r[?12;25h[?12l[?25h[27m[m[H[2J[?25l[58;1H"/etc/fstab" 11L, 465C[2;1H#
+# /etc/fstab
+# Created by anaconda on Sun Nov 27 00:26:18 2022
+#
+# Accessible filesystems, by reference, are maintained under '/dev/disk'
+# See man pages fstab(5), findfs(8), mount(8) and/or blkid(8) for more info
+#
+/dev/mapper/centos-root /[23Cxfs     defaults[8C0 0
+UUID=fbf76286-7b82-442d-abd8-5369f4f56909 /boot[19Cxfs     defaults[8C0 0[11;1H/dev/mapper/centos-swap swap[20Cswap    defaults[8C0 0
+[1m[34m~                                                                                            [13;1H~                                                                                            [14;1H~                                                                                            [15;1H~                                                                                            [16;1H~                                                                                            [17;1H~                                                                                            [18;1H~                                                                                            [19;1H~                                                                                            [20;1H~                                                                                            [21;1H~                                                                                            [22;1H~                                                                                            [23;1H~                                                                                            [24;1H~                                                                                            [25;1H~                                                                                            [26;1H~                                                                                            [27;1H~                                                                                            [28;1H~                                                                                            [29;1H~                                                                                            [30;1H~                                                                                            [31;1H~                                                                                            [32;1H~                                                                                            [33;1H~                                                                                            [34;1H~                                                                                            [35;1H~                                                                                            [36;1H~                                                                                            [37;1H~                                                                                            [38;1H~                                                                                            [39;1H~                                                                                            [40;1H~                                                                                            [41;1H~                                                                                            [42;1H~                                                                                            [43;1H~                                                                                            [44;1H~                                                                                            [45;1H~                                                                                            [46;1H~                                                                                            [47;1H~                                                                                            [48;1H~                                                                                            [49;1H~                                                                                            [50;1H~                                                                                            [51;1H~                                                                                            [52;1H~                                                                                            [53;1H~                                                                                            [54;1H~                                                                                            [55;1H~                                                                                            [56;1H~                                                                                            [57;1H~                                                                                            [1;1H[?12l[?25h
+
+
+
+
+
+
+
+
+[?25l[m[58;1H[1m-- INSERT --[m[58;14H[K[10;1H[?12l[?25h
+/dev/mapper/centos-swap swap                    swap    defaults        0 0[?25l[12;1H[K[12;1H[?12l[?25h[?25lUUID="291013ba-220f-4841-9ac0-ef87198316b3" TYPE="ext4[?12l[?25h[?25l TYPE="ext4[12;54H[K[12;43H[?12l[?25h[?25l291013ba-220f-4841-9ac0-ef87198316b3 TYPE="ext4[12;53H[K[12;6H[?12l[?25h291013ba-220f-4841-9ac0-ef87198316b3 TYPE[?25lYPE="ext4[12;52H[K[12;43H[?12l[?25h[?25lPE="ext4[12;51H[K[12;43H[?12l[?25h[?25lE="ext4[12;50H[K[12;43H[?12l[?25h[?25l="ext4[12;49H[K[12;43H[?12l[?25h[?25l"ext4[12;48H[K[12;43H[?12l[?25h[?25lext4[12;47H[K[12;43H[?12l[?25h[?25l/ext4[?12l[?25h[?25lmext4[?12l[?25h[?25lnext4[?12l[?25h[?25ltext4[?12l[?25h[?25l/ext4[?12l[?25h[?25lrext4[?12l[?25h[?25laext4[?12l[?25h[?25liext4[?12l[?25h[?25ldext4[?12l[?25h[?25l1ext4[?12l[?25h[?25l ext4[?12l[?25hext4[?25l [?12l[?25h[?25ld[?12l[?25h[?25le[?12l[?25h[?25lf[?12l[?25h[?25la[?12l[?25h[?25ly[?12l[?25h[?25l[12;63H[K[12;63H[?12l[?25h[?25lu[?12l[?25h[?25ll[?12l[?25h[?25lt[?12l[?25h[?25ls[?12l[?25h[?25l [?12l[?25h[?25l0[?12l[?25h[?25l [?12l[?25h[?25l0[?12l[?25h[58;1H[K[12;70H[?25l[?12l[?25h[?25l[58;1H:[?12l[?25hwq[?25l"/etc/fstab" 12L, 536C written
+[?1l>[?12l[?25h[?1049l]0;root@localhost:~[root@localhost ~]# vi /etc/fstab [1P[1P[1@c[1@a[1@t
+
+#
+# /etc/fstab
+# Created by anaconda on Sun Nov 27 00:26:18 2022
+#
+# Accessible filesystems, by reference, are maintained under '/dev/disk'
+# See man pages fstab(5), findfs(8), mount(8) and/or blkid(8) for more info
+#
+/dev/mapper/centos-root /                       xfs     defaults        0 0
+UUID=fbf76286-7b82-442d-abd8-5369f4f56909 /boot                   xfs     defaults        0 0
+/dev/mapper/centos-swap swap                    swap    defaults        0 0
+UUID=291013ba-220f-4841-9ac0-ef87198316b3 /mnt/raid1 ext4 defaults 0 0
+]0;root@localhost:~[root@localhost ~]# mdadm --detail /dev/md1
+/dev/md1:
+           Version : 1.2
+     Creation Time : Mon Jul 31 17:40:41 2023
+        Raid Level : raid1
+        Array Size : 20954112 (19.98 GiB 21.46 GB)
+     Used Dev Size : 20954112 (19.98 GiB 21.46 GB)
+      Raid Devices : 2
+     Total Devices : 2
+       Persistence : Superblock is persistent
+
+       Update Time : Mon Jul 31 17:45:38 2023
+             State : clean 
+    Active Devices : 2
+   Working Devices : 2
+    Failed Devices : 0
+     Spare Devices : 0
+
+Consistency Policy : resync
+
+              Name : localhost.localdomain:1  (local to host localhost.localdomain)
+              UUID : 7dc1b3fd:6ddc9526:b39ae556:52efe46e
+            Events : 17
+
+    Number   Major   Minor   RaidDevice State
+       0       8       16        0      active sync   /dev/sdb
+       1       8       32        1      active sync   /dev/sdc
+]0;root@localhost:~[root@localhost ~]# cd /mnt/raid1/
+]0;root@localhost:/mnt/raid1[root@localhost raid1]# echo test>raid[K[K[Kaid1.txt[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[Kecho test > raid1.txt
+]0;root@localhost:/mnt/raid1[root@localhost raid1]# ls
+[0m[01;34mlost+found[0m  raid1.txt
+]0;root@localhost:/mnt/raid1[root@localhost raid1]# fsdis[K[K[K[Kdisk -l
+
+Disk /dev/sda: 21.5 GB, 21474836480 bytes, 41943040 sectors
+Units = sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+Disk label type: dos
+Disk identifier: 0x000cd7d9
+
+   Device Boot      Start         End      Blocks   Id  System
+/dev/sda1   *        2048     2099199     1048576   83  Linux
+/dev/sda2         2099200    41943039    19921920   8e  Linux LVM
+
+Disk /dev/sdb: 21.5 GB, 21474836480 bytes, 41943040 sectors
+Units = sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+
+
+Disk /dev/sdc: 21.5 GB, 21474836480 bytes, 41943040 sectors
+Units = sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+
+
+Disk /dev/mapper/centos-root: 18.2 GB, 18249416704 bytes, 35643392 sectors
+Units = sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+
+
+Disk /dev/mapper/centos-swap: 2147 MB, 2147483648 bytes, 4194304 sectors
+Units = sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+
+
+Disk /dev/md1: 21.5 GB, 21457010688 bytes, 41908224 sectors
+Units = sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+
+]0;root@localhost:/mnt/raid1[root@localhost raid1]# dd if=/dev/zero of=lol.file bs=1024 count=502400
+502400+0 records in
+502400+0 records out
+514457600 bytes (514 MB) copied, 2.62673 s, 196 MB/s
+]0;root@localhost:/mnt/raid1[root@localhost raid1]# lsblk
+NAME            MAJ:MIN RM  SIZE RO TYPE  MOUNTPOINT
+sda               8:0    0   20G  0 disk  
+├─sda1            8:1    0    1G  0 part  /boot
+└─sda2            8:2    0   19G  0 part  
+  ├─centos-root 253:0    0   17G  0 lvm   /
+  └─centos-swap 253:1    0    2G  0 lvm   [SWAP]
+sdb               8:16   0   20G  0 disk  
+└─md1             9:1    0   20G  0 raid1 /mnt/raid1
+sdc               8:32   0   20G  0 disk  
+└─md1             9:1    0   20G  0 raid1 /mnt/raid1
+sr0              11:0    1  973M  0 rom   
+]0;root@localhost:/mnt/raid1[root@localhost raid1]# exit
+
+Script done on Monday 31 July 2023 06:04:47 PM IST

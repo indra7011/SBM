@@ -1,0 +1,192 @@
+Script started on Monday 31 July 2023 06:24:57 PM IST
+]0;root@client:~[?1034h[root@client ~]# yum install iscsi-initiator-utils -y
+Loaded plugins: fastestmirror
+Determining fastest mirrors
+ * base: centos.mirror.net.in
+ * extras: centos.mirror.net.in
+ * updates: centos.mirror.net.in
+base                                                                  | 3.6 kB  00:00:00     
+extras                                                                | 2.9 kB  00:00:00     
+updates                                                               | 2.9 kB  00:00:00     
+(1/4): base/7/x86_64/group_gz                                         | 153 kB  00:00:00     
+(2/4): extras/7/x86_64/primary_db                                     | 250 kB  00:00:00     
+(4/4): updates/7/x86_64/primary 77% [================-     ]  0.0 B/s |  22 MB  --:--:-- ETA (3/4): updates/7/x86_64/primary_db                                    |  22 MB  00:00:00     
+(4/4): base/7/x86_64/primary_db 86% [==================-   ] 3.3 MB/s |  24 MB  00:00:01 ETA (4/4): base/7/x86_64/primary_db 100% [=====================] 3.8 MB/s |  28 MB  00:00:00 ETA (4/4): base/7/x86_64/primary_db                                       | 6.1 MB  00:00:01     
+Resolving Dependencies
+--> Running transaction check
+---> Package iscsi-initiator-utils.x86_64 0:6.2.0.874-22.el7_9 will be installed
+--> Processing Dependency: iscsi-initiator-utils-iscsiuio >= 6.2.0.874-22.el7_9 for package: iscsi-initiator-utils-6.2.0.874-22.el7_9.x86_64
+--> Running transaction check
+---> Package iscsi-initiator-utils-iscsiuio.x86_64 0:6.2.0.874-22.el7_9 will be installed
+--> Finished Dependency Resolution
+
+Dependencies Resolved
+
+=============================================================================================
+ Package                             Arch        Version                  Repository    Size
+=============================================================================================
+Installing:
+ iscsi-initiator-utils               x86_64      6.2.0.874-22.el7_9       updates      423 k
+Installing for dependencies:
+ iscsi-initiator-utils-iscsiuio      x86_64      6.2.0.874-22.el7_9       updates       94 k
+
+Transaction Summary
+=============================================================================================
+Install  1 Package (+1 Dependent package)
+
+Total download size: 517 k
+Installed size: 2.5 M
+Downloading packages:
+warning: /var/cache/yum/x86_64/7/updates/packages/iscsi-initiator-utils-iscsiuio-6.2.0.874-22.el7_9.x86_64.rpm: Header V3 RSA/SHA256 Signature, key ID f4a80eb5: NOKEY
+Public key for iscsi-initiator-utils-iscsiuio-6.2.0.874-22.el7_9.x86_64.rpm is not installed
+(1/2): iscsi-initiator-utils-iscsiuio-6.2.0.874-22.el7_9.x86_64.rpm   |  94 kB  00:00:00     
+(2/2): iscsi-initiator-utils-6.2.0.874-22.el7_9.x86_64.rpm            | 423 kB  00:00:00     
+---------------------------------------------------------------------------------------------
+Total                                                        1.9 MB/s | 517 kB  00:00:00     
+Retrieving key from file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7
+Importing GPG key 0xF4A80EB5:
+ Userid     : "CentOS-7 Key (CentOS 7 Official Signing Key) <security@centos.org>"
+ Fingerprint: 6341 ab27 53d7 8a78 a7c2 7bb1 24c6 a8a7 f4a8 0eb5
+ Package    : centos-release-7-9.2009.0.el7.centos.x86_64 (@anaconda)
+ From       : /etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7
+Running transaction check
+Running transaction test
+Transaction test succeeded
+Running transaction
+  Installing : iscsi-initiator-utils-iscsiuio-6.2. [                                   ] 1/2  Installing : iscsi-initiator-utils-iscsiuio-6.2. [############                       ] 1/2  Installing : iscsi-initiator-utils-iscsiuio-6.2. [########################           ] 1/2  Installing : iscsi-initiator-utils-iscsiuio-6.2. [################################## ] 1/2  Installing : iscsi-initiator-utils-iscsiuio-6.2.0.874-22.el7_9.x86_64                  1/2 
+  Installing : iscsi-initiator-utils-6.2.0.874-22. [                                   ] 2/2  Installing : iscsi-initiator-utils-6.2.0.874-22. [#                                  ] 2/2  Installing : iscsi-initiator-utils-6.2.0.874-22. [##                                 ] 2/2  Installing : iscsi-initiator-utils-6.2.0.874-22. [###                                ] 2/2  Installing : iscsi-initiator-utils-6.2.0.874-22. [####                               ] 2/2  Installing : iscsi-initiator-utils-6.2.0.874-22. [#####                              ] 2/2  Installing : iscsi-initiator-utils-6.2.0.874-22. [######                             ] 2/2  Installing : iscsi-initiator-utils-6.2.0.874-22. [#######                            ] 2/2  Installing : iscsi-initiator-utils-6.2.0.874-22. [########                           ] 2/2  Installing : iscsi-initiator-utils-6.2.0.874-22. [#########                          ] 2/2  Installing : iscsi-initiator-utils-6.2.0.874-22. [##########                         ] 2/2  Installing : iscsi-initiator-utils-6.2.0.874-22. [###########                        ] 2/2  Installing : iscsi-initiator-utils-6.2.0.874-22. [############                       ] 2/2  Installing : iscsi-initiator-utils-6.2.0.874-22. [#############                      ] 2/2  Installing : iscsi-initiator-utils-6.2.0.874-22. [##############                     ] 2/2  Installing : iscsi-initiator-utils-6.2.0.874-22. [###############                    ] 2/2  Installing : iscsi-initiator-utils-6.2.0.874-22. [################                   ] 2/2  Installing : iscsi-initiator-utils-6.2.0.874-22. [#################                  ] 2/2  Installing : iscsi-initiator-utils-6.2.0.874-22. [##################                 ] 2/2  Installing : iscsi-initiator-utils-6.2.0.874-22. [###################                ] 2/2  Installing : iscsi-initiator-utils-6.2.0.874-22. [####################               ] 2/2  Installing : iscsi-initiator-utils-6.2.0.874-22. [#####################              ] 2/2  Installing : iscsi-initiator-utils-6.2.0.874-22. [######################             ] 2/2  Installing : iscsi-initiator-utils-6.2.0.874-22. [#######################            ] 2/2  Installing : iscsi-initiator-utils-6.2.0.874-22. [########################           ] 2/2  Installing : iscsi-initiator-utils-6.2.0.874-22. [#########################          ] 2/2  Installing : iscsi-initiator-utils-6.2.0.874-22. [##########################         ] 2/2  Installing : iscsi-initiator-utils-6.2.0.874-22. [############################       ] 2/2  Installing : iscsi-initiator-utils-6.2.0.874-22. [#############################      ] 2/2  Installing : iscsi-initiator-utils-6.2.0.874-22. [##############################     ] 2/2  Installing : iscsi-initiator-utils-6.2.0.874-22. [###############################    ] 2/2  Installing : iscsi-initiator-utils-6.2.0.874-22. [################################   ] 2/2  Installing : iscsi-initiator-utils-6.2.0.874-22. [#################################  ] 2/2  Installing : iscsi-initiator-utils-6.2.0.874-22. [################################## ] 2/2  Installing : iscsi-initiator-utils-6.2.0.874-22.el7_9.x86_64                           2/2 
+  Verifying  : iscsi-initiator-utils-6.2.0.874-22.el7_9.x86_64                           1/2 
+  Verifying  : iscsi-initiator-utils-iscsiuio-6.2.0.874-22.el7_9.x86_64                  2/2 
+
+Installed:
+  iscsi-initiator-utils.x86_64 0:6.2.0.874-22.el7_9                                          
+
+Dependency Installed:
+  iscsi-initiator-utils-iscsiuio.x86_64 0:6.2.0.874-22.el7_9                                 
+
+Complete!
+]0;root@client:~[root@client ~]# cat /etc/iscsi/initiatorname.iscsi
+InitiatorName=iqn.1994-05.com.redhat:6cfdf7bb89e3
+]0;root@client:~[root@client ~]# systemctl start iscsi
+]0;root@client:~[root@client ~]# systemctl start iscsi[1P iscsi[1P iscsi[1P iscsia iscsit iscsiu iscsis iscsi
+● iscsi.service - Login and scanning of iSCSI devices
+   Loaded: loaded (/usr/lib/systemd/system/iscsi.service; enabled; vendor preset: disabled)
+   Active: inactive (dead)
+Condition: start [1;33mcondition failed[0m at Mon 2023-07-31 18:48:06 IST; 14s ago
+           ConditionDirectoryNotEmpty=/var/lib/iscsi/nodes was not met
+     Docs: man:iscsiadm(8)
+           man:iscsid(8)
+]0;root@client:~[root@client ~]# iscsiadm -m discovery -t st -p 192.168.113.172 --login[1P --login[1P --login9 --login1 --login
+192.168.113.191:3260,1 iqn.2023-07.cdac.acts.hpcsa.sbm:disk1
+Logging in to [iface: default, target: iqn.2023-07.cdac.acts.hpcsa.sbm:disk1, portal: 192.168.113.191,3260] (multiple)
+Login to [iface: default, target: iqn.2023-07.cdac.acts.hpcsa.sbm:disk1, portal: 192.168.113.191,3260] successful.
+]0;root@client:~[root@client ~]# lsblk 
+NAME            MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT
+sda               8:0    0   20G  0 disk 
+├─sda1            8:1    0    1G  0 part /boot
+└─sda2            8:2    0   19G  0 part 
+  ├─centos-root 253:0    0   17G  0 lvm  /
+  └─centos-swap 253:1    0    2G  0 lvm  [SWAP]
+sdb               8:16   0   20G  0 disk 
+sr0              11:0    1  973M  0 rom  
+]0;root@client:~[root@client ~]# fdisk /dev/sdb
+Welcome to fdisk (util-linux 2.23.2).
+
+Changes will remain in memory only, until you decide to write them.
+Be careful before using the write command.
+
+Device does not contain a recognized partition table
+Building a new DOS disklabel with disk identifier 0x66614fca.
+
+Command (m for help): n
+Partition type:
+   p   primary (0 primary, 0 extended, 4 free)
+   e   extended
+Select (default p): p
+Partition number (1-4, default 1): 
+First sector (2048-41943039, default 2048): 
+Using default value 2048
+Last sector, +sectors or +size{K,M,G} (2048-41943039, default 41943039): 
+Using default value 41943039
+Partition 1 of type Linux and of size 20 GiB is set
+
+Command (m for help): w
+The partition table has been altered!
+
+Calling ioctl() to re-read partition table.
+Syncing disks.
+]0;root@client:~[root@client ~]# mkfs.ext4 /dev/sdb1
+mke2fs 1.42.9 (28-Dec-2013)
+Filesystem label=
+OS type: Linux
+Block size=4096 (log=2)
+Fragment size=4096 (log=2)
+Stride=0 blocks, Stripe width=0 blocks
+1310720 inodes, 5242624 blocks
+262131 blocks (5.00%) reserved for the super user
+First data block=0
+Maximum filesystem blocks=2153775104
+160 block groups
+32768 blocks per group, 32768 fragments per group
+8192 inodes per group
+Superblock backups stored on blocks: 
+	32768, 98304, 163840, 229376, 294912, 819200, 884736, 1605632, 2654208, 
+	4096000
+
+Allocating group tables:   0/160       done                            
+Writing inode tables:   0/160       done                            
+Creating journal (32768 blocks): done
+Writing superblocks and filesystem accounting information:   0/160       done
+
+]0;root@client:~[root@client ~]# mkdir /mnt/iscsilab
+]0;root@client:~[root@client ~]# mount /dev/sdb1 /mnt/iscsilab/
+]0;root@client:~[root@client ~]# df -h
+Filesystem               Size  Used Avail Use% Mounted on
+devtmpfs                 475M     0  475M   0% /dev
+tmpfs                    487M     0  487M   0% /dev/shm
+tmpfs                    487M  7.7M  479M   2% /run
+tmpfs                    487M     0  487M   0% /sys/fs/cgroup
+/dev/mapper/centos-root   17G  1.5G   16G   9% /
+/dev/sda1               1014M  138M  877M  14% /boot
+tmpfs                     98M     0   98M   0% /run/user/0
+/dev/sdb1                 20G   45M   19G   1% /mnt/iscsilab
+]0;root@client:~[root@client ~]# cd /mnt/iscsilab/
+]0;root@client:/mnt/iscsilab[root@client iscsilab]# iscsiadm -m session
+tcp: [1] 192.168.113.191:3260,1 iqn.2023-07.cdac.acts.hpcsa.sbm:disk1 (non-flash)
+]0;root@client:/mnt/iscsilab[root@client iscsilab]# lsblk 
+NAME            MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT
+sda               8:0    0   20G  0 disk 
+├─sda1            8:1    0    1G  0 part /boot
+└─sda2            8:2    0   19G  0 part 
+  ├─centos-root 253:0    0   17G  0 lvm  /
+  └─centos-swap 253:1    0    2G  0 lvm  [SWAP]
+sdb               8:16   0   20G  0 disk 
+└─sdb1            8:17   0   20G  0 part /mnt/iscsilab
+sr0              11:0    1  973M  0 rom  
+]0;root@client:/mnt/iscsilab[root@client iscsilab]# dd if=/dev/zero of=file.test bs=1024 count=520040[C[C[1P40[1P040[1P04010402040204080408040
+12288040+0 records in
+12288040+0 records out
+12582952960 bytes (13 GB) copied, 18.1797 s, 692 MB/s
+]0;root@client:/mnt/iscsilab[root@client iscsilab]# lsblk 
+NAME            MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT
+sda               8:0    0   20G  0 disk 
+├─sda1            8:1    0    1G  0 part /boot
+└─sda2            8:2    0   19G  0 part 
+  ├─centos-root 253:0    0   17G  0 lvm  /
+  └─centos-swap 253:1    0    2G  0 lvm  [SWAP]
+sdb               8:16   0   20G  0 disk 
+└─sdb1            8:17   0   20G  0 part /mnt/iscsilab
+sr0              11:0    1  973M  0 rom  
+]0;root@client:/mnt/iscsilab[root@client iscsilab]# df -Th
+Filesystem              Type      Size  Used Avail Use% Mounted on
+devtmpfs                devtmpfs  475M     0  475M   0% /dev
+tmpfs                   tmpfs     487M     0  487M   0% /dev/shm
+tmpfs                   tmpfs     487M  7.7M  479M   2% /run
+tmpfs                   tmpfs     487M     0  487M   0% /sys/fs/cgroup
+/dev/mapper/centos-root xfs        17G  1.5G   16G   9% /
+/dev/sda1               xfs      1014M  138M  877M  14% /boot
+tmpfs                   tmpfs      98M     0   98M   0% /run/user/0
+/dev/sdb1               ext4       20G   12G  6.8G  64% /mnt/iscsilab
+]0;root@client:/mnt/iscsilab[root@client iscsilab]# exit
+
+Script done on Monday 31 July 2023 07:02:10 PM IST
