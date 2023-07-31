@@ -1,0 +1,24 @@
+1  lsblk
+    2  fdisk -l
+    3  vgs
+    4  lvs
+    5  yum install lvm2
+    6  lsblk
+    7  pvcreate /dev/sdb /dev/sdc
+    8  pvdisplay 
+    9  vgcreate my_volume_group /dev/sdb /dev/sdc
+   10  vgdisplay 
+   11  lvcreate -n data_lv -L 10G my_volume_group
+   12  lvcreate -n scratch_lv -L 10G my_volume_group
+   13  lvcreate -n app_lv -L 10G my_volume_group
+   14  lvdisplay 
+   15  mkfs.ext4 /dev/my_volume_group/data_lv 
+   16  mkfs.ext4 /dev/my_volume_group/scratch_lv 
+   17  mkfs.ext4 /dev/my_volume_group/app_lv 
+   18  mkdir /data
+   19  mkdir /scratch
+   20  mkdir /app
+   21  mount /dev/my_volume_group/data_lv /data
+   22  mount /dev/my_volume_group/scratch_lv /scratch
+   23  mount /dev/my_volume_group/app_lv /app
+   24  df -h
